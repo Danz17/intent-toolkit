@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Intent Toolkit - FRP Research</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #eee;
+      min-height: 100vh;
+      padding: 10px;
+      padding-bottom: 80px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00d4ff;
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    h2 {
+      color: #ff6b6b;
+      margin: 15px 0 10px;
+      font-size: 1.1rem;
+      border-bottom: 2px solid #ff6b6b;
+      padding-bottom: 5px;
+    }
+    h3 {
+      color: #ffd93d;
+      margin: 12px 0 8px;
+      font-size: 0.95rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 0.75rem;
+      margin-bottom: 15px;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; }
+
+    /* Mobile-first tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 5px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      padding: 10px 14px;
+      background: #0d1b2a;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tab.active {
+      background: #1e3a5f;
+      color: #00d4ff;
+      font-weight: bold;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Intent Links - Large touch targets */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .intent-link {
+      display: block;
+      background: #0d1b2a;
+      color: #00d4ff;
+      padding: 14px 12px;
+      text-decoration: none;
+      border-radius: 10px;
+      border-left: 4px solid #00d4ff;
+      font-size: 0.75rem;
+      word-break: break-all;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.2s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .intent-link:active {
+      transform: scale(0.98);
+      background: #1e3a5f;
+    }
+    .intent-link .label {
+      display: block;
+      color: #ffd93d;
+      font-weight: bold;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+    .intent-link .url {
+      opacity: 0.8;
+      font-size: 0.7rem;
+    }
+
+    /* Color variants */
+    .tel-link { border-left-color: #ff6b6b; }
+    .tel-link .label { color: #ff9f43; }
+
+    .samsung-link { border-left-color: #a855f7; }
+    .samsung-link .label { color: #c084fc; }
+
+    .working { border-left-color: #22c55e !important; background: #0a1f12; }
+    .working .label { color: #22c55e !important; }
+
+    .priority {
+      border-left-color: #f59e0b !important;
+      border-width: 5px;
+      background: #1a1505;
+    }
+    .priority .label { color: #fbbf24 !important; font-size: 1rem; }
+
+    /* Notes */
+    .note {
+      background: #2d1b00;
+      border-left: 4px solid #ff9f43;
+      padding: 10px 12px;
+      margin: 10px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.8rem;
+    }
+    .note.success {
+      background: #0d2818;
+      border-left-color: #22c55e;
+    }
+    .note.info {
+      background: #0d1b2a;
+      border-left-color: #00d4ff;
+    }
+
+    /* QR Section - Collapsible on mobile */
+    .qr-section {
+      background: #1e3a5f;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .qr-section.collapsed .qr-content { display: none; }
+    .qr-toggle {
+      background: none;
+      border: none;
+      color: #00d4ff;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      padding: 5px;
+    }
+    #qr-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: #0d1b2a;
+      color: #fff;
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 20px;
+      background: #00d4ff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .btn:active { transform: scale(0.95); }
+    .btn-secondary { background: #ff6b6b; }
+    .btn-green { background: #22c55e; }
+
+    #qr-code {
+      margin: 15px auto;
+      padding: 10px;
+      background: #fff;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    /* Quick Actions - Fixed bottom bar on mobile */
+    .quick-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0d1b2a;
+      padding: 10px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      border-top: 1px solid #333;
+      z-index: 100;
+    }
+    .quick-btn {
+      padding: 10px 12px;
+      background: #1e3a5f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      flex: 1;
+      max-width: 100px;
+    }
+    .quick-btn:active { background: #2a4a6f; }
+    .quick-btn.highlight { background: #22c55e; color: #000; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.8rem;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+    th { background: #0d1b2a; color: #ffd93d; }
+
+    code {
+      background: #0d1b2a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: #00d4ff;
+      font-size: 0.7rem;
+    }
+    pre {
+      background: #0d1b2a;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.7rem;
+      color: #00d4ff;
+    }
+
+    /* Desktop adjustments */
+    @media (min-width: 600px) {
+      body { padding: 20px; }
+      h1 { font-size: 1.8rem; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .intent-link { font-size: 0.8rem; }
+      .intent-link .label { font-size: 1rem; }
+      .quick-bar { display: none; }
+      body { padding-bottom: 20px; }
+    }
+
+    /* Category divider */
+    .divider {
+      text-align: center;
+      color: #666;
+      margin: 20px 0 10px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Status badge */
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    .badge-working { background: #22c55e; color: #000; }
+    .badge-try { background: #f59e0b; color: #000; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔓 Intent Toolkit</h1>
+    <p class="subtitle">FRP Security Research | SM-S721B | By Phenix</p>
+
+    <!-- Quick Priority Section -->
+    <div class="note success">
+      ⚡ <strong>TAP ANY LINK</strong> to open directly, or scroll down for QR codes
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('priority')">⭐ Priority</button>
+      <button class="tab" onclick="showTab('packages')">📦 Packages</button>
+      <button class="tab" onclick="showTab('samsung')">📱 Samsung</button>
+      <button class="tab" onclick="showTab('codes')">🔢 Codes</button>
+      <button class="tab" onclick="showTab('qr')">📷 QR Gen</button>
+      <button class="tab" onclick="showTab('docs')">📖 Docs</button>
+    </div>
+
+    <!-- PRIORITY TAB - Most likely to work -->
+    <div id="priority" class="tab-content active">
+      <h2>⭐ Try These First</h2>
+
+      <div class="grid">
+        <a class="intent-link priority" href="intent://com.android.settings/#Intent;scheme=android-app;end">
+          <span class="label">⚙️ SETTINGS APP</span>
+          <span class="url">intent://com.android.settings/#Intent;scheme=android-app;end</span>
+        </a>
+
+        <a class="intent-link priority" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">
+          <span class="label">🏠 SAMSUNG LAUNCHER <span class="badge badge-working">VERIFIED</span></span>
+          <span class="url">intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end</span>
+        </a>
+
+        <a class="intent-link priority" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">
+          <span class="label">📁 MY FILES</span>
+          <span class="url">intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end</span>
+        </a>
+
+        <a class="intent-link priority" href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end">
+          <span class="label">📞 SAMSUNG PHONE (for codes)</span>
+          <span class="url">intent://com.samsung.android.dialer/#Intent;scheme=android-app;end</span>
+        </a>
+      </div>
+
+      <h3>🔑 Critical Dialer Codes</h3>
+      <div class="note info">If you can access the Phone app, dial these codes:</div>
+      <div class="grid">
+        <a class="intent-link tel-link priority" href="tel:*#0808#">
+          <span class="label">⭐ *#0808# - USB/ADB MODE</span>
+          <span class="url">Opens USB settings - Enable MTP+ADB!</span>
+        </a>
+
+        <a class="intent-link tel-link" href="tel:*#0*#">
+          <span class="label">🔧 *#0*# - Hardware Test</span>
+          <span class="url">Diagnostic menu with various tests</span>
+        </a>
+
+        <a class="intent-link tel-link" href="tel:*#9900#">
+          <span class="label">📊 *#9900# - SysDump</span>
+          <span class="url">Debug logs and settings</span>
+        </a>
+      </div>
+
+      <h3>🔧 Developer Options</h3>
+      <div class="grid">
+        <a class="intent-link working" href="intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end">
+          <span class="label">🔧 Developer Options (Direct)</span>
+          <span class="url">intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end</span>
+        </a>
+
+        <a class="intent-link" href="intent://com.android.settings/.Settings$DevelopmentSettingsDashboardActivity/#Intent;scheme=android-app;end">
+          <span class="label">🔧 Dev Options Dashboard</span>
+          <span class="url">intent://...DevelopmentSettingsDashboardActivity/...</span>
+        </a>
+      </div>
+
+      <h3>📱 Escape Routes</h3>
+      <div class="grid">
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.voc/#Intent;scheme=android-app;end">
+          <span class="label">👥 Samsung Members</span>
+          <span class="url">May have browser links inside</span>
+        </a>
+
+        <a class="intent-link samsung-link" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">
+          <span class="label">🏪 Galaxy Store</span>
+          <span class="url">Can sometimes escape to settings</span>
+        </a>
+
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.oneconnect/#Intent;scheme=android-app;end">
+          <span class="label">🏠 SmartThings</span>
+          <span class="url">Has web content that may escape</span>
+        </a>
+
+        <a class="intent-link" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">
+          <span class="label">📂 Document Browser</span>
+          <span class="url">File access may lead to APK install</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- PACKAGES TAB -->
+    <div id="packages" class="tab-content">
+      <h2>📦 Package Launch Intents</h2>
+      <div class="note">Format: <code>intent://[package]/#Intent;scheme=android-app;end</code></div>
+
+      <h3>System Apps</h3>
+      <div class="grid">
+        <a class="intent-link" href="intent://com.android.settings/#Intent;scheme=android-app;end">
+          <span class="label">⚙️ Settings</span>
+          <span class="url">intent://com.android.settings/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.dialer/#Intent;scheme=android-app;end">
+          <span class="label">📞 Dialer</span>
+          <span class="url">intent://com.android.dialer/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.contacts/#Intent;scheme=android-app;end">
+          <span class="label">👤 Contacts</span>
+          <span class="url">intent://com.android.contacts/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.chrome/#Intent;scheme=android-app;end">
+          <span class="label">🌐 Chrome</span>
+          <span class="url">intent://com.android.chrome/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">
+          <span class="label">📂 Documents</span>
+          <span class="url">intent://com.android.documentsui/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.packageinstaller/#Intent;scheme=android-app;end">
+          <span class="label">📦 Package Installer</span>
+          <span class="url">intent://com.android.packageinstaller/#Intent;scheme=android-app;end</span>
+        </a>
+      </div>
+
+      <h3>Google Apps</h3>
+      <div class="grid">
+        <a class="intent-link" href="intent://com.google.android.googlequicksearchbox/#Intent;scheme=android-app;end">
+          <span class="label">🔍 Google</span>
+          <span class="url">intent://com.google.android.googlequicksearchbox/...</span>
+        </a>
+        <a class="intent-link" href="intent://com.google.android.gms/#Intent;scheme=android-app;end">
+          <span class="label">⚙️ Play Services</span>
+          <span class="url">intent://com.google.android.gms/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.vending/#Intent;scheme=android-app;end">
+          <span class="label">🏪 Play Store</span>
+          <span class="url">intent://com.android.vending/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.google.android.youtube/#Intent;scheme=android-app;end">
+          <span class="label">▶️ YouTube</span>
+          <span class="url">intent://com.google.android.youtube/#Intent;scheme=android-app;end</span>
+        </a>
+        <a class="intent-link" href="intent://com.google.android.apps.photos/#Intent;scheme=android-app;end">
+          <span class="label">📷 Photos</span>
+          <span class="url">intent://com.google.android.apps.photos/#Intent;scheme=android-app;end</span>
+        </a>
+      </div>
+
+      <h3>Settings Activities (Direct)</h3>
+      <div class="grid">
+        <a class="intent-link" href="intent://com.android.settings/.Settings$WifiSettingsActivity/#Intent;scheme=android-app;end">
+          <span class="label">📶 WiFi Settings</span>
+          <span class="url">intent://...WifiSettingsActivity/...</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.settings/.Settings$BluetoothSettingsActivity/#Intent;scheme=android-app;end">
+          <span class="label">🔵 Bluetooth</span>
+          <span class="url">intent://...BluetoothSettingsActivity/...</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.settings/.Settings$SecuritySettingsActivity/#Intent;scheme=android-app;end">
+          <span class="label">🔒 Security</span>
+          <span class="url">intent://...SecuritySettingsActivity/...</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.settings/.Settings$AccessibilitySettingsActivity/#Intent;scheme=android-app;end">
+          <span class="label">♿ Accessibility</span>
+          <span class="url">intent://...AccessibilitySettingsActivity/...</span>
+        </a>
+        <a class="intent-link" href="intent://com.android.settings/.Settings$AccountSettingsActivity/#Intent;scheme=android-app;end">
+          <span class="label">👤 Accounts</span>
+          <span class="url">intent://...AccountSettingsActivity/...</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SAMSUNG TAB -->
+    <div id="samsung" class="tab-content">
+      <h2>📱 Samsung Specific</h2>
+
+      <h3>Samsung System Apps</h3>
+      <div class="grid">
+        <a class="intent-link samsung-link" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">
+          <span class="label">🏠 Samsung Launcher</span>
+          <span class="url">intent://com.sec.android.app.launcher/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">
+          <span class="label">📁 My Files</span>
+          <span class="url">intent://com.sec.android.app.myfiles/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end">
+          <span class="label">📞 Samsung Phone</span>
+          <span class="url">intent://com.samsung.android.dialer/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.messaging/#Intent;scheme=android-app;end">
+          <span class="label">💬 Messages</span>
+          <span class="url">intent://com.samsung.android.messaging/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.contacts/#Intent;scheme=android-app;end">
+          <span class="label">👤 Contacts</span>
+          <span class="url">intent://com.samsung.android.contacts/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.sec.android.gallery3d/#Intent;scheme=android-app;end">
+          <span class="label">🖼️ Gallery</span>
+          <span class="url">intent://com.sec.android.gallery3d/...</span>
+        </a>
+      </div>
+
+      <h3>Samsung Services</h3>
+      <div class="grid">
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.voc/#Intent;scheme=android-app;end">
+          <span class="label">👥 Samsung Members</span>
+          <span class="url">intent://com.samsung.android.voc/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">
+          <span class="label">🏪 Galaxy Store</span>
+          <span class="url">intent://com.sec.android.app.samsungapps/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.oneconnect/#Intent;scheme=android-app;end">
+          <span class="label">🏠 SmartThings</span>
+          <span class="url">intent://com.samsung.android.oneconnect/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.sm/#Intent;scheme=android-app;end">
+          <span class="label">🔧 Device Care</span>
+          <span class="url">intent://com.samsung.android.sm/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.themestore/#Intent;scheme=android-app;end">
+          <span class="label">🎨 Theme Store</span>
+          <span class="url">intent://com.samsung.android.themestore/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.bixby.agent/#Intent;scheme=android-app;end">
+          <span class="label">🗣️ Bixby</span>
+          <span class="url">intent://com.samsung.android.bixby.agent/...</span>
+        </a>
+      </div>
+
+      <h3>Samsung Apps</h3>
+      <div class="grid">
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.app.notes/#Intent;scheme=android-app;end">
+          <span class="label">📝 Samsung Notes</span>
+          <span class="url">intent://com.samsung.android.app.notes/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.calendar/#Intent;scheme=android-app;end">
+          <span class="label">📅 Calendar</span>
+          <span class="url">intent://com.samsung.android.calendar/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.app.routines/#Intent;scheme=android-app;end">
+          <span class="label">🔄 Routines</span>
+          <span class="url">intent://com.samsung.android.app.routines/...</span>
+        </a>
+        <a class="intent-link samsung-link" href="intent://com.samsung.android.samsungpass/#Intent;scheme=android-app;end">
+          <span class="label">🔑 Samsung Pass</span>
+          <span class="url">intent://com.samsung.android.samsungpass/...</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SECRET CODES TAB -->
+    <div id="codes" class="tab-content">
+      <h2>🔢 Samsung Secret Codes</h2>
+      <div class="note info">These require the Phone dialer app. Try launching it first, then dial.</div>
+
+      <h3>⭐ ADB/USB Critical</h3>
+      <div class="grid">
+        <a class="intent-link tel-link priority" href="tel:*#0808#">
+          <span class="label">⭐ *#0808# - USB Settings</span>
+          <span class="url">CRITICAL - Change USB mode to MTP+ADB</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#9900#">
+          <span class="label">📊 *#9900# - SysDump</span>
+          <span class="url">Debug logs, can enable USB debugging</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#7284#">
+          <span class="label">🔌 *#7284# - USB I2C</span>
+          <span class="url">USB path control settings</span>
+        </a>
+      </div>
+
+      <h3>🔧 Hardware Diagnostics</h3>
+      <div class="grid">
+        <a class="intent-link tel-link" href="tel:*#0*#">
+          <span class="label">🔧 *#0*# - Hardware Test</span>
+          <span class="url">Full diagnostic menu</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#7353#">
+          <span class="label">🔧 *#7353# - Quick Test</span>
+          <span class="url">Quick hardware tests</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#0011#">
+          <span class="label">📡 *#0011# - Service Mode</span>
+          <span class="url">Network service info</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#0228#">
+          <span class="label">🔋 *#0228# - Battery</span>
+          <span class="url">Detailed battery status</span>
+        </a>
+      </div>
+
+      <h3>ℹ️ System Info</h3>
+      <div class="grid">
+        <a class="intent-link tel-link" href="tel:*#06#">
+          <span class="label">📱 *#06# - IMEI</span>
+          <span class="url">Shows IMEI number</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#1234#">
+          <span class="label">📋 *#1234# - Firmware</span>
+          <span class="url">AP/CP/CSC versions</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#12580*369#">
+          <span class="label">📋 *#12580*369# - All Info</span>
+          <span class="url">Complete SW/HW info</span>
+        </a>
+      </div>
+
+      <h3>📡 Network</h3>
+      <div class="grid">
+        <a class="intent-link tel-link" href="tel:*#2263#">
+          <span class="label">📡 *#2263# - RF Band</span>
+          <span class="url">Network band selection</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#9090#">
+          <span class="label">🔧 *#9090# - Diagnostic</span>
+          <span class="url">Debug output config</span>
+        </a>
+        <a class="intent-link tel-link" href="tel:*#*#4636#*#*">
+          <span class="label">🔧 *#*#4636#*#* - Testing</span>
+          <span class="url">Android testing menu</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- QR TAB -->
+    <div id="qr" class="tab-content">
+      <h2>📷 QR Code Generator</h2>
+      <div class="note info">Generate QR codes to scan with another device's camera/Lens</div>
+
+      <div class="qr-section">
+        <input type="text" id="qr-input" placeholder="Tap a link or enter URL here">
+        <div class="btn-row">
+          <button class="btn" onclick="generateQR()">Generate QR</button>
+          <button class="btn btn-secondary" onclick="copyURL()">Copy URL</button>
+        </div>
+        <div id="qr-code"></div>
+        <p id="qr-status" style="color:#888; margin-top:10px; font-size:0.8rem;"></p>
+      </div>
+
+      <h3>Quick QR Links</h3>
+      <div class="grid">
+        <div class="intent-link" onclick="setQR('intent://com.android.settings/#Intent;scheme=android-app;end')">
+          <span class="label">⚙️ Settings QR</span>
+          <span class="url">Tap to generate QR</span>
+        </div>
+        <div class="intent-link" onclick="setQR('intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end')">
+          <span class="label">📁 My Files QR</span>
+          <span class="url">Tap to generate QR</span>
+        </div>
+        <div class="intent-link" onclick="setQR('tel:*#0808#')">
+          <span class="label">🔧 USB Settings Code QR</span>
+          <span class="url">Tap to generate QR</span>
+        </div>
+        <div class="intent-link" onclick="setQR('intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end')">
+          <span class="label">🔧 Dev Options QR</span>
+          <span class="url">Tap to generate QR</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCS TAB -->
+    <div id="docs" class="tab-content">
+      <h2>📖 Documentation</h2>
+
+      <h3>Device Info</h3>
+      <table>
+        <tr><th>Property</th><th>Value</th></tr>
+        <tr><td>Model</td><td>SM-S721B (S24 FE)</td></tr>
+        <tr><td>Android</td><td>14</td></tr>
+        <tr><td>Firmware</td><td>S721BXXS3AYB3</td></tr>
+        <tr><td>FRP Status</td><td>TRIGGERED</td></tr>
+      </table>
+
+      <h3>Intent URL Format</h3>
+      <pre>
+intent://[package]/#Intent;scheme=android-app;end
+
+Examples:
+intent://com.android.settings/#Intent;scheme=android-app;end
+intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end
+      </pre>
+
+      <h3>Attack Chain</h3>
+      <pre>
+1. Access Chrome (via keyboard settings)
+2. Navigate to this page
+3. Tap intent links directly
+4. OR scan QR with Lens
+5. Target activity opens
+6. Enable Developer Options
+7. Enable USB Debugging
+8. Connect ADB!
+      </pre>
+
+      <h3>Key Targets</h3>
+      <ul style="line-height:2; padding-left:20px;">
+        <li><strong>*#0808#</strong> - USB mode (MTP+ADB)</li>
+        <li><strong>Developer Options</strong> - Enable ADB</li>
+        <li><strong>Settings</strong> - Full access</li>
+        <li><strong>My Files</strong> - APK install</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Fixed Bottom Quick Actions -->
+  <div class="quick-bar">
+    <button class="quick-btn highlight" onclick="window.location.href='intent://com.android.settings/#Intent;scheme=android-app;end'">⚙️ Settings</button>
+    <button class="quick-btn" onclick="window.location.href='intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end'">📁 Files</button>
+    <button class="quick-btn" onclick="window.location.href='tel:*#0808#'">🔧 USB</button>
+    <button class="quick-btn" onclick="showTab('qr'); document.querySelector('[onclick*=showTab]').scrollIntoView()">📷 QR</button>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      // Find and activate the matching tab button
+      document.querySelectorAll('.tab').forEach(t => {
+        if (t.textContent.toLowerCase().includes(tabId) ||
+            (tabId === 'priority' && t.textContent.includes('Priority')) ||
+            (tabId === 'packages' && t.textContent.includes('Packages')) ||
+            (tabId === 'samsung' && t.textContent.includes('Samsung')) ||
+            (tabId === 'codes' && t.textContent.includes('Codes')) ||
+            (tabId === 'qr' && t.textContent.includes('QR')) ||
+            (tabId === 'docs' && t.textContent.includes('Docs'))) {
+          t.classList.add('active');
+        }
+      });
+    }
+
+    let qrCode = null;
+
+    function generateQR() {
+      const input = document.getElementById('qr-input').value.trim();
+      if (!input) {
+        document.getElementById('qr-status').textContent = 'Enter a URL first';
+        return;
+      }
+
+      const qrDiv = document.getElementById('qr-code');
+      qrDiv.innerHTML = '';
+
+      try {
+        qrCode = new QRCode(qrDiv, {
+          text: input,
+          width: 200,
+          height: 200,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.L
+        });
+        document.getElementById('qr-status').textContent = '✅ Scan with camera or Lens!';
+      } catch(e) {
+        document.getElementById('qr-status').textContent = 'Error generating QR';
+      }
+    }
+
+    function setQR(url) {
+      document.getElementById('qr-input').value = url;
+      generateQR();
+    }
+
+    function copyURL() {
+      const input = document.getElementById('qr-input');
+      if (!input.value) {
+        document.getElementById('qr-status').textContent = 'Nothing to copy';
+        return;
+      }
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(input.value).then(() => {
+          document.getElementById('qr-status').textContent = '📋 Copied!';
+        });
+      } else {
+        input.select();
+        document.execCommand('copy');
+        document.getElementById('qr-status').textContent = '📋 Copied!';
+      }
+    }
+
+    // On load, don't auto-generate QR on mobile to save resources
+    if (window.innerWidth >= 600) {
+      window.onload = function() {
+        document.getElementById('qr-input').value = 'intent://com.android.settings/#Intent;scheme=android-app;end';
+        generateQR();
+      };
+    }
+  </script>
+</body>
+</html>
