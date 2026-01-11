@@ -6,6 +6,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#1a1a2e">
+  <link rel="icon" type="image/png" href="https://adbappcontrol.com/assets/img/logo_blue.png">
+  <link rel="apple-touch-icon" href="https://adbappcontrol.com/assets/img/logo_blue.png">
   <title>Intent Toolkit - FRP Research</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
@@ -347,140 +349,135 @@
     }
     .works-on-device .label { color: #22c55e !important; }
 
-    /* Database Tab Styles */
-    .db-controls {
+    /* Database Tab - Mobile-First Category View */
+    .db-sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
       background: #0d1b2a;
-      padding: 12px;
+      padding: 10px;
       border-radius: 10px;
       margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
-    .db-controls input {
-      width: 100%;
-      padding: 12px;
+    .db-sticky-bar input {
+      flex: 1;
+      padding: 10px 12px;
       font-size: 14px;
       border: none;
       border-radius: 8px;
       background: #1e3a5f;
       color: #fff;
-      margin-bottom: 10px;
     }
-    .db-controls input::placeholder { color: #888; }
-    .filter-row {
+    .db-sticky-bar input::placeholder { color: #888; }
+    .db-bar-info {
       display: flex;
+      align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: #888;
+      white-space: nowrap;
     }
-    .filter-row select {
-      flex: 1;
-      min-width: 100px;
-      padding: 10px;
+    .btn-reset {
+      padding: 8px 12px;
+      background: #ef4444;
+      color: #fff;
       border: none;
       border-radius: 6px;
-      background: #1e3a5f;
-      color: #fff;
       font-size: 0.8rem;
       cursor: pointer;
+      font-weight: bold;
     }
-    .db-stats {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      color: #888;
-      font-size: 0.8rem;
-    }
-    .btn-small {
-      padding: 5px 12px;
-      background: #1e3a5f;
-      color: #00d4ff;
-      border: none;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      cursor: pointer;
-    }
-    .btn-small:hover { background: #2a4a6f; }
+    .btn-reset:active { transform: scale(0.95); }
 
-    .db-table-wrap {
-      overflow-x: auto;
-      border-radius: 10px;
+    /* Category Sections */
+    .db-category {
       background: #0d1b2a;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
     }
-    .db-table {
-      width: 100%;
-      min-width: 600px;
-      border-collapse: collapse;
-      font-size: 0.75rem;
-    }
-    .db-table th {
+    .db-cat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 12px;
       background: #1e3a5f;
+      cursor: pointer;
+      user-select: none;
+    }
+    .db-cat-header:active { background: #2a4a6f; }
+    .db-cat-title {
+      font-size: 1rem;
+      font-weight: bold;
       color: #00d4ff;
-      padding: 12px 8px;
-      text-align: left;
-      font-weight: bold;
-      position: sticky;
-      top: 0;
     }
-    .db-table td {
-      padding: 10px 8px;
-      border-bottom: 1px solid #1e3a5f;
-      vertical-align: top;
-    }
-    .db-table tr:hover { background: rgba(0,212,255,0.05); }
-
-    .db-table .cat-cell {
-      white-space: nowrap;
-      font-size: 0.9rem;
-    }
-    .db-table .label-cell {
-      color: #ffd93d;
-      font-weight: bold;
-    }
-    .db-table .purpose-cell {
-      color: #aaa;
-      max-width: 200px;
-    }
-
-    /* Status badges in database */
-    .status-badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-    .status-working { background: #22c55e; color: #000; }
-    .status-partial { background: #f59e0b; color: #000; }
-    .status-blocked { background: #ef4444; color: #fff; }
-    .status-untested { background: #666; color: #fff; }
-
-    /* Action buttons in table */
-    .db-action-btn {
-      padding: 6px 10px;
+    .db-cat-title .icon { margin-right: 8px; font-size: 1.2rem; }
+    .db-cat-count {
       background: #00d4ff;
       color: #000;
-      border: none;
-      border-radius: 4px;
+      padding: 2px 8px;
+      border-radius: 10px;
       font-size: 0.7rem;
+      font-weight: bold;
+    }
+    .db-cat-body {
+      display: none;
+      padding: 8px;
+    }
+    .db-category.open .db-cat-body { display: block; }
+    .db-category.open .db-cat-header { background: #2a4a6f; }
+
+    /* Intent Cards */
+    .intent-card {
+      display: block;
+      background: #16213e;
+      border-left: 4px solid #00d4ff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
       cursor: pointer;
-      white-space: nowrap;
+      transition: all 0.15s;
     }
-    .db-action-btn:hover { background: #00b8d9; }
-    .db-action-btn.qr { background: #a855f7; color: #fff; }
-    .db-action-btn.qr:hover { background: #9333ea; }
+    .intent-card:active { transform: scale(0.98); background: #1e3a5f; }
+    .intent-card .ic-label {
+      font-weight: bold;
+      color: #ffd93d;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .intent-card .ic-purpose {
+      color: #aaa;
+      font-size: 0.8rem;
+    }
 
-    .db-load-more {
-      text-align: center;
-      padding: 15px;
+    /* Tried/Greyed out state */
+    .intent-card.tried {
+      opacity: 0.4;
+      border-left-color: #666;
+    }
+    .intent-card.tried .ic-label { color: #888; }
+    .intent-card.last-tried {
+      opacity: 0.5;
+      border-left-color: #f59e0b;
+      background: #1a1505;
+    }
+    .intent-card.last-tried::after {
+      content: " ← Last tried";
+      color: #f59e0b;
+      font-size: 0.7rem;
     }
 
-    /* Mobile: Compact table layout */
-    @media (max-width: 600px) {
-      .db-table { min-width: 100%; font-size: 0.7rem; }
-      .db-table th, .db-table td { padding: 8px 5px; }
-      .db-table .purpose-cell { display: none; }
-      .filter-row select { min-width: 80px; font-size: 0.7rem; }
-    }
+    /* Category priority colors */
+    .db-category[data-priority="critical"] .db-cat-header { border-left: 4px solid #ef4444; }
+    .db-category[data-priority="high"] .db-cat-header { border-left: 4px solid #f59e0b; }
+    .db-category[data-priority="medium"] .db-cat-header { border-left: 4px solid #00d4ff; }
+    .db-category[data-priority="low"] .db-cat-header { border-left: 4px solid #666; }
+
+    /* Hidden when filtered out */
+    .db-category.hidden, .intent-card.hidden { display: none; }
   </style>
 </head>
 <body>
@@ -1049,70 +1046,21 @@ FOR OTHER DEVICES (may work):
       <p>Test Date: 2026-01-12</p>
     </div>
 
-    <!-- DATABASE TAB - Comprehensive Intent Library -->
+    <!-- DATABASE TAB - Mobile-First Category View -->
     <div id="database" class="tab-content">
-      <h2>📊 Intent Database</h2>
-
-      <div class="note info">
-        🔍 <strong>Search & Filter</strong> through 120+ intent URLs.
-        Status reflects testing on SM-S721B.
-      </div>
-
-      <!-- Search & Filter Controls -->
-      <div class="db-controls">
-        <input type="text" id="db-search" placeholder="🔍 Search intents..."
+      <!-- Sticky Search & Reset Bar -->
+      <div class="db-sticky-bar">
+        <input type="text" id="db-search" placeholder="🔍 Search..."
           oninput="filterDatabase()">
-        <div class="filter-row">
-          <select id="db-category" onchange="filterDatabase()">
-            <option value="">All Categories</option>
-          </select>
-          <select id="db-manufacturer" onchange="filterDatabase()">
-            <option value="">All Brands</option>
-            <option value="all">Generic Android</option>
-            <option value="samsung">Samsung</option>
-            <option value="google">Google</option>
-            <option value="xiaomi">Xiaomi</option>
-            <option value="oneplus">OnePlus</option>
-            <option value="oppo">OPPO</option>
-            <option value="huawei">Huawei</option>
-          </select>
-          <select id="db-status" onchange="filterDatabase()">
-            <option value="">All Status</option>
-            <option value="working">✅ Working</option>
-            <option value="partial">⚠️ Partial</option>
-            <option value="notWorking">❌ Blocked</option>
-            <option value="untested">❓ Untested</option>
-          </select>
+        <div class="db-bar-info">
+          <span id="db-tried-count">Tried: 0</span>
+          <button class="btn-reset" onclick="resetIntentView()">🔄 Reset</button>
         </div>
       </div>
 
-      <!-- Results Counter -->
-      <div class="db-stats">
-        Showing <span id="db-count">0</span> intents
-        <button class="btn-small" onclick="resetFilters()">Reset</button>
-      </div>
-
-      <!-- Database Table -->
-      <div class="db-table-wrap">
-        <table id="db-table" class="db-table">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Label</th>
-              <th>Purpose</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="db-tbody">
-            <!-- Populated by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Load More / Pagination -->
-      <div id="db-load-more" class="db-load-more" style="display:none;">
-        <button class="btn" onclick="loadMoreResults()">Load More</button>
+      <!-- Category Sections -->
+      <div id="db-categories">
+        <!-- Populated by JavaScript with category cards -->
       </div>
     </div>
   </div>
@@ -1245,30 +1193,36 @@ FOR OTHER DEVICES (may work):
     }
 
     // ============================================
-    // INTENT DATABASE - Loaded from JSON
+    // INTENT DATABASE - Mobile Category View
     // ============================================
 
-    // Category definitions with icons
+    // Category definitions with icons and priority
     const categories = {
-      general: { icon: "⚙️", label: "General Android" },
-      security: { icon: "🔒", label: "Lock Screen & Security" },
-      settings: { icon: "🛠️", label: "Device Settings" },
-      third_party: { icon: "📦", label: "3rd Party FRP Tools" },
-      google: { icon: "🔵", label: "Google Apps" },
-      samsung: { icon: "📱", label: "Samsung" },
-      motorola: { icon: "📱", label: "Motorola" },
-      xiaomi: { icon: "📱", label: "Xiaomi" },
-      oneplus: { icon: "📱", label: "OnePlus" },
-      oppo: { icon: "📱", label: "OPPO" },
-      huawei: { icon: "📱", label: "Huawei" },
-      pixel: { icon: "📱", label: "Google Pixel" }
+      security: { icon: "🔒", label: "Lock Screen & Security", priority: "critical" },
+      third_party: { icon: "📦", label: "3rd Party FRP Tools", priority: "critical" },
+      general: { icon: "⚙️", label: "General Android", priority: "high" },
+      settings: { icon: "🛠️", label: "Device Settings", priority: "high" },
+      samsung: { icon: "📱", label: "Samsung", priority: "high" },
+      google: { icon: "🔵", label: "Google Apps", priority: "medium" },
+      xiaomi: { icon: "📱", label: "Xiaomi", priority: "medium" },
+      oneplus: { icon: "📱", label: "OnePlus", priority: "medium" },
+      oppo: { icon: "📱", label: "OPPO", priority: "medium" },
+      huawei: { icon: "📱", label: "Huawei", priority: "medium" },
+      realme: { icon: "📱", label: "Realme", priority: "medium" },
+      pixel: { icon: "📱", label: "Google Pixel", priority: "medium" },
+      motorola: { icon: "📱", label: "Motorola", priority: "low" },
+      lg: { icon: "📱", label: "LG", priority: "low" },
+      sony: { icon: "📱", label: "Sony", priority: "low" },
+      htc: { icon: "📱", label: "HTC", priority: "low" },
+      nokia: { icon: "📱", label: "Nokia", priority: "low" },
+      asus: { icon: "📱", label: "Asus", priority: "low" },
+      infinix: { icon: "📱", label: "Infinix", priority: "low" }
     };
 
-    // Intent database (embedded for offline use)
+    // Intent database and state
     let intentDatabase = [];
-    let filteredResults = [];
-    let displayedCount = 0;
-    const BATCH_SIZE = 50;
+    let triedIntents = [];  // Session-persistent list of tried intent IDs
+    let lastTriedId = null;
 
     // Load database from JSON file
     async function loadDatabase() {
@@ -1276,127 +1230,164 @@ FOR OTHER DEVICES (may work):
         const response = await fetch('research/intent-database.json');
         const data = await response.json();
         intentDatabase = data.intents || [];
-        populateCategoryFilter(data.categories || categories);
-        filterDatabase();
+        renderCategories();
       } catch (err) {
         console.error('Failed to load database:', err);
-        document.getElementById('db-tbody').innerHTML =
-          '<tr><td colspan="5" style="text-align:center;color:#ef4444;">' +
-          '❌ Failed to load database. Check console.</td></tr>';
+        document.getElementById('db-categories').innerHTML =
+          '<div class="note" style="color:#ef4444;">❌ Failed to load. ' +
+          'Run from local server or check file path.</div>';
       }
     }
 
-    // Populate category dropdown from database
-    function populateCategoryFilter(cats) {
-      const select = document.getElementById('db-category');
-      select.innerHTML = '<option value="">All Categories</option>';
-      Object.entries(cats).forEach(([key, val]) => {
-        const opt = document.createElement('option');
-        opt.value = key;
-        opt.textContent = val.icon + ' ' + val.label;
-        select.appendChild(opt);
+    // Render category sections with intent cards
+    function renderCategories() {
+      const container = document.getElementById('db-categories');
+      container.innerHTML = '';
+
+      // Group intents by category
+      const grouped = {};
+      intentDatabase.forEach(intent => {
+        if (!grouped[intent.category]) grouped[intent.category] = [];
+        grouped[intent.category].push(intent);
+      });
+
+      // Render each category (in priority order from categories object)
+      Object.keys(categories).forEach(catKey => {
+        const intents = grouped[catKey];
+        if (!intents || intents.length === 0) return;
+
+        const cat = categories[catKey];
+        const section = document.createElement('div');
+        section.className = 'db-category';
+        section.id = 'cat-' + catKey;
+        section.dataset.priority = cat.priority;
+        section.dataset.category = catKey;
+
+        section.innerHTML = `
+          <div class="db-cat-header" onclick="toggleCategory('${catKey}')">
+            <span class="db-cat-title">
+              <span class="icon">${cat.icon}</span>${cat.label}
+            </span>
+            <span class="db-cat-count">${intents.length}</span>
+          </div>
+          <div class="db-cat-body" id="cat-body-${catKey}"></div>
+        `;
+        container.appendChild(section);
+
+        // Render intent cards
+        const body = section.querySelector('.db-cat-body');
+        renderIntentCards(body, intents, catKey);
+      });
+
+      updateTriedCount();
+    }
+
+    // Render intent cards within a category
+    function renderIntentCards(container, intents, catKey) {
+      container.innerHTML = '';
+
+      // Sort: non-tried first, then tried (preserving order within each group)
+      const sorted = [...intents].sort((a, b) => {
+        const aTried = triedIntents.includes(a.id);
+        const bTried = triedIntents.includes(b.id);
+        if (aTried && !bTried) return 1;
+        if (!aTried && bTried) return -1;
+        return 0;
+      });
+
+      sorted.forEach(intent => {
+        const card = document.createElement('div');
+        card.className = 'intent-card';
+        card.id = 'intent-' + intent.id;
+        card.dataset.intentId = intent.id;
+        card.dataset.category = catKey;
+
+        // Apply tried states
+        if (intent.id === lastTriedId) {
+          card.classList.add('last-tried');
+        } else if (triedIntents.includes(intent.id)) {
+          card.classList.add('tried');
+        }
+
+        card.innerHTML = `
+          <div class="ic-label">${intent.label}</div>
+          <div class="ic-purpose">${intent.purpose}</div>
+        `;
+        card.onclick = () => handleIntentClick(intent);
+        container.appendChild(card);
       });
     }
 
-    // Get status for current device
-    function getDeviceStatus(intent) {
-      const device = currentDevice;
-      if (intent.testedDevices.working.includes(device)) return 'working';
-      if (intent.testedDevices.partial.includes(device)) return 'partial';
-      if (intent.testedDevices.notWorking.includes(device)) return 'notWorking';
-      return 'untested';
+    // Handle intent click - grey out, move previous to end, open intent
+    function handleIntentClick(intent) {
+      // If there was a previously tried intent, mark it as fully tried
+      if (lastTriedId && lastTriedId !== intent.id) {
+        const prevCard = document.getElementById('intent-' + lastTriedId);
+        if (prevCard) {
+          prevCard.classList.remove('last-tried');
+          prevCard.classList.add('tried');
+          // Move to end of its category
+          const catBody = prevCard.parentElement;
+          catBody.appendChild(prevCard);
+        }
+      }
+
+      // Mark current as last tried
+      if (!triedIntents.includes(intent.id)) {
+        triedIntents.push(intent.id);
+      }
+      lastTriedId = intent.id;
+
+      // Update UI
+      const card = document.getElementById('intent-' + intent.id);
+      if (card) {
+        card.classList.remove('tried');
+        card.classList.add('last-tried');
+      }
+      updateTriedCount();
+
+      // Open the intent URL
+      window.location.href = intent.intentUrl;
     }
 
-    // Filter database based on search and filters
+    // Update tried count display
+    function updateTriedCount() {
+      const el = document.getElementById('db-tried-count');
+      if (el) el.textContent = 'Tried: ' + triedIntents.length;
+    }
+
+    // Toggle category open/close
+    function toggleCategory(catKey) {
+      const section = document.getElementById('cat-' + catKey);
+      if (section) section.classList.toggle('open');
+    }
+
+    // Filter database by search
     function filterDatabase() {
       const search = document.getElementById('db-search').value.toLowerCase();
-      const category = document.getElementById('db-category').value;
-      const manufacturer = document.getElementById('db-manufacturer').value;
-      const status = document.getElementById('db-status').value;
 
-      filteredResults = intentDatabase.filter(intent => {
-        // Search filter
-        if (search) {
-          const searchable = (intent.label + intent.purpose + intent.intentUrl)
-            .toLowerCase();
-          if (!searchable.includes(search)) return false;
-        }
-        // Category filter
-        if (category && intent.category !== category) return false;
-        // Manufacturer filter
-        if (manufacturer && intent.manufacturer !== manufacturer) return false;
-        // Status filter
-        if (status && getDeviceStatus(intent) !== status) return false;
-        return true;
+      document.querySelectorAll('.db-category').forEach(section => {
+        let visibleCount = 0;
+        section.querySelectorAll('.intent-card').forEach(card => {
+          const label = card.querySelector('.ic-label').textContent.toLowerCase();
+          const purpose = card.querySelector('.ic-purpose').textContent.toLowerCase();
+          const matches = !search || label.includes(search) || purpose.includes(search);
+          card.classList.toggle('hidden', !matches);
+          if (matches) visibleCount++;
+        });
+        // Hide category if no matches
+        section.classList.toggle('hidden', visibleCount === 0);
+        // Auto-open if searching
+        if (search && visibleCount > 0) section.classList.add('open');
       });
-
-      displayedCount = 0;
-      document.getElementById('db-tbody').innerHTML = '';
-      loadMoreResults();
-      document.getElementById('db-count').textContent = filteredResults.length;
     }
 
-    // Render more results (pagination)
-    function loadMoreResults() {
-      const tbody = document.getElementById('db-tbody');
-      const end = Math.min(displayedCount + BATCH_SIZE, filteredResults.length);
-
-      for (let i = displayedCount; i < end; i++) {
-        const intent = filteredResults[i];
-        const status = getDeviceStatus(intent);
-        const cat = categories[intent.category] ||
-          { icon: '📱', label: intent.category };
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="cat-cell">${cat.icon}</td>
-          <td class="label-cell">${intent.label}</td>
-          <td class="purpose-cell">${intent.purpose}</td>
-          <td><span class="status-badge status-${status}">${getStatusLabel(status)}</span></td>
-          <td>
-            <button class="db-action-btn" onclick="openIntent('${intent.intentUrl}')">Open</button>
-            <button class="db-action-btn qr" onclick="dbToQR('${intent.intentUrl}')">QR</button>
-          </td>
-        `;
-        tbody.appendChild(row);
-      }
-
-      displayedCount = end;
-      const loadMoreDiv = document.getElementById('db-load-more');
-      loadMoreDiv.style.display =
-        displayedCount < filteredResults.length ? 'block' : 'none';
-    }
-
-    // Status label mapping
-    function getStatusLabel(status) {
-      const labels = {
-        working: '✅ Works',
-        partial: '⚠️ Partial',
-        notWorking: '❌ Blocked',
-        untested: '❓ Test'
-      };
-      return labels[status] || '❓ Test';
-    }
-
-    // Open intent URL
-    function openIntent(url) {
-      window.location.href = url;
-    }
-
-    // Send intent to QR tab
-    function dbToQR(url) {
-      document.getElementById('qr-input').value = url;
-      showTab('qr');
-      generateQR();
-    }
-
-    // Reset all filters
-    function resetFilters() {
+    // Reset view - clear tried state and reorder
+    function resetIntentView() {
+      triedIntents = [];
+      lastTriedId = null;
       document.getElementById('db-search').value = '';
-      document.getElementById('db-category').value = '';
-      document.getElementById('db-manufacturer').value = '';
-      document.getElementById('db-status').value = '';
-      filterDatabase();
+      renderCategories();
     }
 
     // ============================================
