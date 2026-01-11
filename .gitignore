@@ -1,14 +1,7 @@
-# Research - ignore large binary tools but track important files
-research/SamFwTool/
-research/usb_driver/
-research/usb_driver.zip
+# Research and development files (local only)
+research/
 tools/
 notes/
-
-# Track these research files
-!research/intent-database.json
-!research/digest/
-!research/research.md
 
 # System files
 .DS_Store
