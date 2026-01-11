@@ -5,1201 +5,564 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#1a1a2e">
+  <meta name="theme-color" content="#0a0a0f">
   <link rel="icon" type="image/png" href="https://adbappcontrol.com/assets/img/logo_blue.png">
   <link rel="apple-touch-icon" href="https://adbappcontrol.com/assets/img/logo_blue.png">
-  <title>Intent Toolkit - FRP Research</title>
+  <title>FRP Toolkit</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-header: #0d0d14;
+      --accent: #00d4ff;
+      --accent-dim: #0088aa;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --text: #e8e8e8;
+      --text-dim: #888;
+      --border: #1a1a25;
+      --header-h: 56px;
+      --footer-h: 90px;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      color: #eee;
+      background: var(--bg-dark);
+      color: var(--text);
       min-height: 100vh;
-      padding: 10px;
-      padding-bottom: 80px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #00d4ff;
-      font-size: 1.5rem;
-      margin-bottom: 5px;
-    }
-    h2 {
-      color: #ff6b6b;
-      margin: 15px 0 10px;
-      font-size: 1.1rem;
-      border-bottom: 2px solid #ff6b6b;
-      padding-bottom: 5px;
-    }
-    h3 {
-      color: #ffd93d;
-      margin: 12px 0 8px;
-      font-size: 0.95rem;
-    }
-    .subtitle {
-      text-align: center;
-      color: #888;
-      font-size: 0.75rem;
-      margin-bottom: 15px;
-    }
-
-    .container { max-width: 800px; margin: 0 auto; }
-
-    /* Mobile-first tabs */
-    .tabs {
-      display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 5px;
-      margin-bottom: 10px;
-      padding-bottom: 5px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .tabs::-webkit-scrollbar { display: none; }
-
-    .tab {
-      padding: 10px 14px;
-      background: #0d1b2a;
-      border: none;
-      color: #888;
-      cursor: pointer;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .tab.active {
-      background: #1e3a5f;
-      color: #00d4ff;
-      font-weight: bold;
-    }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    /* Intent Links - Large touch targets */
-    .grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .intent-link {
-      display: block;
-      background: #0d1b2a;
-      color: #00d4ff;
-      padding: 14px 12px;
-      text-decoration: none;
-      border-radius: 10px;
-      border-left: 4px solid #00d4ff;
-      font-size: 0.75rem;
-      word-break: break-all;
-      cursor: pointer;
-      transition: transform 0.1s, background 0.2s;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-    .intent-link:active {
-      transform: scale(0.98);
-      background: #1e3a5f;
-    }
-    .intent-link .label {
-      display: block;
-      color: #ffd93d;
-      font-weight: bold;
-      margin-bottom: 4px;
-      font-size: 0.95rem;
-    }
-    .intent-link .url {
-      opacity: 0.8;
-      font-size: 0.7rem;
-    }
-
-    /* Color variants */
-    .tel-link { border-left-color: #ff6b6b; }
-    .tel-link .label { color: #ff9f43; }
-
-    .samsung-link { border-left-color: #a855f7; }
-    .samsung-link .label { color: #c084fc; }
-
-    .working { border-left-color: #22c55e !important; background: #0a1f12; }
-    .working .label { color: #22c55e !important; }
-
-    .priority {
-      border-left-color: #f59e0b !important;
-      border-width: 5px;
-      background: #1a1505;
-    }
-    .priority .label { color: #fbbf24 !important; font-size: 1rem; }
-
-    /* Notes */
-    .note {
-      background: #2d1b00;
-      border-left: 4px solid #ff9f43;
-      padding: 10px 12px;
-      margin: 10px 0;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.8rem;
-    }
-    .note.success {
-      background: #0d2818;
-      border-left-color: #22c55e;
-    }
-    .note.info {
-      background: #0d1b2a;
-      border-left-color: #00d4ff;
-    }
-
-    /* QR Section - Collapsible on mobile */
-    .qr-section {
-      background: #1e3a5f;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    .qr-section.collapsed .qr-content { display: none; }
-    .qr-toggle {
-      background: none;
-      border: none;
-      color: #00d4ff;
-      font-size: 1rem;
-      cursor: pointer;
-      width: 100%;
-      padding: 5px;
-    }
-    #qr-input {
-      width: 100%;
-      padding: 12px;
-      font-size: 14px;
-      border: none;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      background: #0d1b2a;
-      color: #fff;
-    }
-    .btn-row {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 12px 20px;
-      background: #00d4ff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-    .btn:active { transform: scale(0.95); }
-    .btn-secondary { background: #ff6b6b; }
-    .btn-green { background: #22c55e; }
-
-    #qr-code {
-      margin: 15px auto;
-      padding: 10px;
-      background: #fff;
-      border-radius: 12px;
-      display: inline-block;
-    }
-
-    /* Quick Actions - Fixed bottom bar on mobile */
-    .quick-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #0d1b2a;
-      padding: 10px;
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      border-top: 1px solid #333;
-      z-index: 100;
-    }
-    .quick-btn {
-      padding: 10px 12px;
-      background: #1e3a5f;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      flex: 1;
-      max-width: 100px;
-    }
-    .quick-btn:active { background: #2a4a6f; }
-    .quick-btn.highlight { background: #22c55e; color: #000; }
-
-    /* Tables */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 10px 0;
-      font-size: 0.8rem;
-    }
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #333;
-    }
-    th { background: #0d1b2a; color: #ffd93d; }
-
-    code {
-      background: #0d1b2a;
-      padding: 2px 5px;
-      border-radius: 4px;
-      color: #00d4ff;
-      font-size: 0.7rem;
-    }
-    pre {
-      background: #0d1b2a;
-      padding: 12px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 0.7rem;
-      color: #00d4ff;
-    }
-
-    /* Desktop adjustments */
-    @media (min-width: 600px) {
-      body { padding: 20px; }
-      h1 { font-size: 1.8rem; }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .intent-link { font-size: 0.8rem; }
-      .intent-link .label { font-size: 1rem; }
-      .quick-bar { display: none; }
-      body { padding-bottom: 20px; }
-    }
-
-    /* Category divider */
-    .divider {
-      text-align: center;
-      color: #666;
-      margin: 20px 0 10px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    /* Status badge */
-    .badge {
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.65rem;
-      margin-left: 5px;
-      vertical-align: middle;
-    }
-    .badge-working { background: #22c55e; color: #000; }
-    .badge-try { background: #f59e0b; color: #000; }
-    .badge-blocked { background: #ef4444; color: #fff; }
-
-    /* Device-specific visibility classes */
-    .blocked-on-device {
-      opacity: 0.35;
-      pointer-events: none;
-      position: relative;
-    }
-    .blocked-on-device .label {
-      text-decoration: line-through;
-      color: #666 !important;
-    }
-    .blocked-on-device::after {
-      content: "✗ SM-S721B";
-      position: absolute;
-      top: 5px;
-      right: 8px;
-      font-size: 0.6rem;
-      color: #ef4444;
-      background: rgba(0,0,0,0.5);
-      padding: 2px 5px;
-      border-radius: 3px;
-    }
-
-    /* Assistant section special styling */
-    .assistant-link {
-      border-left-color: #4ade80 !important;
-      background: linear-gradient(90deg, #0a1f12 0%, #0d1b2a 100%);
-    }
-    .assistant-link .label { color: #4ade80 !important; }
-    .assistant-link .voice-cmd {
-      display: block;
-      color: #86efac;
-      font-style: italic;
-      margin-top: 4px;
-      font-size: 0.85rem;
-    }
-    .assistant-link .voice-cmd::before { content: '🗣️ "'; }
-    .assistant-link .voice-cmd::after { content: '"'; }
-
-    /* Works badge */
-    .works-on-device {
-      border-left-color: #22c55e !important;
-      background: #0a1f12;
-    }
-    .works-on-device .label { color: #22c55e !important; }
-
-    /* Database Tab - Mobile-First Category View */
-    .db-sticky-bar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: #0d1b2a;
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .db-sticky-bar input {
-      flex: 1;
-      padding: 10px 12px;
-      font-size: 14px;
-      border: none;
-      border-radius: 8px;
-      background: #1e3a5f;
-      color: #fff;
-    }
-    .db-sticky-bar input::placeholder { color: #888; }
-    .db-bar-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.75rem;
-      color: #888;
-      white-space: nowrap;
-    }
-    .btn-reset {
-      padding: 8px 12px;
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .btn-reset:active { transform: scale(0.95); }
-
-    /* Category Sections */
-    .db-category {
-      background: #0d1b2a;
-      border-radius: 12px;
-      margin-bottom: 10px;
       overflow: hidden;
     }
-    .db-cat-header {
+
+    /* ============ TOP HEADER (FIXED) ============ */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 12px;
-      background: #1e3a5f;
+      padding: 0 12px;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+    }
+    .logo-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tabs {
+      display: flex;
+      gap: 8px;
+    }
+    .header-tab {
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-tab:active { transform: scale(0.95); }
+    .header-tab.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .header-tab.hidden { display: none; }
+
+    /* ============ MAIN CONTENT (SCROLLABLE) ============ */
+    .main-content {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      bottom: var(--footer-h);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* View containers */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ============ INTENT VIEW ============ */
+    .category-section {
+      margin-bottom: 12px;
+    }
+    .cat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, var(--bg-card) 0%, #1a1a28 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       cursor: pointer;
       user-select: none;
+      transition: all 0.2s;
     }
-    .db-cat-header:active { background: #2a4a6f; }
-    .db-cat-title {
-      font-size: 1rem;
-      font-weight: bold;
-      color: #00d4ff;
+    .cat-header:active { transform: scale(0.98); }
+    .cat-header.open { border-radius: 12px 12px 0 0; border-bottom: none; }
+    .cat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
     }
-    .db-cat-title .icon { margin-right: 8px; font-size: 1.2rem; }
-    .db-cat-count {
-      background: #00d4ff;
+    .cat-icon { font-size: 1.2rem; }
+    .cat-count {
+      background: var(--accent);
       color: #000;
       padding: 2px 8px;
       border-radius: 10px;
       font-size: 0.7rem;
-      font-weight: bold;
+      font-weight: 700;
     }
-    .db-cat-body {
+    .cat-body {
       display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
       padding: 8px;
     }
-    .db-category.open .db-cat-body { display: block; }
-    .db-category.open .db-cat-header { background: #2a4a6f; }
+    .category-section.open .cat-body { display: block; }
 
     /* Intent Cards */
     .intent-card {
       display: block;
-      background: #16213e;
-      border-left: 4px solid #00d4ff;
+      background: linear-gradient(135deg, #16161f 0%, #1a1a26 100%);
+      border-left: 3px solid var(--accent);
       border-radius: 8px;
       padding: 12px;
       margin-bottom: 8px;
       cursor: pointer;
       transition: all 0.15s;
+      text-decoration: none;
     }
-    .intent-card:active { transform: scale(0.98); background: #1e3a5f; }
-    .intent-card .ic-label {
-      font-weight: bold;
-      color: #ffd93d;
-      font-size: 0.95rem;
+    .intent-card:last-child { margin-bottom: 0; }
+    .intent-card:active { transform: scale(0.98); opacity: 0.8; }
+    .intent-label {
+      font-weight: 600;
+      color: var(--warning);
+      font-size: 0.9rem;
       margin-bottom: 4px;
     }
-    .intent-card .ic-purpose {
-      color: #aaa;
+    .intent-purpose {
+      color: var(--text-dim);
       font-size: 0.8rem;
     }
 
-    /* Tried/Greyed out state */
+    /* Tried states */
     .intent-card.tried {
-      opacity: 0.4;
-      border-left-color: #666;
+      opacity: 0.35;
+      border-left-color: #444;
     }
-    .intent-card.tried .ic-label { color: #888; }
+    .intent-card.tried .intent-label { color: #666; }
     .intent-card.last-tried {
       opacity: 0.5;
-      border-left-color: #f59e0b;
-      background: #1a1505;
+      border-left-color: var(--warning);
+      background: linear-gradient(135deg, #1a1505 0%, #1a1a26 100%);
     }
     .intent-card.last-tried::after {
-      content: " ← Last tried";
-      color: #f59e0b;
+      content: " (last)";
+      color: var(--warning);
       font-size: 0.7rem;
     }
 
-    /* Category priority colors */
-    .db-category[data-priority="critical"] .db-cat-header { border-left: 4px solid #ef4444; }
-    .db-category[data-priority="high"] .db-cat-header { border-left: 4px solid #f59e0b; }
-    .db-category[data-priority="medium"] .db-cat-header { border-left: 4px solid #00d4ff; }
-    .db-category[data-priority="low"] .db-cat-header { border-left: 4px solid #666; }
+    /* Priority styling */
+    .cat-header[data-priority="critical"] { border-left: 4px solid var(--danger); }
+    .cat-header[data-priority="high"] { border-left: 4px solid var(--warning); }
 
-    /* Hidden when filtered out */
-    .db-category.hidden, .intent-card.hidden { display: none; }
+    /* ============ QR VIEW ============ */
+    .qr-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .qr-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .qr-item:active { transform: scale(0.98); }
+    .qr-item .qr-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .qr-item .qr-label {
+      font-size: 0.75rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* QR Modal */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .qr-modal.active { display: flex; }
+    .qr-modal .qr-large {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+    }
+    .qr-modal .qr-title {
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .qr-modal .qr-close {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* ============ ADMIN VIEW ============ */
+    .admin-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .admin-title {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .admin-stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .admin-stat:last-child { border-bottom: none; }
+    .admin-stat-value { color: var(--accent); font-weight: 600; }
+
+    /* Password Modal */
+    .password-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    .password-modal.active { display: flex; }
+    .password-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      width: 90%;
+      max-width: 300px;
+    }
+    .password-box h3 {
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .password-box input {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.2rem;
+      text-align: center;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: 8px;
+    }
+    .password-box input:focus { outline: none; border-color: var(--accent); }
+    .password-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .password-error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* ============ BOTTOM BAR ============ */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    /* Layer 1: Controls */
+    .bar-controls {
+      background: var(--bg-header);
+      border-top: 1px solid var(--border);
+      padding: 10px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .cat-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      flex: 1;
+      padding: 2px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-pills::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cat-pill:active { transform: scale(0.95); }
+    .cat-pill.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    .search-box {
+      width: 100px;
+      padding: 8px 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.8rem;
+    }
+    .search-box:focus { outline: none; border-color: var(--accent); width: 140px; }
+    .search-box::placeholder { color: var(--text-dim); }
+
+    .btn-reset {
+      padding: 8px 12px;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .btn-reset:active { transform: scale(0.95); }
+
+    /* Layer 2: Credits */
+    .bar-credits {
+      background: var(--bg-dark);
+      padding: 6px 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+    .heart-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+    .heart-btn:active { transform: scale(1.2); }
+
+    /* ============ EMPTY STATE ============ */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-dim);
+    }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
+
+    /* ============ LOADING ============ */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-dim);
+    }
+
+    /* Hide on certain views */
+    .bar-controls.hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔓 Intent Toolkit</h1>
-    <p class="subtitle">FRP Security Research | SM-S721B | By Phenix</p>
 
-    <!-- Quick Priority Section -->
-    <div class="note success">
-      ⚡ <strong>TAP ANY LINK</strong> to open directly, or scroll down for QR codes
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="logo">
+      <img src="https://adbappcontrol.com/assets/img/logo_blue.png" alt="FRP">
+      <span class="logo-text">FRP Toolkit</span>
     </div>
-
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab" onclick="showTab('assistant')">🗣️ Assistant</button>
-      <button class="tab active" onclick="showTab('priority')">⭐ Priority</button>
-      <button class="tab" onclick="showTab('packages')">📦 Packages</button>
-      <button class="tab" onclick="showTab('samsung')">📱 Samsung</button>
-      <button class="tab" onclick="showTab('codes')">🔢 Codes</button>
-      <button class="tab" onclick="showTab('qr')">📷 QR Gen</button>
-      <button class="tab" onclick="showTab('database')">📊 Database</button>
-      <button class="tab" onclick="showTab('docs')">📖 Docs</button>
+    <div class="header-tabs">
+      <button class="header-tab" id="tab-intent" onclick="switchView('intent')">Intent</button>
+      <button class="header-tab" id="tab-qr" onclick="switchView('qr')">QR</button>
     </div>
+  </header>
 
-    <!-- ASSISTANT TAB - Voice commands that work! -->
-    <div id="assistant" class="tab-content">
-      <h2>🗣️ Google Assistant Commands</h2>
-
-      <div class="note success">
-        ✅ <strong>BREAKTHROUGH!</strong> Google Assistant can open apps during FRP lock!<br>
-        Say "Hey Google" or hold the home button, then use these commands.
-      </div>
-
-      <h3>✅ Verified Working (SM-S721B)</h3>
-      <div class="grid">
-        <div class="intent-link assistant-link works-on-device">
-          <span class="label">📱 Display Settings</span>
-          <span class="voice-cmd">Open Display Settings</span>
-          <span class="url">✅ Works on SM-S721B</span>
-        </div>
-
-        <div class="intent-link assistant-link works-on-device">
-          <span class="label">♿ Accessibility Settings</span>
-          <span class="voice-cmd">Open Accessibility</span>
-          <span class="url">✅ Works on SM-S721B</span>
-        </div>
-
-        <div class="intent-link assistant-link works-on-device">
-          <span class="label">🔊 Sound Settings</span>
-          <span class="voice-cmd">Open Sound Settings</span>
-          <span class="url">✅ Works on SM-S721B</span>
-        </div>
-
-        <div class="intent-link assistant-link works-on-device">
-          <span class="label">🔔 Notification Settings</span>
-          <span class="voice-cmd">Open Notifications</span>
-          <span class="url">✅ Works on SM-S721B</span>
-        </div>
-
-        <div class="intent-link assistant-link works-on-device">
-          <span class="label">ℹ️ Device Info / About</span>
-          <span class="voice-cmd">Open Device Info</span>
-          <span class="url">✅ Works - but Dev Options won't toggle!</span>
-        </div>
-      </div>
-
-      <h3>⚠️ Partial (Opens then Closes)</h3>
-      <div class="grid">
-        <div class="intent-link assistant-link" style="border-left-color: #f59e0b;">
-          <span class="label" style="color: #f59e0b;">🏪 Play Store</span>
-          <span class="voice-cmd">Open Play Store</span>
-          <span class="url">Opens → asks for update → closes. After update: blocked</span>
-        </div>
-
-        <div class="intent-link assistant-link" style="border-left-color: #f59e0b;">
-          <span class="label" style="color: #f59e0b;">▶️ YouTube</span>
-          <span class="voice-cmd">Open YouTube</span>
-          <span class="url">Opens → asks for update → closes. After update: blocked</span>
-        </div>
-      </div>
-
-      <h3>🔍 Try These Commands</h3>
-      <div class="grid">
-        <div class="intent-link assistant-link">
-          <span class="label">⚙️ Settings</span>
-          <span class="voice-cmd">Open Settings</span>
-          <span class="url">Try this!</span>
-        </div>
-
-        <div class="intent-link assistant-link">
-          <span class="label">📁 Files</span>
-          <span class="voice-cmd">Open Files</span>
-          <span class="url">Try this!</span>
-        </div>
-
-        <div class="intent-link assistant-link">
-          <span class="label">🔧 Developer Options</span>
-          <span class="voice-cmd">Open Developer Options</span>
-          <span class="url">Try this!</span>
-        </div>
-
-        <div class="intent-link assistant-link">
-          <span class="label">📶 WiFi Settings</span>
-          <span class="voice-cmd">Open WiFi Settings</span>
-          <span class="url">Try this!</span>
-        </div>
-
-        <div class="intent-link assistant-link">
-          <span class="label">🔵 Bluetooth Settings</span>
-          <span class="voice-cmd">Open Bluetooth</span>
-          <span class="url">Try this!</span>
-        </div>
-
-        <div class="intent-link assistant-link">
-          <span class="label">🔒 Security Settings</span>
-          <span class="voice-cmd">Open Security Settings</span>
-          <span class="url">Try this!</span>
-        </div>
-      </div>
-
-      <h3>💡 Research Notes</h3>
-      <div class="note info">
-        <strong>IntentResolver Crash:</strong> Some share requests cause the IntentResolver app to crash.
-        This might be exploitable for navigation bypass.
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- Intent View -->
+    <div id="view-intent" class="view active">
+      <div id="intent-categories">
+        <div class="loading">Loading database...</div>
       </div>
     </div>
 
-    <!-- PRIORITY TAB - Most likely to work -->
-    <div id="priority" class="tab-content active">
-      <h2>⭐ Try These First</h2>
-
-      <!-- SM-S721B: All Chrome intent:// URLs are BLOCKED on this device -->
-      <div class="note" style="background:#2a1515; border-color:#ef4444;">
-        ⚠️ <strong>SM-S721B Notice:</strong> Chrome intent:// URLs are blocked on this device.
-        Use <strong>Google Assistant</strong> tab instead!
-      </div>
-
-      <div class="grid">
-        <a class="intent-link priority blocked-on-device" href="intent://com.android.settings/#Intent;scheme=android-app;end">
-          <span class="label">⚙️ SETTINGS APP</span>
-          <span class="url">intent://com.android.settings/#Intent;scheme=android-app;end</span>
-        </a>
-
-        <a class="intent-link priority blocked-on-device" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">
-          <span class="label">🏠 SAMSUNG LAUNCHER</span>
-          <span class="url">intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end</span>
-        </a>
-
-        <a class="intent-link priority blocked-on-device" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">
-          <span class="label">📁 MY FILES</span>
-          <span class="url">intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end</span>
-        </a>
-
-        <a class="intent-link priority blocked-on-device" href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end">
-          <span class="label">📞 SAMSUNG PHONE (for codes)</span>
-          <span class="url">intent://com.samsung.android.dialer/#Intent;scheme=android-app;end</span>
-        </a>
-      </div>
-
-      <h3>🔑 Critical Dialer Codes</h3>
-      <div class="note info">If you can access the Phone app, dial these codes:</div>
-      <div class="grid">
-        <!-- SM-S721B: Secret codes don't trigger from tel: links -->
-        <a class="intent-link tel-link priority blocked-on-device" href="tel:*#0808#">
-          <span class="label">⭐ *#0808# - USB/ADB MODE</span>
-          <span class="url">Opens USB settings - Enable MTP+ADB!</span>
-        </a>
-
-        <a class="intent-link tel-link blocked-on-device" href="tel:*#0*#">
-          <span class="label">🔧 *#0*# - Hardware Test</span>
-          <span class="url">Diagnostic menu with various tests</span>
-        </a>
-
-        <a class="intent-link tel-link blocked-on-device" href="tel:*#9900#">
-          <span class="label">📊 *#9900# - SysDump</span>
-          <span class="url">Debug logs and settings</span>
-        </a>
-      </div>
-
-      <h3>🔧 Developer Options</h3>
-      <div class="grid">
-        <!-- SM-S721B: Dev Options intent blocked, and 7x build number tap doesn't work -->
-        <a class="intent-link working blocked-on-device" href="intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end">
-          <span class="label">🔧 Developer Options (Direct)</span>
-          <span class="url">intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end</span>
-        </a>
-
-        <a class="intent-link blocked-on-device" href="intent://com.android.settings/.Settings$DevelopmentSettingsDashboardActivity/#Intent;scheme=android-app;end">
-          <span class="label">🔧 Dev Options Dashboard</span>
-          <span class="url">intent://...DevelopmentSettingsDashboardActivity/...</span>
-        </a>
-      </div>
-
-      <h3>📱 Escape Routes</h3>
-      <div class="grid">
-        <!-- SM-S721B: All intent:// links blocked -->
-        <a class="intent-link samsung-link blocked-on-device" href="intent://com.samsung.android.voc/#Intent;scheme=android-app;end">
-          <span class="label">👥 Samsung Members</span>
-          <span class="url">May have browser links inside</span>
-        </a>
-
-        <a class="intent-link samsung-link blocked-on-device" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">
-          <span class="label">🏪 Galaxy Store</span>
-          <span class="url">Can sometimes escape to settings</span>
-        </a>
-
-        <a class="intent-link samsung-link blocked-on-device" href="intent://com.samsung.android.oneconnect/#Intent;scheme=android-app;end">
-          <span class="label">🏠 SmartThings</span>
-          <span class="url">Has web content that may escape</span>
-        </a>
-
-        <a class="intent-link blocked-on-device" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">
-          <span class="label">📂 Document Browser</span>
-          <span class="url">File access may lead to APK install</span>
-        </a>
+    <!-- QR View -->
+    <div id="view-qr" class="view">
+      <div id="qr-categories">
+        <div class="loading">Loading QR codes...</div>
       </div>
     </div>
 
-    <!-- PACKAGES TAB -->
-    <div id="packages" class="tab-content">
-      <h2>📦 Package Launch Intents</h2>
-      <div class="note">Format: <code>intent://[package]/#Intent;scheme=android-app;end</code></div>
-
-      <h3>System Apps</h3>
-      <div class="grid">
-        <a class="intent-link" href="intent://com.android.settings/#Intent;scheme=android-app;end">
-          <span class="label">⚙️ Settings</span>
-          <span class="url">intent://com.android.settings/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.dialer/#Intent;scheme=android-app;end">
-          <span class="label">📞 Dialer</span>
-          <span class="url">intent://com.android.dialer/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.contacts/#Intent;scheme=android-app;end">
-          <span class="label">👤 Contacts</span>
-          <span class="url">intent://com.android.contacts/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.chrome/#Intent;scheme=android-app;end">
-          <span class="label">🌐 Chrome</span>
-          <span class="url">intent://com.android.chrome/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">
-          <span class="label">📂 Documents</span>
-          <span class="url">intent://com.android.documentsui/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.packageinstaller/#Intent;scheme=android-app;end">
-          <span class="label">📦 Package Installer</span>
-          <span class="url">intent://com.android.packageinstaller/#Intent;scheme=android-app;end</span>
-        </a>
-      </div>
-
-      <h3>Google Apps</h3>
-      <div class="grid">
-        <a class="intent-link" href="intent://com.google.android.googlequicksearchbox/#Intent;scheme=android-app;end">
-          <span class="label">🔍 Google</span>
-          <span class="url">intent://com.google.android.googlequicksearchbox/...</span>
-        </a>
-        <a class="intent-link" href="intent://com.google.android.gms/#Intent;scheme=android-app;end">
-          <span class="label">⚙️ Play Services</span>
-          <span class="url">intent://com.google.android.gms/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.vending/#Intent;scheme=android-app;end">
-          <span class="label">🏪 Play Store</span>
-          <span class="url">intent://com.android.vending/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.google.android.youtube/#Intent;scheme=android-app;end">
-          <span class="label">▶️ YouTube</span>
-          <span class="url">intent://com.google.android.youtube/#Intent;scheme=android-app;end</span>
-        </a>
-        <a class="intent-link" href="intent://com.google.android.apps.photos/#Intent;scheme=android-app;end">
-          <span class="label">📷 Photos</span>
-          <span class="url">intent://com.google.android.apps.photos/#Intent;scheme=android-app;end</span>
-        </a>
-      </div>
-
-      <h3>Settings Activities (Direct)</h3>
-      <div class="grid">
-        <a class="intent-link" href="intent://com.android.settings/.Settings$WifiSettingsActivity/#Intent;scheme=android-app;end">
-          <span class="label">📶 WiFi Settings</span>
-          <span class="url">intent://...WifiSettingsActivity/...</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.settings/.Settings$BluetoothSettingsActivity/#Intent;scheme=android-app;end">
-          <span class="label">🔵 Bluetooth</span>
-          <span class="url">intent://...BluetoothSettingsActivity/...</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.settings/.Settings$SecuritySettingsActivity/#Intent;scheme=android-app;end">
-          <span class="label">🔒 Security</span>
-          <span class="url">intent://...SecuritySettingsActivity/...</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.settings/.Settings$AccessibilitySettingsActivity/#Intent;scheme=android-app;end">
-          <span class="label">♿ Accessibility</span>
-          <span class="url">intent://...AccessibilitySettingsActivity/...</span>
-        </a>
-        <a class="intent-link" href="intent://com.android.settings/.Settings$AccountSettingsActivity/#Intent;scheme=android-app;end">
-          <span class="label">👤 Accounts</span>
-          <span class="url">intent://...AccountSettingsActivity/...</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- SAMSUNG TAB -->
-    <div id="samsung" class="tab-content">
-      <h2>📱 Samsung Specific</h2>
-
-      <h3>Samsung System Apps</h3>
-      <div class="grid">
-        <a class="intent-link samsung-link" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">
-          <span class="label">🏠 Samsung Launcher</span>
-          <span class="url">intent://com.sec.android.app.launcher/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">
-          <span class="label">📁 My Files</span>
-          <span class="url">intent://com.sec.android.app.myfiles/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end">
-          <span class="label">📞 Samsung Phone</span>
-          <span class="url">intent://com.samsung.android.dialer/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.messaging/#Intent;scheme=android-app;end">
-          <span class="label">💬 Messages</span>
-          <span class="url">intent://com.samsung.android.messaging/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.contacts/#Intent;scheme=android-app;end">
-          <span class="label">👤 Contacts</span>
-          <span class="url">intent://com.samsung.android.contacts/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.sec.android.gallery3d/#Intent;scheme=android-app;end">
-          <span class="label">🖼️ Gallery</span>
-          <span class="url">intent://com.sec.android.gallery3d/...</span>
-        </a>
-      </div>
-
-      <h3>Samsung Services</h3>
-      <div class="grid">
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.voc/#Intent;scheme=android-app;end">
-          <span class="label">👥 Samsung Members</span>
-          <span class="url">intent://com.samsung.android.voc/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">
-          <span class="label">🏪 Galaxy Store</span>
-          <span class="url">intent://com.sec.android.app.samsungapps/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.oneconnect/#Intent;scheme=android-app;end">
-          <span class="label">🏠 SmartThings</span>
-          <span class="url">intent://com.samsung.android.oneconnect/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.sm/#Intent;scheme=android-app;end">
-          <span class="label">🔧 Device Care</span>
-          <span class="url">intent://com.samsung.android.sm/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.themestore/#Intent;scheme=android-app;end">
-          <span class="label">🎨 Theme Store</span>
-          <span class="url">intent://com.samsung.android.themestore/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.bixby.agent/#Intent;scheme=android-app;end">
-          <span class="label">🗣️ Bixby</span>
-          <span class="url">intent://com.samsung.android.bixby.agent/...</span>
-        </a>
-      </div>
-
-      <h3>Samsung Apps</h3>
-      <div class="grid">
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.app.notes/#Intent;scheme=android-app;end">
-          <span class="label">📝 Samsung Notes</span>
-          <span class="url">intent://com.samsung.android.app.notes/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.calendar/#Intent;scheme=android-app;end">
-          <span class="label">📅 Calendar</span>
-          <span class="url">intent://com.samsung.android.calendar/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.app.routines/#Intent;scheme=android-app;end">
-          <span class="label">🔄 Routines</span>
-          <span class="url">intent://com.samsung.android.app.routines/...</span>
-        </a>
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.samsungpass/#Intent;scheme=android-app;end">
-          <span class="label">🔑 Samsung Pass</span>
-          <span class="url">intent://com.samsung.android.samsungpass/...</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- SECRET CODES TAB -->
-    <div id="codes" class="tab-content">
-      <h2>🔢 Samsung Secret Codes</h2>
-      <div class="note info">These require the Phone dialer app. Try launching it first, then dial.</div>
-
-      <h3>⭐ ADB/USB Critical</h3>
-      <div class="grid">
-        <a class="intent-link tel-link priority" href="tel:*#0808#">
-          <span class="label">⭐ *#0808# - USB Settings</span>
-          <span class="url">CRITICAL - Change USB mode to MTP+ADB</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#9900#">
-          <span class="label">📊 *#9900# - SysDump</span>
-          <span class="url">Debug logs, can enable USB debugging</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#7284#">
-          <span class="label">🔌 *#7284# - USB I2C</span>
-          <span class="url">USB path control settings</span>
-        </a>
-      </div>
-
-      <h3>🔧 Hardware Diagnostics</h3>
-      <div class="grid">
-        <a class="intent-link tel-link" href="tel:*#0*#">
-          <span class="label">🔧 *#0*# - Hardware Test</span>
-          <span class="url">Full diagnostic menu</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#7353#">
-          <span class="label">🔧 *#7353# - Quick Test</span>
-          <span class="url">Quick hardware tests</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#0011#">
-          <span class="label">📡 *#0011# - Service Mode</span>
-          <span class="url">Network service info</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#0228#">
-          <span class="label">🔋 *#0228# - Battery</span>
-          <span class="url">Detailed battery status</span>
-        </a>
-      </div>
-
-      <h3>ℹ️ System Info</h3>
-      <div class="grid">
-        <a class="intent-link tel-link" href="tel:*#06#">
-          <span class="label">📱 *#06# - IMEI</span>
-          <span class="url">Shows IMEI number</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#1234#">
-          <span class="label">📋 *#1234# - Firmware</span>
-          <span class="url">AP/CP/CSC versions</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#12580*369#">
-          <span class="label">📋 *#12580*369# - All Info</span>
-          <span class="url">Complete SW/HW info</span>
-        </a>
-      </div>
-
-      <h3>📡 Network</h3>
-      <div class="grid">
-        <a class="intent-link tel-link" href="tel:*#2263#">
-          <span class="label">📡 *#2263# - RF Band</span>
-          <span class="url">Network band selection</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#9090#">
-          <span class="label">🔧 *#9090# - Diagnostic</span>
-          <span class="url">Debug output config</span>
-        </a>
-        <a class="intent-link tel-link" href="tel:*#*#4636#*#*">
-          <span class="label">🔧 *#*#4636#*#* - Testing</span>
-          <span class="url">Android testing menu</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- QR TAB -->
-    <div id="qr" class="tab-content">
-      <h2>📷 QR Code Generator</h2>
-      <div class="note info">Generate QR codes to scan with another device's camera/Lens</div>
-
-      <div class="qr-section">
-        <input type="text" id="qr-input" placeholder="Tap a link or enter URL here">
-        <div class="btn-row">
-          <button class="btn" onclick="generateQR()">Generate QR</button>
-          <button class="btn btn-secondary" onclick="copyURL()">Copy URL</button>
+    <!-- Admin View -->
+    <div id="view-admin" class="view">
+      <div class="admin-section">
+        <h3 class="admin-title">Statistics</h3>
+        <div class="admin-stat">
+          <span>Total Intents</span>
+          <span class="admin-stat-value" id="stat-total">0</span>
         </div>
-        <div id="qr-code"></div>
-        <p id="qr-status" style="color:#888; margin-top:10px; font-size:0.8rem;"></p>
-      </div>
-
-      <h3>Quick QR Links</h3>
-      <div class="grid">
-        <div class="intent-link" onclick="setQR('intent://com.android.settings/#Intent;scheme=android-app;end')">
-          <span class="label">⚙️ Settings QR</span>
-          <span class="url">Tap to generate QR</span>
+        <div class="admin-stat">
+          <span>Categories</span>
+          <span class="admin-stat-value" id="stat-cats">0</span>
         </div>
-        <div class="intent-link" onclick="setQR('intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end')">
-          <span class="label">📁 My Files QR</span>
-          <span class="url">Tap to generate QR</span>
-        </div>
-        <div class="intent-link" onclick="setQR('tel:*#0808#')">
-          <span class="label">🔧 USB Settings Code QR</span>
-          <span class="url">Tap to generate QR</span>
-        </div>
-        <div class="intent-link" onclick="setQR('intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end')">
-          <span class="label">🔧 Dev Options QR</span>
-          <span class="url">Tap to generate QR</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- DOCS TAB -->
-    <div id="docs" class="tab-content">
-      <h2>📖 Documentation</h2>
-
-      <h3>Device Info</h3>
-      <table>
-        <tr><th>Property</th><th>Value</th></tr>
-        <tr><td>Model</td><td>SM-S721B (S24 FE)</td></tr>
-        <tr><td>Android</td><td>14</td></tr>
-        <tr><td>Firmware</td><td>S721BXXS3AYB3</td></tr>
-        <tr><td>FRP Status</td><td>TRIGGERED</td></tr>
-        <tr><td>Bootloader</td><td>LOCKED</td></tr>
-      </table>
-
-      <h3>✅ What Works (SM-S721B)</h3>
-      <table>
-        <tr><th>Method</th><th>Result</th></tr>
-        <tr style="color:#4ade80;"><td>🗣️ Google Assistant</td><td>✅ Voice commands work!</td></tr>
-        <tr style="color:#4ade80;"><td>"Open Display Settings"</td><td>✅ Works</td></tr>
-        <tr style="color:#4ade80;"><td>"Open Accessibility"</td><td>✅ Works</td></tr>
-        <tr style="color:#4ade80;"><td>"Open Sound Settings"</td><td>✅ Works</td></tr>
-        <tr style="color:#4ade80;"><td>"Open Notifications"</td><td>✅ Works</td></tr>
-        <tr style="color:#4ade80;"><td>"Open Device Info"</td><td>✅ Works (Dev Options won't toggle)</td></tr>
-        <tr style="color:#f59e0b;"><td>"Open Play Store"</td><td>⚠️ Opens then closes</td></tr>
-        <tr style="color:#f59e0b;"><td>"Open YouTube"</td><td>⚠️ Opens then closes</td></tr>
-      </table>
-
-      <h3>❌ What Failed (SM-S721B)</h3>
-      <table>
-        <tr><th>Method</th><th>Result</th></tr>
-        <tr style="color:#ef4444;"><td>Chrome intent:// URLs</td><td>❌ All blocked</td></tr>
-        <tr style="color:#ef4444;"><td>Samsung secret codes</td><td>❌ No trigger</td></tr>
-        <tr style="color:#ef4444;"><td>SamFW MTP→ADB</td><td>❌ Not compatible</td></tr>
-        <tr style="color:#ef4444;"><td>USB driver switch</td><td>❌ No ADB drivers</td></tr>
-        <tr style="color:#ef4444;"><td>7x Build Number tap</td><td>❌ Doesn't enable Dev Options</td></tr>
-      </table>
-
-      <h3>🔍 Interesting Findings</h3>
-      <div class="note info">
-        <strong>IntentResolver Crash:</strong> Some share requests cause the IntentResolver app to crash.
-        This behavior might be exploitable for navigation bypass.
-      </div>
-
-      <h3>Intent URL Format</h3>
-      <pre>
-intent://[package]/#Intent;scheme=android-app;end
-
-Examples:
-intent://com.android.settings/#Intent;scheme=android-app;end
-intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end
-      </pre>
-
-      <h3>Attack Chain (Updated)</h3>
-      <pre>
-FOR SM-S721B (intents blocked):
-1. Access Chrome (via keyboard settings)
-2. Invoke Google Assistant (hold home or "Hey Google")
-3. Use voice commands to open settings
-4. Try to find path to Developer Options
-5. Or explore IntentResolver crash exploit
-
-FOR OTHER DEVICES (may work):
-1. Access Chrome (via keyboard settings)
-2. Navigate to this page
-3. Tap intent links directly
-4. OR scan QR with Lens
-5. Target activity opens
-6. Enable Developer Options
-7. Enable USB Debugging
-8. Connect ADB!
-      </pre>
-
-      <h3>Researcher</h3>
-      <p>Phenix (Alaa Qweider) - <a href="mailto:Alaa@nulled.ai" style="color:#00d4ff;">Alaa@nulled.ai</a></p>
-      <p>Test Date: 2026-01-12</p>
-    </div>
-
-    <!-- DATABASE TAB - Mobile-First Category View -->
-    <div id="database" class="tab-content">
-      <!-- Sticky Search & Reset Bar -->
-      <div class="db-sticky-bar">
-        <input type="text" id="db-search" placeholder="🔍 Search..."
-          oninput="filterDatabase()">
-        <div class="db-bar-info">
-          <span id="db-tried-count">Tried: 0</span>
-          <button class="btn-reset" onclick="resetIntentView()">🔄 Reset</button>
+        <div class="admin-stat">
+          <span>Tried This Session</span>
+          <span class="admin-stat-value" id="stat-tried">0</span>
         </div>
       </div>
 
-      <!-- Category Sections -->
-      <div id="db-categories">
-        <!-- Populated by JavaScript with category cards -->
+      <div class="admin-section">
+        <h3 class="admin-title">Session Data</h3>
+        <div class="admin-stat">
+          <span>Export Database</span>
+          <button class="btn-reset" onclick="exportDatabase()" style="background: var(--accent); color: #000;">Export JSON</button>
+        </div>
+        <div class="admin-stat">
+          <span>Clear Session</span>
+          <button class="btn-reset" onclick="resetIntentView()">Reset Tried</button>
+        </div>
+      </div>
+
+      <div class="admin-section">
+        <h3 class="admin-title">Device Info</h3>
+        <div class="admin-stat">
+          <span>User Agent</span>
+          <span class="admin-stat-value" id="stat-ua" style="font-size: 0.65rem; max-width: 200px; word-break: break-all;">-</span>
+        </div>
       </div>
     </div>
+  </main>
+
+  <!-- BOTTOM BAR -->
+  <footer class="bottom-bar">
+    <!-- Layer 1: Controls -->
+    <div class="bar-controls" id="bar-controls">
+      <div class="cat-pills" id="cat-pills">
+        <!-- Populated by JS -->
+      </div>
+      <input type="text" class="search-box" id="search-box" placeholder="Search..." oninput="filterIntents()">
+      <button class="btn-reset" onclick="resetIntentView()">Reset</button>
+    </div>
+
+    <!-- Layer 2: Credits -->
+    <div class="bar-credits">
+      <span>made by phenix with</span>
+      <button class="heart-btn" onclick="showPasswordModal()">❤️</button>
+      <span>and frustration</span>
+    </div>
+  </footer>
+
+  <!-- QR MODAL -->
+  <div class="qr-modal" id="qr-modal" onclick="closeQrModal(event)">
+    <div class="qr-large" id="qr-large"></div>
+    <div class="qr-title" id="qr-title"></div>
+    <button class="qr-close" onclick="closeQrModal()">Close</button>
   </div>
 
-  <!-- Fixed Bottom Quick Actions -->
-  <div class="quick-bar">
-    <button class="quick-btn highlight" onclick="window.location.href='intent://com.android.settings/#Intent;scheme=android-app;end'">⚙️ Settings</button>
-    <button class="quick-btn" onclick="window.location.href='intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end'">📁 Files</button>
-    <button class="quick-btn" onclick="window.location.href='tel:*#0808#'">🔧 USB</button>
-    <button class="quick-btn" onclick="showTab('qr'); document.querySelector('[onclick*=showTab]').scrollIntoView()">📷 QR</button>
+  <!-- PASSWORD MODAL -->
+  <div class="password-modal" id="password-modal">
+    <div class="password-box">
+      <h3>Admin Access</h3>
+      <input type="password" id="admin-password" placeholder="••••••" maxlength="6" oninput="checkPassword()">
+      <button class="password-btn" onclick="submitPassword()">Enter</button>
+      <div class="password-error" id="password-error">Incorrect password</div>
+    </div>
   </div>
 
   <script>
-    /**
-     * DEVICE COMPATIBILITY DATA
-     * This structure enables future dynamic device detection and per-device UI customization.
-     * When device detection is implemented, this data can show/hide methods based on what works.
-     *
-     * Research Date: 2026-01-12
-     * Researcher: Phenix (Alaa Qweider)
-     */
-    const deviceData = {
-      "SM-S721B": {
-        name: "Galaxy S24 FE",
-        android: 14,
-        firmware: "S721BXXS3AYB3",
-        frpStatus: "TRIGGERED",
-        bootloader: "LOCKED",
-        working: [
-          { method: "google_assistant", note: "Voice commands work!" },
-          { method: "assistant_display_settings", command: "Open Display Settings" },
-          { method: "assistant_accessibility", command: "Open Accessibility" },
-          { method: "assistant_sound", command: "Open Sound Settings" },
-          { method: "assistant_notifications", command: "Open Notifications" },
-          { method: "assistant_device_info", command: "Open Device Info", note: "Dev Options won't toggle" }
-        ],
-        partial: [
-          { method: "assistant_playstore", note: "Opens, asks update, closes. After update: blocked" },
-          { method: "assistant_youtube", note: "Opens, asks update, closes. After update: blocked" }
-        ],
-        notWorking: [
-          { method: "chrome_intents", note: "All intent:// URLs blocked" },
-          { method: "secret_codes", note: "*#0808#, *#0*#, *#9900# - no trigger" },
-          { method: "samfw_mtp_adb", note: "MTP→ADB exploit not compatible" },
-          { method: "usb_driver_switch", note: "COM14 - no compatible ADB drivers" },
-          { method: "developer_options_toggle", note: "7x build number tap doesn't enable" }
-        ],
-        interestingBehavior: [
-          { finding: "IntentResolver crashes on some share requests" },
-          { finding: "Could be exploitable for navigation" }
-        ],
-        testDate: "2026-01-12"
-      }
-      // Add more devices as testing continues
-    };
-
-    // Current device (for future auto-detection)
-    const currentDevice = "SM-S721B";
-
-    function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      // Find and activate the matching tab button
-      const tabMap = {
-        'assistant': 'Assistant',
-        'priority': 'Priority',
-        'packages': 'Packages',
-        'samsung': 'Samsung',
-        'codes': 'Codes',
-        'qr': 'QR',
-        'database': 'Database',
-        'docs': 'Docs'
-      };
-      document.querySelectorAll('.tab').forEach(t => {
-        if (t.textContent.includes(tabMap[tabId])) {
-          t.classList.add('active');
-        }
-      });
-    }
-
-    let qrCode = null;
-
-    function generateQR() {
-      const input = document.getElementById('qr-input').value.trim();
-      if (!input) {
-        document.getElementById('qr-status').textContent = 'Enter a URL first';
-        return;
-      }
-
-      const qrDiv = document.getElementById('qr-code');
-      qrDiv.innerHTML = '';
-
-      try {
-        qrCode = new QRCode(qrDiv, {
-          text: input,
-          width: 200,
-          height: 200,
-          colorDark: '#000000',
-          colorLight: '#ffffff',
-          correctLevel: QRCode.CorrectLevel.L
-        });
-        document.getElementById('qr-status').textContent = '✅ Scan with camera or Lens!';
-      } catch(e) {
-        document.getElementById('qr-status').textContent = 'Error generating QR';
-      }
-    }
-
-    function setQR(url) {
-      document.getElementById('qr-input').value = url;
-      generateQR();
-    }
-
-    function copyURL() {
-      const input = document.getElementById('qr-input');
-      if (!input.value) {
-        document.getElementById('qr-status').textContent = 'Nothing to copy';
-        return;
-      }
-
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(input.value).then(() => {
-          document.getElementById('qr-status').textContent = '📋 Copied!';
-        });
-      } else {
-        input.select();
-        document.execCommand('copy');
-        document.getElementById('qr-status').textContent = '📋 Copied!';
-      }
-    }
-
     // ============================================
-    // INTENT DATABASE - Mobile Category View
+    // EMBEDDED DATABASE
     // ============================================
-
-    // Category definitions with icons and priority
     const categories = {
-      security: { icon: "🔒", label: "Lock Screen & Security", priority: "critical" },
-      third_party: { icon: "📦", label: "3rd Party FRP Tools", priority: "critical" },
+      voice_commands: { icon: "🗣️", label: "Voice Commands", priority: "critical" },
+      secret_codes: { icon: "🔢", label: "Secret Codes", priority: "critical" },
+      security: { icon: "🔒", label: "Lock & Security", priority: "critical" },
+      third_party: { icon: "📦", label: "3rd Party Tools", priority: "critical" },
       general: { icon: "⚙️", label: "General Android", priority: "high" },
       settings: { icon: "🛠️", label: "Device Settings", priority: "high" },
       samsung: { icon: "📱", label: "Samsung", priority: "high" },
@@ -1219,74 +582,237 @@ FOR OTHER DEVICES (may work):
       infinix: { icon: "📱", label: "Infinix", priority: "low" }
     };
 
-    // Intent database and state
-    let intentDatabase = [];
-    let triedIntents = [];  // Session-persistent list of tried intent IDs
-    let lastTriedId = null;
+    // Voice Commands (merged from Assistant tab)
+    const voiceCommands = [
+      { id: "voice_001", category: "voice_commands", label: "Open Display Settings", intentUrl: "assistant://open-display-settings", purpose: "Say: 'Open Display Settings' - Works on SM-S721B" },
+      { id: "voice_002", category: "voice_commands", label: "Open Accessibility", intentUrl: "assistant://open-accessibility", purpose: "Say: 'Open Accessibility' - Works on SM-S721B" },
+      { id: "voice_003", category: "voice_commands", label: "Open Sound Settings", intentUrl: "assistant://open-sound-settings", purpose: "Say: 'Open Sound Settings' - Works on SM-S721B" },
+      { id: "voice_004", category: "voice_commands", label: "Open Notifications", intentUrl: "assistant://open-notifications", purpose: "Say: 'Open Notifications' - Works on SM-S721B" },
+      { id: "voice_005", category: "voice_commands", label: "Open Device Info", intentUrl: "assistant://open-device-info", purpose: "Say: 'Open Device Info' - Access About Phone" },
+      { id: "voice_006", category: "voice_commands", label: "Open Settings", intentUrl: "assistant://open-settings", purpose: "Say: 'Open Settings'" },
+      { id: "voice_007", category: "voice_commands", label: "Open Files", intentUrl: "assistant://open-files", purpose: "Say: 'Open Files'" },
+      { id: "voice_008", category: "voice_commands", label: "Open Developer Options", intentUrl: "assistant://open-developer-options", purpose: "Say: 'Open Developer Options'" },
+      { id: "voice_009", category: "voice_commands", label: "Open WiFi Settings", intentUrl: "assistant://open-wifi", purpose: "Say: 'Open WiFi Settings'" },
+      { id: "voice_010", category: "voice_commands", label: "Open Bluetooth", intentUrl: "assistant://open-bluetooth", purpose: "Say: 'Open Bluetooth'" },
+      { id: "voice_011", category: "voice_commands", label: "Open Security Settings", intentUrl: "assistant://open-security", purpose: "Say: 'Open Security Settings'" }
+    ];
 
-    // Load database from JSON file
-    async function loadDatabase() {
-      try {
-        const response = await fetch('research/intent-database.json');
-        const data = await response.json();
-        intentDatabase = data.intents || [];
-        renderCategories();
-      } catch (err) {
-        console.error('Failed to load database:', err);
-        document.getElementById('db-categories').innerHTML =
-          '<div class="note" style="color:#ef4444;">❌ Failed to load. ' +
-          'Run from local server or check file path.</div>';
+    // Secret Codes (merged from Codes tab)
+    const secretCodes = [
+      { id: "code_001", category: "secret_codes", label: "*#0808# - USB Settings", intentUrl: "tel:*#0808#", purpose: "CRITICAL - Change USB mode to MTP+ADB" },
+      { id: "code_002", category: "secret_codes", label: "*#9900# - SysDump", intentUrl: "tel:*#9900#", purpose: "Debug logs, can enable USB debugging" },
+      { id: "code_003", category: "secret_codes", label: "*#7284# - USB I2C", intentUrl: "tel:*#7284#", purpose: "USB path control settings" },
+      { id: "code_004", category: "secret_codes", label: "*#0*# - Hardware Test", intentUrl: "tel:*#0*#", purpose: "Full diagnostic menu" },
+      { id: "code_005", category: "secret_codes", label: "*#7353# - Quick Test", intentUrl: "tel:*#7353#", purpose: "Quick hardware tests" },
+      { id: "code_006", category: "secret_codes", label: "*#0011# - Service Mode", intentUrl: "tel:*#0011#", purpose: "Network service info" },
+      { id: "code_007", category: "secret_codes", label: "*#0228# - Battery", intentUrl: "tel:*#0228#", purpose: "Detailed battery status" },
+      { id: "code_008", category: "secret_codes", label: "*#06# - IMEI", intentUrl: "tel:*#06#", purpose: "Shows IMEI number" },
+      { id: "code_009", category: "secret_codes", label: "*#1234# - Firmware", intentUrl: "tel:*#1234#", purpose: "AP/CP/CSC versions" },
+      { id: "code_010", category: "secret_codes", label: "*#12580*369# - All Info", intentUrl: "tel:*#12580*369#", purpose: "Complete SW/HW info" },
+      { id: "code_011", category: "secret_codes", label: "*#2263# - RF Band", intentUrl: "tel:*#2263#", purpose: "Network band selection" },
+      { id: "code_012", category: "secret_codes", label: "*#*#4636#*#* - Testing", intentUrl: "tel:*#*#4636#*#*", purpose: "Android testing menu" }
+    ];
+
+    // Main intent database (embedded from research/intent-database.json)
+    const intentDatabase = [
+      // Voice Commands
+      ...voiceCommands,
+      // Secret Codes
+      ...secretCodes,
+      // General Android
+      { id: "general_001", category: "general", label: "Open Settings App", intentUrl: "intent://com.android.settings/#Intent;scheme=android-app;end", purpose: "Main settings launcher" },
+      { id: "general_002", category: "general", label: "Open Settings (Action)", intentUrl: "intent:#Intent;action=android.settings.SETTINGS;end", purpose: "Settings via action intent" },
+      { id: "general_003", category: "general", label: "USB Settings", intentUrl: "intent://com.android.settings.UsbSettingsActivity/#Intent;scheme=android-app;end", purpose: "USB connection - potential ADB access" },
+      { id: "general_004", category: "general", label: "ADB Settings", intentUrl: "intent://com.android.settings.AdbSettingsActivity/#Intent;scheme=android-app;end", purpose: "ADB debugging - critical for bypass" },
+      { id: "general_005", category: "general", label: "Calculator (AOSP)", intentUrl: "intent://com.android.calculator2/#Intent;scheme=android-app;end", purpose: "Basic calculator app" },
+      { id: "general_006", category: "general", label: "Dial Pad", intentUrl: "tel:123456789", purpose: "Open phone dialer" },
+      { id: "general_007", category: "general", label: "Open Contacts", intentUrl: "intent://com.android.contacts/#Intent;scheme=android-app;end", purpose: "Contacts app" },
+      { id: "general_008", category: "general", label: "Launch Camera", intentUrl: "intent://android.media.action.IMAGE_CAPTURE#Intent;scheme=android-app;end", purpose: "Open camera for photo" },
+      // Security
+      { id: "security_001", category: "security", label: "Open Smart Lock", intentUrl: "intent://#Intent;scheme=promote_smartlock_scheme;package=com.google.android.gms;end", purpose: "Google Smart Lock - bypass vector" },
+      { id: "security_002", category: "security", label: "Change Lock Type", intentUrl: "intent://#Intent;action=android.app.action.CHOOSE_LOCK;package=com.android.settings;end", purpose: "Lock type selection - critical" },
+      { id: "security_003", category: "security", label: "Security Settings", intentUrl: "intent://#Intent;action=android.settings.SECURITY_SETTINGS;package=com.android.settings;end", purpose: "Security settings main" },
+      { id: "security_004", category: "security", label: "Fingerprint Setup", intentUrl: "intent://#Intent;action=android.settings.FINGERPRINT_ENROLL;package=com.android.settings;end", purpose: "Fingerprint enrollment" },
+      { id: "security_005", category: "security", label: "Set New PIN/Password", intentUrl: "intent://#Intent;action=android.app.action.SET_NEW_PASSWORD;package=com.android.settings;end", purpose: "Password creation - critical" },
+      { id: "security_006", category: "security", label: "Device Admin Apps", intentUrl: "intent://#Intent;action=android.settings.DEVICE_ADMIN_SETTINGS;package=com.android.settings;end", purpose: "Device administrator list" },
+      { id: "security_007", category: "security", label: "Credential Storage", intentUrl: "intent://#Intent;action=android.settings.CREDENTIAL_STORAGE_SETTINGS;package=com.android.settings;end", purpose: "Credential management" },
+      { id: "security_008", category: "security", label: "Trust Agents", intentUrl: "intent://#Intent;action=android.settings.TRUST_AGENTS_SETTINGS;package=com.android.settings;end", purpose: "Smart Lock trust agents" },
+      { id: "security_009", category: "security", label: "Privacy Settings", intentUrl: "intent://#Intent;action=android.settings.PRIVACY_SETTINGS;package=com.android.settings;end", purpose: "Privacy configuration" },
+      { id: "security_010", category: "security", label: "Location Settings", intentUrl: "intent://#Intent;action=android.settings.LOCATION_SOURCE_SETTINGS;package=com.android.settings;end", purpose: "GPS and location" },
+      // Third Party Tools
+      { id: "third_party_001", category: "third_party", label: "HushSMS", intentUrl: "intent://com.hushsms.app/#Intent;end", purpose: "FRP bypass SMS tool" },
+      { id: "third_party_002", category: "third_party", label: "Alliance Shield", intentUrl: "intent://com.ss.ae/alliance_shield/#Intent;end", purpose: "Device admin FRP tool" },
+      { id: "third_party_003", category: "third_party", label: "Alliance Shield X", intentUrl: "intent://com.ss.aex/alliance_shield_x/#Intent;end", purpose: "Device admin FRP tool v2" },
+      { id: "third_party_004", category: "third_party", label: "Activity Launcher", intentUrl: "intent://com.activitylauncher/#Intent;end", purpose: "Launch hidden activities" },
+      { id: "third_party_005", category: "third_party", label: "Test DPC", intentUrl: "intent://com.afwsamples.testdpc/#Intent;end", purpose: "Device Policy Controller" },
+      { id: "third_party_006", category: "third_party", label: "ES File Explorer", intentUrl: "intent://com.estrongs.android.pop/#Intent;end", purpose: "File manager with root access" },
+      { id: "third_party_007", category: "third_party", label: "Smart Switch", intentUrl: "intent://com.sec.android.easyMover/#Intent;end", purpose: "Samsung data transfer" },
+      { id: "third_party_008", category: "third_party", label: "Quick Shortcut Maker", intentUrl: "intent://com.quickshortcutmaker/#Intent;end", purpose: "Create activity shortcuts" },
+      { id: "third_party_009", category: "third_party", label: "Google Account Manager", intentUrl: "intent://com.google.android.gsf.login/#Intent;end", purpose: "Add Google account - critical" },
+      // Settings
+      { id: "settings_001", category: "settings", label: "Display Settings", intentUrl: "intent:#Intent;action=android.settings.DISPLAY_SETTINGS;end", purpose: "Screen and display options" },
+      { id: "settings_002", category: "settings", label: "Notification Settings", intentUrl: "intent:#Intent;action=android.settings.APP_NOTIFICATION_SETTINGS;end", purpose: "App notification preferences" },
+      { id: "settings_003", category: "settings", label: "Accessibility Settings", intentUrl: "intent:#Intent;action=android.settings.ACCESSIBILITY_SETTINGS;end", purpose: "Accessibility options - bypass help" },
+      { id: "settings_004", category: "settings", label: "Wi-Fi Settings", intentUrl: "intent:#Intent;action=android.settings.WIFI_SETTINGS;end", purpose: "WiFi configuration" },
+      { id: "settings_005", category: "settings", label: "Bluetooth Settings", intentUrl: "intent:#Intent;action=android.settings.BLUETOOTH_SETTINGS;end", purpose: "Bluetooth pairing" },
+      { id: "settings_006", category: "settings", label: "Hotspot & Tethering", intentUrl: "intent:#Intent;action=android.settings.TETHER_SETTINGS;end", purpose: "Mobile hotspot" },
+      { id: "settings_007", category: "settings", label: "Date & Time", intentUrl: "intent:#Intent;action=android.settings.DATE_SETTINGS;end", purpose: "Date and timezone" },
+      { id: "settings_008", category: "settings", label: "Input Method", intentUrl: "intent:#Intent;action=android.settings.INPUT_METHOD_SETTINGS;end", purpose: "Keyboard selection" },
+      { id: "settings_009", category: "settings", label: "NFC Settings", intentUrl: "intent:#Intent;action=android.settings.NFC_SETTINGS;end", purpose: "NFC configuration" },
+      { id: "settings_010", category: "settings", label: "Data Usage", intentUrl: "intent:#Intent;action=android.settings.DATA_USAGE_SETTINGS;end", purpose: "Mobile data usage" },
+      // Samsung
+      { id: "samsung_001", category: "samsung", label: "Samsung Dialer", intentUrl: "intent://com.samsung.android.dialer/#Intent;scheme=android-app;end", purpose: "Samsung phone app" },
+      { id: "samsung_002", category: "samsung", label: "MyFiles", intentUrl: "intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end", purpose: "Samsung file manager" },
+      { id: "samsung_003", category: "samsung", label: "Galaxy Store", intentUrl: "intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end", purpose: "Samsung app store" },
+      { id: "samsung_004", category: "samsung", label: "One UI Launcher", intentUrl: "intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end", purpose: "Samsung home launcher" },
+      { id: "samsung_005", category: "samsung", label: "Hidden Menu", intentUrl: "intent://com.sec.android.hiddenmenu/#Intent;scheme=android-app;end", purpose: "Samsung hidden diagnostic" },
+      { id: "samsung_006", category: "samsung", label: "Samsung Pass", intentUrl: "intent://com.samsung.android.samsungpass/#Intent;scheme=android-app;end", purpose: "Password manager" },
+      { id: "samsung_007", category: "samsung", label: "Smart Switch", intentUrl: "intent://com.sec.android.easyMover/#Intent;scheme=android-app;end", purpose: "Data transfer" },
+      { id: "samsung_008", category: "samsung", label: "Knox Secure Folder", intentUrl: "intent://com.samsung.knox.securefolder/#Intent;scheme=android-app;end", purpose: "Knox Secure Folder" },
+      { id: "samsung_009", category: "samsung", label: "Device Care", intentUrl: "intent://com.samsung.android.lool/#Intent;scheme=android-app;end", purpose: "Device maintenance" },
+      { id: "samsung_010", category: "samsung", label: "Samsung Browser", intentUrl: "intent://com.sec.android.app.sbrowser/#Intent;scheme=android-app;end", purpose: "Samsung browser" },
+      { id: "samsung_011", category: "samsung", label: "Samsung Camera", intentUrl: "intent://com.sec.android.app.camera/#Intent;scheme=android-app;end", purpose: "Samsung camera" },
+      { id: "samsung_012", category: "samsung", label: "Gallery", intentUrl: "intent://com.sec.android.gallery3d/#Intent;scheme=android-app;end", purpose: "Photo gallery" },
+      // Google Apps
+      { id: "google_001", category: "google", label: "Google Assistant", intentUrl: "intent://com.google.android.apps.googleassistant/#Intent;scheme=android-app;end", purpose: "Voice assistant" },
+      { id: "google_002", category: "google", label: "Play Store", intentUrl: "intent://com.android.vending/#Intent;scheme=android-app;end", purpose: "App store" },
+      { id: "google_003", category: "google", label: "YouTube", intentUrl: "intent://com.google.android.youtube/#Intent;scheme=android-app;end", purpose: "Video streaming" },
+      { id: "google_004", category: "google", label: "Gmail", intentUrl: "intent://com.google.android.gm/#Intent;scheme=android-app;end", purpose: "Email client" },
+      { id: "google_005", category: "google", label: "Google Maps", intentUrl: "intent://com.google.android.apps.maps/#Intent;scheme=android-app;end", purpose: "Navigation" },
+      { id: "google_006", category: "google", label: "Chrome", intentUrl: "intent://com.android.chrome/#Intent;scheme=android-app;end", purpose: "Web browser" },
+      { id: "google_007", category: "google", label: "Google Drive", intentUrl: "intent://com.google.android.apps.docs/#Intent;scheme=android-app;end", purpose: "Cloud storage" },
+      { id: "google_008", category: "google", label: "Google Photos", intentUrl: "intent://com.google.android.apps.photos/#Intent;scheme=android-app;end", purpose: "Photo management" },
+      { id: "google_009", category: "google", label: "Play Services", intentUrl: "intent://com.google.android.gms/#Intent;scheme=android-app;end", purpose: "Google services framework" },
+      { id: "google_010", category: "google", label: "Files by Google", intentUrl: "intent://com.google.android.apps.nbu.files/#Intent;scheme=android-app;end", purpose: "File manager" },
+      { id: "google_011", category: "google", label: "Google Lens", intentUrl: "intent://com.google.ar.lens/#Intent;scheme=android-app;end", purpose: "Visual search - QR scanning" }
+    ];
+
+    // ============================================
+    // STATE
+    // ============================================
+    let currentView = 'intent';
+    let triedIntents = [];
+    let lastTriedId = null;
+    let activeCategory = null;
+    const ADMIN_PASSWORD = '357357';
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategoryPills();
+      renderIntentView();
+      renderQrView();
+      updateStats();
+      document.getElementById('stat-ua').textContent = navigator.userAgent.substring(0, 80) + '...';
+    });
+
+    // ============================================
+    // VIEW SWITCHING
+    // ============================================
+    function switchView(view) {
+      currentView = view;
+
+      // Update tabs
+      document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
+      if (view === 'intent') {
+        document.getElementById('tab-qr').classList.add('active');
+        document.getElementById('tab-intent').classList.add('hidden');
+        document.getElementById('tab-qr').classList.remove('hidden');
+      } else if (view === 'qr') {
+        document.getElementById('tab-intent').classList.add('active');
+        document.getElementById('tab-qr').classList.add('hidden');
+        document.getElementById('tab-intent').classList.remove('hidden');
       }
+
+      // Update views
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + view).classList.add('active');
+
+      // Show/hide controls bar (hide for admin)
+      document.getElementById('bar-controls').classList.toggle('hidden', view === 'admin');
     }
 
-    // Render category sections with intent cards
-    function renderCategories() {
-      const container = document.getElementById('db-categories');
+    // ============================================
+    // CATEGORY PILLS
+    // ============================================
+    function renderCategoryPills() {
+      const container = document.getElementById('cat-pills');
+      container.innerHTML = '<button class="cat-pill active" data-cat="all" onclick="filterByCategory(\'all\')">All</button>';
+
+      Object.keys(categories).forEach(key => {
+        const cat = categories[key];
+        const pill = document.createElement('button');
+        pill.className = 'cat-pill';
+        pill.dataset.cat = key;
+        pill.textContent = cat.icon + ' ' + cat.label;
+        pill.onclick = () => filterByCategory(key);
+        container.appendChild(pill);
+      });
+    }
+
+    function filterByCategory(catKey) {
+      activeCategory = catKey === 'all' ? null : catKey;
+
+      // Update pills
+      document.querySelectorAll('.cat-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.cat === catKey);
+      });
+
+      // Filter categories
+      document.querySelectorAll('.category-section').forEach(section => {
+        const match = !activeCategory || section.dataset.category === activeCategory;
+        section.style.display = match ? 'block' : 'none';
+        if (match && activeCategory) section.classList.add('open');
+      });
+
+      // Scroll to top
+      document.querySelector('.main-content').scrollTop = 0;
+    }
+
+    // ============================================
+    // INTENT VIEW RENDERING
+    // ============================================
+    function renderIntentView() {
+      const container = document.getElementById('intent-categories');
       container.innerHTML = '';
 
-      // Group intents by category
+      // Group by category
       const grouped = {};
       intentDatabase.forEach(intent => {
         if (!grouped[intent.category]) grouped[intent.category] = [];
         grouped[intent.category].push(intent);
       });
 
-      // Render each category (in priority order from categories object)
+      // Render in priority order
       Object.keys(categories).forEach(catKey => {
         const intents = grouped[catKey];
         if (!intents || intents.length === 0) return;
 
         const cat = categories[catKey];
         const section = document.createElement('div');
-        section.className = 'db-category';
-        section.id = 'cat-' + catKey;
-        section.dataset.priority = cat.priority;
+        section.className = 'category-section';
         section.dataset.category = catKey;
 
         section.innerHTML = `
-          <div class="db-cat-header" onclick="toggleCategory('${catKey}')">
-            <span class="db-cat-title">
-              <span class="icon">${cat.icon}</span>${cat.label}
+          <div class="cat-header" data-priority="${cat.priority}" onclick="toggleCategory(this.parentElement)">
+            <span class="cat-title">
+              <span class="cat-icon">${cat.icon}</span>
+              ${cat.label}
             </span>
-            <span class="db-cat-count">${intents.length}</span>
+            <span class="cat-count">${intents.length}</span>
           </div>
-          <div class="db-cat-body" id="cat-body-${catKey}"></div>
+          <div class="cat-body"></div>
         `;
+
+        const body = section.querySelector('.cat-body');
+        renderIntentCards(body, intents);
         container.appendChild(section);
-
-        // Render intent cards
-        const body = section.querySelector('.db-cat-body');
-        renderIntentCards(body, intents, catKey);
       });
-
-      updateTriedCount();
     }
 
-    // Render intent cards within a category
-    function renderIntentCards(container, intents, catKey) {
-      container.innerHTML = '';
-
-      // Sort: non-tried first, then tried (preserving order within each group)
+    function renderIntentCards(container, intents) {
+      // Sort: non-tried first
       const sorted = [...intents].sort((a, b) => {
         const aTried = triedIntents.includes(a.id);
         const bTried = triedIntents.includes(b.id);
@@ -1300,9 +826,7 @@ FOR OTHER DEVICES (may work):
         card.className = 'intent-card';
         card.id = 'intent-' + intent.id;
         card.dataset.intentId = intent.id;
-        card.dataset.category = catKey;
 
-        // Apply tried states
         if (intent.id === lastTriedId) {
           card.classList.add('last-tried');
         } else if (triedIntents.includes(intent.id)) {
@@ -1310,29 +834,33 @@ FOR OTHER DEVICES (may work):
         }
 
         card.innerHTML = `
-          <div class="ic-label">${intent.label}</div>
-          <div class="ic-purpose">${intent.purpose}</div>
+          <div class="intent-label">${intent.label}</div>
+          <div class="intent-purpose">${intent.purpose}</div>
         `;
         card.onclick = () => handleIntentClick(intent);
         container.appendChild(card);
       });
     }
 
-    // Handle intent click - grey out, move previous to end, open intent
+    function toggleCategory(section) {
+      section.classList.toggle('open');
+    }
+
+    // ============================================
+    // INTENT CLICK HANDLING
+    // ============================================
     function handleIntentClick(intent) {
-      // If there was a previously tried intent, mark it as fully tried
+      // Move previous tried to end
       if (lastTriedId && lastTriedId !== intent.id) {
         const prevCard = document.getElementById('intent-' + lastTriedId);
         if (prevCard) {
           prevCard.classList.remove('last-tried');
           prevCard.classList.add('tried');
-          // Move to end of its category
-          const catBody = prevCard.parentElement;
-          catBody.appendChild(prevCard);
+          prevCard.parentElement.appendChild(prevCard);
         }
       }
 
-      // Mark current as last tried
+      // Mark current as tried
       if (!triedIntents.includes(intent.id)) {
         triedIntents.push(intent.id);
       }
@@ -1344,67 +872,205 @@ FOR OTHER DEVICES (may work):
         card.classList.remove('tried');
         card.classList.add('last-tried');
       }
-      updateTriedCount();
 
-      // Open the intent URL
+      updateStats();
+
+      // Handle voice commands differently
+      if (intent.category === 'voice_commands') {
+        alert('🗣️ Voice Command:\n\n"Hey Google, ' + intent.label.replace('Open ', '') + '"');
+        return;
+      }
+
+      // Open intent
       window.location.href = intent.intentUrl;
     }
 
-    // Update tried count display
-    function updateTriedCount() {
-      const el = document.getElementById('db-tried-count');
-      if (el) el.textContent = 'Tried: ' + triedIntents.length;
-    }
+    // ============================================
+    // QR VIEW RENDERING
+    // ============================================
+    function renderQrView() {
+      const container = document.getElementById('qr-categories');
+      container.innerHTML = '';
 
-    // Toggle category open/close
-    function toggleCategory(catKey) {
-      const section = document.getElementById('cat-' + catKey);
-      if (section) section.classList.toggle('open');
-    }
+      // Group by category
+      const grouped = {};
+      intentDatabase.forEach(intent => {
+        // Skip voice commands for QR
+        if (intent.category === 'voice_commands') return;
+        if (!grouped[intent.category]) grouped[intent.category] = [];
+        grouped[intent.category].push(intent);
+      });
 
-    // Filter database by search
-    function filterDatabase() {
-      const search = document.getElementById('db-search').value.toLowerCase();
+      Object.keys(categories).forEach(catKey => {
+        const intents = grouped[catKey];
+        if (!intents || intents.length === 0) return;
 
-      document.querySelectorAll('.db-category').forEach(section => {
-        let visibleCount = 0;
-        section.querySelectorAll('.intent-card').forEach(card => {
-          const label = card.querySelector('.ic-label').textContent.toLowerCase();
-          const purpose = card.querySelector('.ic-purpose').textContent.toLowerCase();
-          const matches = !search || label.includes(search) || purpose.includes(search);
-          card.classList.toggle('hidden', !matches);
-          if (matches) visibleCount++;
+        const cat = categories[catKey];
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        section.dataset.category = catKey;
+
+        section.innerHTML = `
+          <div class="cat-header" data-priority="${cat.priority}" onclick="toggleCategory(this.parentElement)">
+            <span class="cat-title">
+              <span class="cat-icon">${cat.icon}</span>
+              ${cat.label}
+            </span>
+            <span class="cat-count">${intents.length}</span>
+          </div>
+          <div class="cat-body">
+            <div class="qr-grid"></div>
+          </div>
+        `;
+
+        const grid = section.querySelector('.qr-grid');
+        intents.slice(0, 10).forEach(intent => {
+          const item = document.createElement('div');
+          item.className = 'qr-item';
+          item.onclick = () => showQrModal(intent);
+
+          const qrBox = document.createElement('div');
+          qrBox.className = 'qr-box';
+
+          // Generate small QR
+          const qr = new QRCode(qrBox, {
+            text: intent.intentUrl,
+            width: 80,
+            height: 80,
+            colorDark: '#000',
+            colorLight: '#fff',
+            correctLevel: QRCode.CorrectLevel.L
+          });
+
+          item.appendChild(qrBox);
+          item.innerHTML += `<div class="qr-label">${intent.label}</div>`;
+          grid.appendChild(item);
         });
-        // Hide category if no matches
-        section.classList.toggle('hidden', visibleCount === 0);
-        // Auto-open if searching
-        if (search && visibleCount > 0) section.classList.add('open');
+
+        container.appendChild(section);
       });
     }
 
-    // Reset view - clear tried state and reorder
-    function resetIntentView() {
-      triedIntents = [];
-      lastTriedId = null;
-      document.getElementById('db-search').value = '';
-      renderCategories();
+    function showQrModal(intent) {
+      const modal = document.getElementById('qr-modal');
+      const large = document.getElementById('qr-large');
+      const title = document.getElementById('qr-title');
+
+      large.innerHTML = '';
+      new QRCode(large, {
+        text: intent.intentUrl,
+        width: 200,
+        height: 200,
+        colorDark: '#000',
+        colorLight: '#fff',
+        correctLevel: QRCode.CorrectLevel.L
+      });
+
+      title.textContent = intent.label;
+      modal.classList.add('active');
+    }
+
+    function closeQrModal(e) {
+      if (!e || e.target.classList.contains('qr-modal') || e.target.classList.contains('qr-close')) {
+        document.getElementById('qr-modal').classList.remove('active');
+      }
     }
 
     // ============================================
-    // INITIALIZATION
+    // SEARCH & FILTER
     // ============================================
+    function filterIntents() {
+      const search = document.getElementById('search-box').value.toLowerCase();
 
-    // On load: initialize QR and database
-    window.onload = function() {
-      // Desktop: pre-generate QR
-      if (window.innerWidth >= 600) {
-        document.getElementById('qr-input').value =
-          'intent://com.android.settings/#Intent;scheme=android-app;end';
-        generateQR();
+      document.querySelectorAll('.category-section').forEach(section => {
+        let hasVisible = false;
+
+        section.querySelectorAll('.intent-card').forEach(card => {
+          const label = card.querySelector('.intent-label').textContent.toLowerCase();
+          const purpose = card.querySelector('.intent-purpose').textContent.toLowerCase();
+          const matches = !search || label.includes(search) || purpose.includes(search);
+          card.style.display = matches ? 'block' : 'none';
+          if (matches) hasVisible = true;
+        });
+
+        section.style.display = hasVisible ? 'block' : 'none';
+        if (search && hasVisible) section.classList.add('open');
+      });
+    }
+
+    // ============================================
+    // RESET
+    // ============================================
+    function resetIntentView() {
+      triedIntents = [];
+      lastTriedId = null;
+      document.getElementById('search-box').value = '';
+      activeCategory = null;
+
+      document.querySelectorAll('.cat-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.cat === 'all');
+      });
+
+      renderIntentView();
+      updateStats();
+    }
+
+    // ============================================
+    // ADMIN
+    // ============================================
+    function showPasswordModal() {
+      document.getElementById('password-modal').classList.add('active');
+      document.getElementById('admin-password').value = '';
+      document.getElementById('admin-password').focus();
+    }
+
+    function checkPassword() {
+      const input = document.getElementById('admin-password');
+      if (input.value === ADMIN_PASSWORD) {
+        document.getElementById('password-modal').classList.remove('active');
+        switchView('admin');
+        updateStats();
       }
-      // Load intent database
-      loadDatabase();
-    };
+    }
+
+    function submitPassword() {
+      const input = document.getElementById('admin-password');
+      if (input.value === ADMIN_PASSWORD) {
+        document.getElementById('password-modal').classList.remove('active');
+        switchView('admin');
+        updateStats();
+      } else {
+        document.getElementById('password-error').style.display = 'block';
+        input.value = '';
+        setTimeout(() => {
+          document.getElementById('password-error').style.display = 'none';
+        }, 2000);
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = intentDatabase.length;
+      document.getElementById('stat-cats').textContent = Object.keys(categories).length;
+      document.getElementById('stat-tried').textContent = triedIntents.length;
+    }
+
+    function exportDatabase() {
+      const data = {
+        metadata: {
+          exported: new Date().toISOString(),
+          totalIntents: intentDatabase.length
+        },
+        categories: categories,
+        intents: intentDatabase
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'frp-intent-database.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
