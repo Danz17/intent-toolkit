@@ -1,0 +1,1415 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-12",
+    "totalIntents": 493,
+    "sources": [
+      "https://github.com/esc0rtd3w/frp-activity-launcher",
+      "https://github.com/zeldoon/Android-Intents---FRP-bypass"
+    ],
+    "author": "Phenix (Alaa Qweider)"
+  },
+  "categories": {
+    "general": { "icon": "⚙️", "label": "General Android", "priority": "high" },
+    "security": { "icon": "🔒", "label": "Lock Screen & Security", "priority": "critical" },
+    "settings": { "icon": "🛠️", "label": "Device Settings", "priority": "high" },
+    "third_party": { "icon": "📦", "label": "3rd Party FRP Tools", "priority": "critical" },
+    "google": { "icon": "🔵", "label": "Google Apps", "priority": "medium" },
+    "samsung": { "icon": "📱", "label": "Samsung", "priority": "high" },
+    "motorola": { "icon": "📱", "label": "Motorola", "priority": "low" },
+    "xiaomi": { "icon": "📱", "label": "Xiaomi", "priority": "medium" },
+    "oneplus": { "icon": "📱", "label": "OnePlus", "priority": "medium" },
+    "oppo": { "icon": "📱", "label": "OPPO", "priority": "medium" },
+    "infinix": { "icon": "📱", "label": "Infinix", "priority": "low" },
+    "huawei": { "icon": "📱", "label": "Huawei", "priority": "medium" },
+    "lg": { "icon": "📱", "label": "LG", "priority": "low" },
+    "sony": { "icon": "📱", "label": "Sony", "priority": "low" },
+    "htc": { "icon": "📱", "label": "HTC", "priority": "low" },
+    "nokia": { "icon": "📱", "label": "Nokia", "priority": "low" },
+    "asus": { "icon": "📱", "label": "Asus", "priority": "low" },
+    "realme": { "icon": "📱", "label": "Realme", "priority": "medium" },
+    "pixel": { "icon": "📱", "label": "Google Pixel", "priority": "medium" }
+  },
+  "intents": [
+    {
+      "id": "general_001",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Open Settings App",
+      "intentUrl": "intent://com.android.settings/#Intent;scheme=android-app;end",
+      "purpose": "Main settings launcher",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_002",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Open Settings (Action)",
+      "intentUrl": "intent:#Intent;action=android.settings.SETTINGS;end",
+      "purpose": "Settings via action intent",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_003",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "USB Settings",
+      "intentUrl": "intent://com.android.settings.UsbSettingsActivity/#Intent;scheme=android-app;end",
+      "purpose": "USB connection settings - potential ADB access",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_004",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "ADB Settings",
+      "intentUrl": "intent://com.android.settings.AdbSettingsActivity/#Intent;scheme=android-app;end",
+      "purpose": "ADB debugging settings - critical for bypass",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_005",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Calculator (AOSP)",
+      "intentUrl": "intent://com.android.calculator2/#Intent;scheme=android-app;end",
+      "purpose": "Basic calculator app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_006",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Dial Pad",
+      "intentUrl": "tel:123456789",
+      "purpose": "Open phone dialer",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_007",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Secret Code",
+      "intentUrl": "tel:*#0*#",
+      "purpose": "Trigger diagnostic secret code",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_008",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Launch Camera (Photo)",
+      "intentUrl": "intent://android.media.action.IMAGE_CAPTURE#Intent;scheme=android-app;end",
+      "purpose": "Open camera for photo",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_009",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Launch Camera (Video)",
+      "intentUrl": "intent://android.media.action.VIDEO_CAPTURE#Intent;scheme=android-app;end",
+      "purpose": "Open camera for video",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_010",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Add Calendar Event",
+      "intentUrl": "intent://android.intent.action.INSERT#Intent;scheme=content://com.android.calendar/events",
+      "purpose": "Create calendar event",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_011",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Pick Contact",
+      "intentUrl": "intent://android.intent.action.PICK#Intent;scheme=content://contacts/people",
+      "purpose": "Contact picker",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_012",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Open Contacts",
+      "intentUrl": "intent://com.android.contacts/#Intent;scheme=android-app;end",
+      "purpose": "Contacts app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_013",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Compose Email",
+      "intentUrl": "intent://android.intent.action.SEND#Intent;scheme=mailto:someone@example.com",
+      "purpose": "Email composition",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_014",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Web Search",
+      "intentUrl": "intent://android.intent.action.WEB_SEARCH#Intent;scheme=android-app;end?query=chatgpt",
+      "purpose": "Trigger web search",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_015",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Open Dialer with Number",
+      "intentUrl": "intent://android.intent.action.DIAL#Intent;scheme=tel:+123456789",
+      "purpose": "Dialer with pre-filled number",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_016",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Open Browser URL",
+      "intentUrl": "intent://android.intent.action.VIEW#Intent;scheme=https://www.example.com",
+      "purpose": "Open URL in browser",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_017",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Quick Contact",
+      "intentUrl": "intent://android.intent.action.QUICK_CONTACT#Intent;scheme=content://contacts/people/1",
+      "purpose": "Quick contact view",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "general_018",
+      "category": "general",
+      "manufacturer": "all",
+      "label": "Print Document",
+      "intentUrl": "intent://android.intent.action.PRINT#Intent;scheme=content://com.example.document",
+      "purpose": "Print dialog",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_001",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Open Smart Lock (Google)",
+      "intentUrl": "intent://#Intent;scheme=promote_smartlock_scheme;package=com.google.android.gms;end",
+      "purpose": "Google Smart Lock - potential bypass vector",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_002",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Change Screen Lock Type",
+      "intentUrl": "intent://#Intent;action=android.app.action.CHOOSE_LOCK;package=com.android.settings;end",
+      "purpose": "Lock type selection - critical",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_003",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Lock Screen & Security Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.SECURITY_SETTINGS;package=com.android.settings;end",
+      "purpose": "Security settings main screen",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_004",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Fingerprint Enrollment",
+      "intentUrl": "intent://#Intent;action=android.settings.FINGERPRINT_ENROLL;package=com.android.settings;end",
+      "purpose": "Fingerprint setup",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_005",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Set New PIN/Password",
+      "intentUrl": "intent://#Intent;action=android.app.action.SET_NEW_PASSWORD;package=com.android.settings;end",
+      "purpose": "Password creation - critical bypass vector",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_006",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "App Pinning Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.APP_PINNING_SETTINGS;package=com.android.settings;end",
+      "purpose": "Pin app to screen",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_007",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Credential Storage Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.CREDENTIAL_STORAGE_SETTINGS;package=com.android.settings;end",
+      "purpose": "Credential management",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_008",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Trusted Credentials (User)",
+      "intentUrl": "intent://#Intent;action=android.settings.TRUSTED_CREDENTIALS_USER;package=com.android.settings;end",
+      "purpose": "User-installed certificates",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_009",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Trusted Credentials (System)",
+      "intentUrl": "intent://#Intent;action=android.settings.TRUSTED_CREDENTIALS_SYSTEM;package=com.android.settings;end",
+      "purpose": "System certificates",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_010",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Trust Agents Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.TRUST_AGENTS_SETTINGS;package=com.android.settings;end",
+      "purpose": "Smart Lock trust agents",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_011",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Privacy Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.PRIVACY_SETTINGS;package=com.android.settings;end",
+      "purpose": "Privacy configuration",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_012",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Autofill Service Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.AUTOFILL_SETTINGS;package=com.android.settings;end",
+      "purpose": "Password autofill service",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_013",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "WebAuthn (2FA) Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.WEBAUTHN_SETTINGS;package=com.android.settings;end",
+      "purpose": "Two-factor authentication",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_014",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "SIM PIN Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.SIM_LOCK_SETTINGS;package=com.android.settings;end",
+      "purpose": "SIM card PIN",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_015",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Owner Info Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.OWNER_INFO_SETTINGS;package=com.android.settings;end",
+      "purpose": "Lock screen message",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_016",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Device Admin Apps",
+      "intentUrl": "intent://#Intent;action=android.settings.DEVICE_ADMIN_SETTINGS;package=com.android.settings;end",
+      "purpose": "Device administrator list",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_017",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Secure Startup",
+      "intentUrl": "intent://#Intent;action=android.settings.SECURE_STARTUP_SETTINGS;package=com.android.settings;end",
+      "purpose": "Encryption at startup",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_018",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Auto-Lock Timeout",
+      "intentUrl": "intent://#Intent;action=android.settings.LOCK_AFTER_TIMEOUT;package=com.android.settings;end",
+      "purpose": "Screen lock timeout",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_019",
+      "category": "security",
+      "manufacturer": "samsung",
+      "label": "Samsung Service Mode",
+      "intentUrl": "intent://#Intent;action=com.sec.android.app.servicemodeapp.ServiceModeActivity;package=com.sec.android.app.servicemodeapp;end",
+      "purpose": "Samsung hidden service menu",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_020",
+      "category": "security",
+      "manufacturer": "samsung",
+      "label": "Samsung Pass (Autofill & Biometrics)",
+      "intentUrl": "intent://#Intent;action=com.samsung.android.samsungpassautofill;package=com.samsung.android.samsungpassautofill;end",
+      "purpose": "Samsung biometric autofill",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_021",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Biometric Enrollment Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.BIOMETRIC_ENROLL;package=com.android.settings;end",
+      "purpose": "Biometric setup",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_022",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Screen Lock Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.SCREEN_LOCK_SETTINGS;package=com.android.settings;end",
+      "purpose": "Screen lock configuration",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_023",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Keyguard Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.KEYGUARD_SETTINGS;package=com.android.settings;end",
+      "purpose": "Lock screen preferences",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_024",
+      "category": "security",
+      "manufacturer": "samsung",
+      "label": "Samsung Pass Main Settings",
+      "intentUrl": "intent://#Intent;action=com.samsung.android.samsungpass.settings.SettingsActivity;package=com.samsung.android.samsungpass;end",
+      "purpose": "Samsung Pass config",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_025",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Safety & Emergency Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.SAFETY_HUB_SETTINGS;package=com.google.android.settings;end",
+      "purpose": "Emergency information",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_026",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Google Trust Agent Settings",
+      "intentUrl": "intent://#Intent;action=com.google.android.gms.trustagent.TrustAgentSettings;package=com.google.android.gms;end",
+      "purpose": "Google Smart Lock agents",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_027",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Device Security Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.DEVICE_SECURITY_SETTINGS;package=com.android.settings;end",
+      "purpose": "Device security overview",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_028",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "User Credentials",
+      "intentUrl": "intent://#Intent;action=android.settings.USER_CREDENTIALS;package=com.android.settings;end",
+      "purpose": "User certificate management",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_029",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Password Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.PASSWORD_SETTINGS;package=com.android.settings;end",
+      "purpose": "Password policies",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_030",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Screen Pinning Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.SCREEN_PINNING_SETTINGS;package=com.android.settings;end",
+      "purpose": "Screen pinning mode",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_031",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Direct Unlock Settings",
+      "intentUrl": "intent://#Intent;action=com.android.settings.DIRECT_UNLOCK_SETTINGS;package=com.android.settings;end",
+      "purpose": "Skip lock screen",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_032",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Google Verify Apps Settings",
+      "intentUrl": "intent://#Intent;action=com.google.android.gms.security.settings.VerifyAppsSettingsActivity;package=com.google.android.gms;end",
+      "purpose": "Play Protect settings",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_033",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Location Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.LOCATION_SOURCE_SETTINGS;package=com.android.settings;end",
+      "purpose": "GPS and location",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "security_034",
+      "category": "security",
+      "manufacturer": "all",
+      "label": "Usage Access Settings",
+      "intentUrl": "intent://#Intent;action=android.settings.USAGE_ACCESS_SETTINGS;package=com.android.settings;end",
+      "purpose": "App usage permissions",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_001",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Display Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.DISPLAY_SETTINGS;end",
+      "purpose": "Screen and display options",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_002",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Notification Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.APP_NOTIFICATION_SETTINGS;end",
+      "purpose": "App notification preferences",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_003",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Battery Saver Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.BATTERY_SAVER_SETTINGS;end",
+      "purpose": "Power saving mode",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_004",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Accessibility Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.ACCESSIBILITY_SETTINGS;end",
+      "purpose": "Accessibility options - important for bypass",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_005",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Data Usage Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.DATA_USAGE_SETTINGS;end",
+      "purpose": "Mobile data usage",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_006",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Wi-Fi Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.WIFI_SETTINGS;end",
+      "purpose": "WiFi configuration",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_007",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Hotspot & Tethering Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.TETHER_SETTINGS;end",
+      "purpose": "Mobile hotspot",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_008",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Airplane Mode Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.AIRPLANE_MODE_SETTINGS;end",
+      "purpose": "Flight mode",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_009",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Bluetooth Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.BLUETOOTH_SETTINGS;end",
+      "purpose": "Bluetooth pairing",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_010",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "NFC Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.NFC_SETTINGS;end",
+      "purpose": "NFC configuration",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_011",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Wireless & Network Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.WIRELESS_SETTINGS;end",
+      "purpose": "Network overview",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_012",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Date & Time Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.DATE_SETTINGS;end",
+      "purpose": "Date and timezone",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_013",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Print Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.PRINT_SETTINGS;end",
+      "purpose": "Printer setup",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_014",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Proxy Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.PROXY_SETTINGS;end",
+      "purpose": "Network proxy",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_015",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Input Method Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.INPUT_METHOD_SETTINGS;end",
+      "purpose": "Keyboard selection",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_016",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "User Dictionary Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.USER_DICTIONARY_SETTINGS;end",
+      "purpose": "Custom words",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_017",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Security & Location Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.SECURITY_SETTINGS;end",
+      "purpose": "Security overview",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "settings_018",
+      "category": "settings",
+      "manufacturer": "all",
+      "label": "Location Source Settings",
+      "intentUrl": "intent:#Intent;action=android.settings.LOCATION_SOURCE_SETTINGS;end",
+      "purpose": "GPS source",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_001",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "HushSMS",
+      "intentUrl": "intent://com.hushsms.app/#Intent;end",
+      "purpose": "FRP bypass SMS tool",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_002",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Alliance Shield",
+      "intentUrl": "intent://com.ss.ae/alliance_shield/#Intent;end",
+      "purpose": "Device admin FRP tool",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_003",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Alliance Shield X",
+      "intentUrl": "intent://com.ss.aex/alliance_shield_x/#Intent;end",
+      "purpose": "Device admin FRP tool v2",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_004",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Activity Launcher",
+      "intentUrl": "intent://com.activitylauncher/#Intent;end",
+      "purpose": "Launch hidden activities",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_005",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Test DPC",
+      "intentUrl": "intent://com.afwsamples.testdpc/#Intent;end",
+      "purpose": "Device Policy Controller",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_006",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Factory Test",
+      "intentUrl": "intent://com.example.factorytest/#Intent;end",
+      "purpose": "Factory test mode",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_007",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Calculator",
+      "intentUrl": "intent://com.andr.calculator/#Intent;end",
+      "purpose": "Third-party calculator",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_008",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Menu Button",
+      "intentUrl": "intent://com.example.menubutton/#Intent;end",
+      "purpose": "Navigation helper",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_009",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "ES File Explorer",
+      "intentUrl": "intent://com.estrongs.android.pop/#Intent;end",
+      "purpose": "File manager with root access",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_010",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Phone Clone",
+      "intentUrl": "intent://com.example.phoneclone/#Intent;end",
+      "purpose": "Data migration tool",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_011",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Smart Switch / Oppo Clone",
+      "intentUrl": "intent://com.sec.android.easyMover/#Intent;end",
+      "purpose": "Samsung data transfer",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_012",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Quick Shortcut Maker",
+      "intentUrl": "intent://com.quickshortcutmaker/#Intent;end",
+      "purpose": "Create activity shortcuts",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_013",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "FRPFILE SMS",
+      "intentUrl": "intent://com.frpfile.sms/#Intent;end",
+      "purpose": "FRP bypass via SMS",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "third_party_014",
+      "category": "third_party",
+      "manufacturer": "all",
+      "label": "Google Account Manager (v7-11)",
+      "intentUrl": "intent://com.google.android.gsf.login/#Intent;end",
+      "purpose": "Add Google account - critical for FRP",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_001",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Dialer",
+      "intentUrl": "intent://com.samsung.android.dialer/#Intent;scheme=android-app;end",
+      "purpose": "Samsung phone app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_002",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "MyFiles (File Manager)",
+      "intentUrl": "intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end",
+      "purpose": "Samsung file manager",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_003",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Galaxy Store",
+      "intentUrl": "intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end",
+      "purpose": "Samsung app store",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_004",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Home Launcher",
+      "intentUrl": "intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end",
+      "purpose": "Samsung One UI launcher",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_005",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Biometrics Auth Service",
+      "intentUrl": "intent://com.samsung.android.biometrics.authservice/#Intent;scheme=android-app;end",
+      "purpose": "Samsung biometric service",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_006",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Knox Check",
+      "intentUrl": "intent://com.samsung.knox.knoxcheck/#Intent;scheme=android-app;end",
+      "purpose": "Knox security verification",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_007",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Secure Folder",
+      "intentUrl": "intent://com.samsung.knox.securefolder/#Intent;scheme=android-app;end",
+      "purpose": "Knox Secure Folder",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_008",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Smart Switch",
+      "intentUrl": "intent://com.sec.android.easyMover/#Intent;scheme=android-app;end",
+      "purpose": "Samsung data transfer",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_009",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Service Mode (Hidden Menu)",
+      "intentUrl": "intent://com.sec.android.hiddenmenu/#Intent;scheme=android-app;end",
+      "purpose": "Samsung hidden diagnostic menu",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_010",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Knox Cloud MDM Agent",
+      "intentUrl": "intent://com.samsung.android.knox.cloudmdm.smdms/#Intent;scheme=android-app;end",
+      "purpose": "Knox MDM management",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_011",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Good Lock",
+      "intentUrl": "intent://com.samsung.android.goodlock/#Intent;scheme=android-app;end",
+      "purpose": "Samsung customization suite",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_012",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Wearable",
+      "intentUrl": "intent://com.samsung.android.app.watchmanager/#Intent;scheme=android-app;end",
+      "purpose": "Galaxy Watch manager",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_013",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Safety Information",
+      "intentUrl": "intent://com.samsung.android.app.safetyinformation/#Intent;scheme=android-app;end",
+      "purpose": "Device safety info",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_014",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Device Security",
+      "intentUrl": "intent://com.samsung.android.sm.devicesecurity/#Intent;scheme=android-app;end",
+      "purpose": "Samsung security check",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_015",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Sensor Settings",
+      "intentUrl": "intent://com.samsung.android.provider.sensorsettings/#Intent;scheme=android-app;end",
+      "purpose": "Sensor configuration",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_016",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Bixby Routines",
+      "intentUrl": "intent://com.samsung.android.app.routines/#Intent;scheme=android-app;end",
+      "purpose": "Automation routines",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_017",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Edge Panel",
+      "intentUrl": "intent://com.samsung.android.app.cocktailbarservice/#Intent;scheme=android-app;end",
+      "purpose": "Edge screen apps",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_018",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Sticker Center",
+      "intentUrl": "intent://com.samsung.android.stickercenter/#Intent;scheme=android-app;end",
+      "purpose": "AR stickers",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_019",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Pass",
+      "intentUrl": "intent://com.samsung.android.samsungpass/#Intent;scheme=android-app;end",
+      "purpose": "Password manager",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_020",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Pass Autofill",
+      "intentUrl": "intent://com.samsung.android.samsungpassautofill/#Intent;scheme=android-app;end",
+      "purpose": "Password autofill",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_021",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Notes",
+      "intentUrl": "intent://com.samsung.android.app.notes/#Intent;scheme=android-app;end",
+      "purpose": "Note-taking app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_022",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Calculator",
+      "intentUrl": "intent://com.sec.android.app.popupcalculator/#Intent;scheme=android-app;end",
+      "purpose": "Calculator app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_023",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Messages",
+      "intentUrl": "intent://com.samsung.android.messaging/#Intent;scheme=android-app;end",
+      "purpose": "SMS app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_024",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Clock",
+      "intentUrl": "intent://com.sec.android.app.clockpackage/#Intent;scheme=android-app;end",
+      "purpose": "Alarm and clock",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_025",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Camera",
+      "intentUrl": "intent://com.sec.android.app.camera/#Intent;scheme=android-app;end",
+      "purpose": "Samsung camera",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_026",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Gallery",
+      "intentUrl": "intent://com.sec.android.gallery3d/#Intent;scheme=android-app;end",
+      "purpose": "Photo gallery",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_027",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Contacts",
+      "intentUrl": "intent://com.samsung.android.app.contacts/#Intent;scheme=android-app;end",
+      "purpose": "Contacts app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_028",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Voice Recorder",
+      "intentUrl": "intent://com.sec.android.app.voicenote/#Intent;scheme=android-app;end",
+      "purpose": "Audio recording",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_029",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Internet Browser",
+      "intentUrl": "intent://com.sec.android.app.sbrowser/#Intent;scheme=android-app;end",
+      "purpose": "Samsung browser",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_030",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Device Care",
+      "intentUrl": "intent://com.samsung.android.lool/#Intent;scheme=android-app;end",
+      "purpose": "Device maintenance",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_031",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Bixby Settings",
+      "intentUrl": "intent://com.samsung.android.app.settings.bixby/#Intent;scheme=android-app;end",
+      "purpose": "Bixby configuration",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_032",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Smart Capture",
+      "intentUrl": "intent://com.samsung.android.app.smartcapture/#Intent;scheme=android-app;end",
+      "purpose": "Screenshot tools",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_033",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Samsung Settings Search",
+      "intentUrl": "intent://com.samsung.android.app.settings.search/#Intent;scheme=android-app;end",
+      "purpose": "Search settings",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "samsung_034",
+      "category": "samsung",
+      "manufacturer": "samsung",
+      "label": "Smart View / Screen Mirroring",
+      "intentUrl": "intent://com.samsung.android.smartmirroring/#Intent;scheme=android-app;end",
+      "purpose": "Screen cast",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_001",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Accessibility Scanner",
+      "intentUrl": "intent://com.google.android.apps.accessibility.auditor/#Intent;scheme=android-app;end",
+      "purpose": "Accessibility testing",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_002",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Assistant",
+      "intentUrl": "intent://com.google.android.apps.googleassistant/#Intent;scheme=android-app;end",
+      "purpose": "Voice assistant",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_003",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Play Store",
+      "intentUrl": "intent://com.android.vending/#Intent;scheme=android-app;end",
+      "purpose": "App store",
+      "testedDevices": { "working": [], "notWorking": [], "partial": ["SM-S721B"] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_004",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "YouTube",
+      "intentUrl": "intent://com.google.android.youtube/#Intent;scheme=android-app;end",
+      "purpose": "Video streaming",
+      "testedDevices": { "working": [], "notWorking": [], "partial": ["SM-S721B"] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_005",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Gmail",
+      "intentUrl": "intent://com.google.android.gm/#Intent;scheme=android-app;end",
+      "purpose": "Email client",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_006",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Maps",
+      "intentUrl": "intent://com.google.android.apps.maps/#Intent;scheme=android-app;end",
+      "purpose": "Navigation",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_007",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Chrome",
+      "intentUrl": "intent://com.android.chrome/#Intent;scheme=android-app;end",
+      "purpose": "Web browser",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_008",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Drive",
+      "intentUrl": "intent://com.google.android.apps.docs/#Intent;scheme=android-app;end",
+      "purpose": "Cloud storage",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_009",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Photos",
+      "intentUrl": "intent://com.google.android.apps.photos/#Intent;scheme=android-app;end",
+      "purpose": "Photo management",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_010",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Play Services",
+      "intentUrl": "intent://com.google.android.gms/#Intent;scheme=android-app;end",
+      "purpose": "Google services framework",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_011",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Files by Google",
+      "intentUrl": "intent://com.google.android.apps.nbu.files/#Intent;scheme=android-app;end",
+      "purpose": "File manager",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_012",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Calendar",
+      "intentUrl": "intent://com.google.android.calendar/#Intent;scheme=android-app;end",
+      "purpose": "Calendar app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_013",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Contacts",
+      "intentUrl": "intent://com.google.android.contacts/#Intent;scheme=android-app;end",
+      "purpose": "Contacts sync",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_014",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Keep",
+      "intentUrl": "intent://com.google.android.keep/#Intent;scheme=android-app;end",
+      "purpose": "Notes app",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_015",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Gboard",
+      "intentUrl": "intent://com.google.android.inputmethod.latin/#Intent;scheme=android-app;end",
+      "purpose": "Google keyboard",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_016",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Messages",
+      "intentUrl": "intent://com.google.android.apps.messaging/#Intent;scheme=android-app;end",
+      "purpose": "SMS/RCS messaging",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_017",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Translate",
+      "intentUrl": "intent://com.google.android.apps.translate/#Intent;scheme=android-app;end",
+      "purpose": "Translation",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_018",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Lens",
+      "intentUrl": "intent://com.google.ar.lens/#Intent;scheme=android-app;end",
+      "purpose": "Visual search - QR scanning",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_019",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Android Device Policy",
+      "intentUrl": "intent://com.google.android.apps.work.oobconfig/#Intent;scheme=android-app;end",
+      "purpose": "Enterprise device setup",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    },
+    {
+      "id": "google_020",
+      "category": "google",
+      "manufacturer": "all",
+      "label": "Google Authenticator",
+      "intentUrl": "intent://com.google.android.apps.authenticator2/#Intent;scheme=android-app;end",
+      "purpose": "2FA codes",
+      "testedDevices": { "working": [], "notWorking": ["SM-S721B"], "partial": [] },
+      "source": "esc0rtd3w"
+    }
+  ]
+}

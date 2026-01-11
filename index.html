@@ -346,6 +346,141 @@
       background: #0a1f12;
     }
     .works-on-device .label { color: #22c55e !important; }
+
+    /* Database Tab Styles */
+    .db-controls {
+      background: #0d1b2a;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .db-controls input {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #1e3a5f;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .db-controls input::placeholder { color: #888; }
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-row select {
+      flex: 1;
+      min-width: 100px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #1e3a5f;
+      color: #fff;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .db-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      color: #888;
+      font-size: 0.8rem;
+    }
+    .btn-small {
+      padding: 5px 12px;
+      background: #1e3a5f;
+      color: #00d4ff;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .btn-small:hover { background: #2a4a6f; }
+
+    .db-table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      background: #0d1b2a;
+    }
+    .db-table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+    .db-table th {
+      background: #1e3a5f;
+      color: #00d4ff;
+      padding: 12px 8px;
+      text-align: left;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+    }
+    .db-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #1e3a5f;
+      vertical-align: top;
+    }
+    .db-table tr:hover { background: rgba(0,212,255,0.05); }
+
+    .db-table .cat-cell {
+      white-space: nowrap;
+      font-size: 0.9rem;
+    }
+    .db-table .label-cell {
+      color: #ffd93d;
+      font-weight: bold;
+    }
+    .db-table .purpose-cell {
+      color: #aaa;
+      max-width: 200px;
+    }
+
+    /* Status badges in database */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .status-working { background: #22c55e; color: #000; }
+    .status-partial { background: #f59e0b; color: #000; }
+    .status-blocked { background: #ef4444; color: #fff; }
+    .status-untested { background: #666; color: #fff; }
+
+    /* Action buttons in table */
+    .db-action-btn {
+      padding: 6px 10px;
+      background: #00d4ff;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .db-action-btn:hover { background: #00b8d9; }
+    .db-action-btn.qr { background: #a855f7; color: #fff; }
+    .db-action-btn.qr:hover { background: #9333ea; }
+
+    .db-load-more {
+      text-align: center;
+      padding: 15px;
+    }
+
+    /* Mobile: Compact table layout */
+    @media (max-width: 600px) {
+      .db-table { min-width: 100%; font-size: 0.7rem; }
+      .db-table th, .db-table td { padding: 8px 5px; }
+      .db-table .purpose-cell { display: none; }
+      .filter-row select { min-width: 80px; font-size: 0.7rem; }
+    }
   </style>
 </head>
 <body>
@@ -366,6 +501,7 @@
       <button class="tab" onclick="showTab('samsung')">📱 Samsung</button>
       <button class="tab" onclick="showTab('codes')">🔢 Codes</button>
       <button class="tab" onclick="showTab('qr')">📷 QR Gen</button>
+      <button class="tab" onclick="showTab('database')">📊 Database</button>
       <button class="tab" onclick="showTab('docs')">📖 Docs</button>
     </div>
 
@@ -912,6 +1048,73 @@ FOR OTHER DEVICES (may work):
       <p>Phenix (Alaa Qweider) - <a href="mailto:Alaa@nulled.ai" style="color:#00d4ff;">Alaa@nulled.ai</a></p>
       <p>Test Date: 2026-01-12</p>
     </div>
+
+    <!-- DATABASE TAB - Comprehensive Intent Library -->
+    <div id="database" class="tab-content">
+      <h2>📊 Intent Database</h2>
+
+      <div class="note info">
+        🔍 <strong>Search & Filter</strong> through 120+ intent URLs.
+        Status reflects testing on SM-S721B.
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="db-controls">
+        <input type="text" id="db-search" placeholder="🔍 Search intents..."
+          oninput="filterDatabase()">
+        <div class="filter-row">
+          <select id="db-category" onchange="filterDatabase()">
+            <option value="">All Categories</option>
+          </select>
+          <select id="db-manufacturer" onchange="filterDatabase()">
+            <option value="">All Brands</option>
+            <option value="all">Generic Android</option>
+            <option value="samsung">Samsung</option>
+            <option value="google">Google</option>
+            <option value="xiaomi">Xiaomi</option>
+            <option value="oneplus">OnePlus</option>
+            <option value="oppo">OPPO</option>
+            <option value="huawei">Huawei</option>
+          </select>
+          <select id="db-status" onchange="filterDatabase()">
+            <option value="">All Status</option>
+            <option value="working">✅ Working</option>
+            <option value="partial">⚠️ Partial</option>
+            <option value="notWorking">❌ Blocked</option>
+            <option value="untested">❓ Untested</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Results Counter -->
+      <div class="db-stats">
+        Showing <span id="db-count">0</span> intents
+        <button class="btn-small" onclick="resetFilters()">Reset</button>
+      </div>
+
+      <!-- Database Table -->
+      <div class="db-table-wrap">
+        <table id="db-table" class="db-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Label</th>
+              <th>Purpose</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="db-tbody">
+            <!-- Populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Load More / Pagination -->
+      <div id="db-load-more" class="db-load-more" style="display:none;">
+        <button class="btn" onclick="loadMoreResults()">Load More</button>
+      </div>
+    </div>
   </div>
 
   <!-- Fixed Bottom Quick Actions -->
@@ -974,14 +1177,18 @@ FOR OTHER DEVICES (may work):
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       // Find and activate the matching tab button
+      const tabMap = {
+        'assistant': 'Assistant',
+        'priority': 'Priority',
+        'packages': 'Packages',
+        'samsung': 'Samsung',
+        'codes': 'Codes',
+        'qr': 'QR',
+        'database': 'Database',
+        'docs': 'Docs'
+      };
       document.querySelectorAll('.tab').forEach(t => {
-        if (t.textContent.toLowerCase().includes(tabId) ||
-            (tabId === 'priority' && t.textContent.includes('Priority')) ||
-            (tabId === 'packages' && t.textContent.includes('Packages')) ||
-            (tabId === 'samsung' && t.textContent.includes('Samsung')) ||
-            (tabId === 'codes' && t.textContent.includes('Codes')) ||
-            (tabId === 'qr' && t.textContent.includes('QR')) ||
-            (tabId === 'docs' && t.textContent.includes('Docs'))) {
+        if (t.textContent.includes(tabMap[tabId])) {
           t.classList.add('active');
         }
       });
@@ -1037,13 +1244,176 @@ FOR OTHER DEVICES (may work):
       }
     }
 
-    // On load, don't auto-generate QR on mobile to save resources
-    if (window.innerWidth >= 600) {
-      window.onload = function() {
-        document.getElementById('qr-input').value = 'intent://com.android.settings/#Intent;scheme=android-app;end';
-        generateQR();
-      };
+    // ============================================
+    // INTENT DATABASE - Loaded from JSON
+    // ============================================
+
+    // Category definitions with icons
+    const categories = {
+      general: { icon: "⚙️", label: "General Android" },
+      security: { icon: "🔒", label: "Lock Screen & Security" },
+      settings: { icon: "🛠️", label: "Device Settings" },
+      third_party: { icon: "📦", label: "3rd Party FRP Tools" },
+      google: { icon: "🔵", label: "Google Apps" },
+      samsung: { icon: "📱", label: "Samsung" },
+      motorola: { icon: "📱", label: "Motorola" },
+      xiaomi: { icon: "📱", label: "Xiaomi" },
+      oneplus: { icon: "📱", label: "OnePlus" },
+      oppo: { icon: "📱", label: "OPPO" },
+      huawei: { icon: "📱", label: "Huawei" },
+      pixel: { icon: "📱", label: "Google Pixel" }
+    };
+
+    // Intent database (embedded for offline use)
+    let intentDatabase = [];
+    let filteredResults = [];
+    let displayedCount = 0;
+    const BATCH_SIZE = 50;
+
+    // Load database from JSON file
+    async function loadDatabase() {
+      try {
+        const response = await fetch('research/intent-database.json');
+        const data = await response.json();
+        intentDatabase = data.intents || [];
+        populateCategoryFilter(data.categories || categories);
+        filterDatabase();
+      } catch (err) {
+        console.error('Failed to load database:', err);
+        document.getElementById('db-tbody').innerHTML =
+          '<tr><td colspan="5" style="text-align:center;color:#ef4444;">' +
+          '❌ Failed to load database. Check console.</td></tr>';
+      }
     }
+
+    // Populate category dropdown from database
+    function populateCategoryFilter(cats) {
+      const select = document.getElementById('db-category');
+      select.innerHTML = '<option value="">All Categories</option>';
+      Object.entries(cats).forEach(([key, val]) => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = val.icon + ' ' + val.label;
+        select.appendChild(opt);
+      });
+    }
+
+    // Get status for current device
+    function getDeviceStatus(intent) {
+      const device = currentDevice;
+      if (intent.testedDevices.working.includes(device)) return 'working';
+      if (intent.testedDevices.partial.includes(device)) return 'partial';
+      if (intent.testedDevices.notWorking.includes(device)) return 'notWorking';
+      return 'untested';
+    }
+
+    // Filter database based on search and filters
+    function filterDatabase() {
+      const search = document.getElementById('db-search').value.toLowerCase();
+      const category = document.getElementById('db-category').value;
+      const manufacturer = document.getElementById('db-manufacturer').value;
+      const status = document.getElementById('db-status').value;
+
+      filteredResults = intentDatabase.filter(intent => {
+        // Search filter
+        if (search) {
+          const searchable = (intent.label + intent.purpose + intent.intentUrl)
+            .toLowerCase();
+          if (!searchable.includes(search)) return false;
+        }
+        // Category filter
+        if (category && intent.category !== category) return false;
+        // Manufacturer filter
+        if (manufacturer && intent.manufacturer !== manufacturer) return false;
+        // Status filter
+        if (status && getDeviceStatus(intent) !== status) return false;
+        return true;
+      });
+
+      displayedCount = 0;
+      document.getElementById('db-tbody').innerHTML = '';
+      loadMoreResults();
+      document.getElementById('db-count').textContent = filteredResults.length;
+    }
+
+    // Render more results (pagination)
+    function loadMoreResults() {
+      const tbody = document.getElementById('db-tbody');
+      const end = Math.min(displayedCount + BATCH_SIZE, filteredResults.length);
+
+      for (let i = displayedCount; i < end; i++) {
+        const intent = filteredResults[i];
+        const status = getDeviceStatus(intent);
+        const cat = categories[intent.category] ||
+          { icon: '📱', label: intent.category };
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="cat-cell">${cat.icon}</td>
+          <td class="label-cell">${intent.label}</td>
+          <td class="purpose-cell">${intent.purpose}</td>
+          <td><span class="status-badge status-${status}">${getStatusLabel(status)}</span></td>
+          <td>
+            <button class="db-action-btn" onclick="openIntent('${intent.intentUrl}')">Open</button>
+            <button class="db-action-btn qr" onclick="dbToQR('${intent.intentUrl}')">QR</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      }
+
+      displayedCount = end;
+      const loadMoreDiv = document.getElementById('db-load-more');
+      loadMoreDiv.style.display =
+        displayedCount < filteredResults.length ? 'block' : 'none';
+    }
+
+    // Status label mapping
+    function getStatusLabel(status) {
+      const labels = {
+        working: '✅ Works',
+        partial: '⚠️ Partial',
+        notWorking: '❌ Blocked',
+        untested: '❓ Test'
+      };
+      return labels[status] || '❓ Test';
+    }
+
+    // Open intent URL
+    function openIntent(url) {
+      window.location.href = url;
+    }
+
+    // Send intent to QR tab
+    function dbToQR(url) {
+      document.getElementById('qr-input').value = url;
+      showTab('qr');
+      generateQR();
+    }
+
+    // Reset all filters
+    function resetFilters() {
+      document.getElementById('db-search').value = '';
+      document.getElementById('db-category').value = '';
+      document.getElementById('db-manufacturer').value = '';
+      document.getElementById('db-status').value = '';
+      filterDatabase();
+    }
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+
+    // On load: initialize QR and database
+    window.onload = function() {
+      // Desktop: pre-generate QR
+      if (window.innerWidth >= 600) {
+        document.getElementById('qr-input').value =
+          'intent://com.android.settings/#Intent;scheme=android-app;end';
+        generateQR();
+      }
+      // Load intent database
+      loadDatabase();
+    };
   </script>
 </body>
 </html>
