@@ -300,6 +300,52 @@
     }
     .badge-working { background: #22c55e; color: #000; }
     .badge-try { background: #f59e0b; color: #000; }
+    .badge-blocked { background: #ef4444; color: #fff; }
+
+    /* Device-specific visibility classes */
+    .blocked-on-device {
+      opacity: 0.35;
+      pointer-events: none;
+      position: relative;
+    }
+    .blocked-on-device .label {
+      text-decoration: line-through;
+      color: #666 !important;
+    }
+    .blocked-on-device::after {
+      content: "✗ SM-S721B";
+      position: absolute;
+      top: 5px;
+      right: 8px;
+      font-size: 0.6rem;
+      color: #ef4444;
+      background: rgba(0,0,0,0.5);
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    /* Assistant section special styling */
+    .assistant-link {
+      border-left-color: #4ade80 !important;
+      background: linear-gradient(90deg, #0a1f12 0%, #0d1b2a 100%);
+    }
+    .assistant-link .label { color: #4ade80 !important; }
+    .assistant-link .voice-cmd {
+      display: block;
+      color: #86efac;
+      font-style: italic;
+      margin-top: 4px;
+      font-size: 0.85rem;
+    }
+    .assistant-link .voice-cmd::before { content: '🗣️ "'; }
+    .assistant-link .voice-cmd::after { content: '"'; }
+
+    /* Works badge */
+    .works-on-device {
+      border-left-color: #22c55e !important;
+      background: #0a1f12;
+    }
+    .works-on-device .label { color: #22c55e !important; }
   </style>
 </head>
 <body>
@@ -314,6 +360,7 @@
 
     <!-- Tabs -->
     <div class="tabs">
+      <button class="tab" onclick="showTab('assistant')">🗣️ Assistant</button>
       <button class="tab active" onclick="showTab('priority')">⭐ Priority</button>
       <button class="tab" onclick="showTab('packages')">📦 Packages</button>
       <button class="tab" onclick="showTab('samsung')">📱 Samsung</button>
@@ -322,27 +369,136 @@
       <button class="tab" onclick="showTab('docs')">📖 Docs</button>
     </div>
 
+    <!-- ASSISTANT TAB - Voice commands that work! -->
+    <div id="assistant" class="tab-content">
+      <h2>🗣️ Google Assistant Commands</h2>
+
+      <div class="note success">
+        ✅ <strong>BREAKTHROUGH!</strong> Google Assistant can open apps during FRP lock!<br>
+        Say "Hey Google" or hold the home button, then use these commands.
+      </div>
+
+      <h3>✅ Verified Working (SM-S721B)</h3>
+      <div class="grid">
+        <div class="intent-link assistant-link works-on-device">
+          <span class="label">📱 Display Settings</span>
+          <span class="voice-cmd">Open Display Settings</span>
+          <span class="url">✅ Works on SM-S721B</span>
+        </div>
+
+        <div class="intent-link assistant-link works-on-device">
+          <span class="label">♿ Accessibility Settings</span>
+          <span class="voice-cmd">Open Accessibility</span>
+          <span class="url">✅ Works on SM-S721B</span>
+        </div>
+
+        <div class="intent-link assistant-link works-on-device">
+          <span class="label">🔊 Sound Settings</span>
+          <span class="voice-cmd">Open Sound Settings</span>
+          <span class="url">✅ Works on SM-S721B</span>
+        </div>
+
+        <div class="intent-link assistant-link works-on-device">
+          <span class="label">🔔 Notification Settings</span>
+          <span class="voice-cmd">Open Notifications</span>
+          <span class="url">✅ Works on SM-S721B</span>
+        </div>
+
+        <div class="intent-link assistant-link works-on-device">
+          <span class="label">ℹ️ Device Info / About</span>
+          <span class="voice-cmd">Open Device Info</span>
+          <span class="url">✅ Works - but Dev Options won't toggle!</span>
+        </div>
+      </div>
+
+      <h3>⚠️ Partial (Opens then Closes)</h3>
+      <div class="grid">
+        <div class="intent-link assistant-link" style="border-left-color: #f59e0b;">
+          <span class="label" style="color: #f59e0b;">🏪 Play Store</span>
+          <span class="voice-cmd">Open Play Store</span>
+          <span class="url">Opens → asks for update → closes. After update: blocked</span>
+        </div>
+
+        <div class="intent-link assistant-link" style="border-left-color: #f59e0b;">
+          <span class="label" style="color: #f59e0b;">▶️ YouTube</span>
+          <span class="voice-cmd">Open YouTube</span>
+          <span class="url">Opens → asks for update → closes. After update: blocked</span>
+        </div>
+      </div>
+
+      <h3>🔍 Try These Commands</h3>
+      <div class="grid">
+        <div class="intent-link assistant-link">
+          <span class="label">⚙️ Settings</span>
+          <span class="voice-cmd">Open Settings</span>
+          <span class="url">Try this!</span>
+        </div>
+
+        <div class="intent-link assistant-link">
+          <span class="label">📁 Files</span>
+          <span class="voice-cmd">Open Files</span>
+          <span class="url">Try this!</span>
+        </div>
+
+        <div class="intent-link assistant-link">
+          <span class="label">🔧 Developer Options</span>
+          <span class="voice-cmd">Open Developer Options</span>
+          <span class="url">Try this!</span>
+        </div>
+
+        <div class="intent-link assistant-link">
+          <span class="label">📶 WiFi Settings</span>
+          <span class="voice-cmd">Open WiFi Settings</span>
+          <span class="url">Try this!</span>
+        </div>
+
+        <div class="intent-link assistant-link">
+          <span class="label">🔵 Bluetooth Settings</span>
+          <span class="voice-cmd">Open Bluetooth</span>
+          <span class="url">Try this!</span>
+        </div>
+
+        <div class="intent-link assistant-link">
+          <span class="label">🔒 Security Settings</span>
+          <span class="voice-cmd">Open Security Settings</span>
+          <span class="url">Try this!</span>
+        </div>
+      </div>
+
+      <h3>💡 Research Notes</h3>
+      <div class="note info">
+        <strong>IntentResolver Crash:</strong> Some share requests cause the IntentResolver app to crash.
+        This might be exploitable for navigation bypass.
+      </div>
+    </div>
+
     <!-- PRIORITY TAB - Most likely to work -->
     <div id="priority" class="tab-content active">
       <h2>⭐ Try These First</h2>
 
+      <!-- SM-S721B: All Chrome intent:// URLs are BLOCKED on this device -->
+      <div class="note" style="background:#2a1515; border-color:#ef4444;">
+        ⚠️ <strong>SM-S721B Notice:</strong> Chrome intent:// URLs are blocked on this device.
+        Use <strong>Google Assistant</strong> tab instead!
+      </div>
+
       <div class="grid">
-        <a class="intent-link priority" href="intent://com.android.settings/#Intent;scheme=android-app;end">
+        <a class="intent-link priority blocked-on-device" href="intent://com.android.settings/#Intent;scheme=android-app;end">
           <span class="label">⚙️ SETTINGS APP</span>
           <span class="url">intent://com.android.settings/#Intent;scheme=android-app;end</span>
         </a>
 
-        <a class="intent-link priority" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">
-          <span class="label">🏠 SAMSUNG LAUNCHER <span class="badge badge-working">VERIFIED</span></span>
+        <a class="intent-link priority blocked-on-device" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">
+          <span class="label">🏠 SAMSUNG LAUNCHER</span>
           <span class="url">intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end</span>
         </a>
 
-        <a class="intent-link priority" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">
+        <a class="intent-link priority blocked-on-device" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">
           <span class="label">📁 MY FILES</span>
           <span class="url">intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end</span>
         </a>
 
-        <a class="intent-link priority" href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end">
+        <a class="intent-link priority blocked-on-device" href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end">
           <span class="label">📞 SAMSUNG PHONE (for codes)</span>
           <span class="url">intent://com.samsung.android.dialer/#Intent;scheme=android-app;end</span>
         </a>
@@ -351,17 +507,18 @@
       <h3>🔑 Critical Dialer Codes</h3>
       <div class="note info">If you can access the Phone app, dial these codes:</div>
       <div class="grid">
-        <a class="intent-link tel-link priority" href="tel:*#0808#">
+        <!-- SM-S721B: Secret codes don't trigger from tel: links -->
+        <a class="intent-link tel-link priority blocked-on-device" href="tel:*#0808#">
           <span class="label">⭐ *#0808# - USB/ADB MODE</span>
           <span class="url">Opens USB settings - Enable MTP+ADB!</span>
         </a>
 
-        <a class="intent-link tel-link" href="tel:*#0*#">
+        <a class="intent-link tel-link blocked-on-device" href="tel:*#0*#">
           <span class="label">🔧 *#0*# - Hardware Test</span>
           <span class="url">Diagnostic menu with various tests</span>
         </a>
 
-        <a class="intent-link tel-link" href="tel:*#9900#">
+        <a class="intent-link tel-link blocked-on-device" href="tel:*#9900#">
           <span class="label">📊 *#9900# - SysDump</span>
           <span class="url">Debug logs and settings</span>
         </a>
@@ -369,12 +526,13 @@
 
       <h3>🔧 Developer Options</h3>
       <div class="grid">
-        <a class="intent-link working" href="intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end">
+        <!-- SM-S721B: Dev Options intent blocked, and 7x build number tap doesn't work -->
+        <a class="intent-link working blocked-on-device" href="intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end">
           <span class="label">🔧 Developer Options (Direct)</span>
           <span class="url">intent://com.android.settings/.DevelopmentSettings/#Intent;scheme=android-app;end</span>
         </a>
 
-        <a class="intent-link" href="intent://com.android.settings/.Settings$DevelopmentSettingsDashboardActivity/#Intent;scheme=android-app;end">
+        <a class="intent-link blocked-on-device" href="intent://com.android.settings/.Settings$DevelopmentSettingsDashboardActivity/#Intent;scheme=android-app;end">
           <span class="label">🔧 Dev Options Dashboard</span>
           <span class="url">intent://...DevelopmentSettingsDashboardActivity/...</span>
         </a>
@@ -382,22 +540,23 @@
 
       <h3>📱 Escape Routes</h3>
       <div class="grid">
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.voc/#Intent;scheme=android-app;end">
+        <!-- SM-S721B: All intent:// links blocked -->
+        <a class="intent-link samsung-link blocked-on-device" href="intent://com.samsung.android.voc/#Intent;scheme=android-app;end">
           <span class="label">👥 Samsung Members</span>
           <span class="url">May have browser links inside</span>
         </a>
 
-        <a class="intent-link samsung-link" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">
+        <a class="intent-link samsung-link blocked-on-device" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">
           <span class="label">🏪 Galaxy Store</span>
           <span class="url">Can sometimes escape to settings</span>
         </a>
 
-        <a class="intent-link samsung-link" href="intent://com.samsung.android.oneconnect/#Intent;scheme=android-app;end">
+        <a class="intent-link samsung-link blocked-on-device" href="intent://com.samsung.android.oneconnect/#Intent;scheme=android-app;end">
           <span class="label">🏠 SmartThings</span>
           <span class="url">Has web content that may escape</span>
         </a>
 
-        <a class="intent-link" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">
+        <a class="intent-link blocked-on-device" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">
           <span class="label">📂 Document Browser</span>
           <span class="url">File access may lead to APK install</span>
         </a>
@@ -688,7 +847,37 @@
         <tr><td>Android</td><td>14</td></tr>
         <tr><td>Firmware</td><td>S721BXXS3AYB3</td></tr>
         <tr><td>FRP Status</td><td>TRIGGERED</td></tr>
+        <tr><td>Bootloader</td><td>LOCKED</td></tr>
       </table>
+
+      <h3>✅ What Works (SM-S721B)</h3>
+      <table>
+        <tr><th>Method</th><th>Result</th></tr>
+        <tr style="color:#4ade80;"><td>🗣️ Google Assistant</td><td>✅ Voice commands work!</td></tr>
+        <tr style="color:#4ade80;"><td>"Open Display Settings"</td><td>✅ Works</td></tr>
+        <tr style="color:#4ade80;"><td>"Open Accessibility"</td><td>✅ Works</td></tr>
+        <tr style="color:#4ade80;"><td>"Open Sound Settings"</td><td>✅ Works</td></tr>
+        <tr style="color:#4ade80;"><td>"Open Notifications"</td><td>✅ Works</td></tr>
+        <tr style="color:#4ade80;"><td>"Open Device Info"</td><td>✅ Works (Dev Options won't toggle)</td></tr>
+        <tr style="color:#f59e0b;"><td>"Open Play Store"</td><td>⚠️ Opens then closes</td></tr>
+        <tr style="color:#f59e0b;"><td>"Open YouTube"</td><td>⚠️ Opens then closes</td></tr>
+      </table>
+
+      <h3>❌ What Failed (SM-S721B)</h3>
+      <table>
+        <tr><th>Method</th><th>Result</th></tr>
+        <tr style="color:#ef4444;"><td>Chrome intent:// URLs</td><td>❌ All blocked</td></tr>
+        <tr style="color:#ef4444;"><td>Samsung secret codes</td><td>❌ No trigger</td></tr>
+        <tr style="color:#ef4444;"><td>SamFW MTP→ADB</td><td>❌ Not compatible</td></tr>
+        <tr style="color:#ef4444;"><td>USB driver switch</td><td>❌ No ADB drivers</td></tr>
+        <tr style="color:#ef4444;"><td>7x Build Number tap</td><td>❌ Doesn't enable Dev Options</td></tr>
+      </table>
+
+      <h3>🔍 Interesting Findings</h3>
+      <div class="note info">
+        <strong>IntentResolver Crash:</strong> Some share requests cause the IntentResolver app to crash.
+        This behavior might be exploitable for navigation bypass.
+      </div>
 
       <h3>Intent URL Format</h3>
       <pre>
@@ -699,8 +888,16 @@ intent://com.android.settings/#Intent;scheme=android-app;end
 intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end
       </pre>
 
-      <h3>Attack Chain</h3>
+      <h3>Attack Chain (Updated)</h3>
       <pre>
+FOR SM-S721B (intents blocked):
+1. Access Chrome (via keyboard settings)
+2. Invoke Google Assistant (hold home or "Hey Google")
+3. Use voice commands to open settings
+4. Try to find path to Developer Options
+5. Or explore IntentResolver crash exploit
+
+FOR OTHER DEVICES (may work):
 1. Access Chrome (via keyboard settings)
 2. Navigate to this page
 3. Tap intent links directly
@@ -711,13 +908,9 @@ intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end
 8. Connect ADB!
       </pre>
 
-      <h3>Key Targets</h3>
-      <ul style="line-height:2; padding-left:20px;">
-        <li><strong>*#0808#</strong> - USB mode (MTP+ADB)</li>
-        <li><strong>Developer Options</strong> - Enable ADB</li>
-        <li><strong>Settings</strong> - Full access</li>
-        <li><strong>My Files</strong> - APK install</li>
-      </ul>
+      <h3>Researcher</h3>
+      <p>Phenix (Alaa Qweider) - <a href="mailto:Alaa@nulled.ai" style="color:#00d4ff;">Alaa@nulled.ai</a></p>
+      <p>Test Date: 2026-01-12</p>
     </div>
   </div>
 
@@ -730,6 +923,52 @@ intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end
   </div>
 
   <script>
+    /**
+     * DEVICE COMPATIBILITY DATA
+     * This structure enables future dynamic device detection and per-device UI customization.
+     * When device detection is implemented, this data can show/hide methods based on what works.
+     *
+     * Research Date: 2026-01-12
+     * Researcher: Phenix (Alaa Qweider)
+     */
+    const deviceData = {
+      "SM-S721B": {
+        name: "Galaxy S24 FE",
+        android: 14,
+        firmware: "S721BXXS3AYB3",
+        frpStatus: "TRIGGERED",
+        bootloader: "LOCKED",
+        working: [
+          { method: "google_assistant", note: "Voice commands work!" },
+          { method: "assistant_display_settings", command: "Open Display Settings" },
+          { method: "assistant_accessibility", command: "Open Accessibility" },
+          { method: "assistant_sound", command: "Open Sound Settings" },
+          { method: "assistant_notifications", command: "Open Notifications" },
+          { method: "assistant_device_info", command: "Open Device Info", note: "Dev Options won't toggle" }
+        ],
+        partial: [
+          { method: "assistant_playstore", note: "Opens, asks update, closes. After update: blocked" },
+          { method: "assistant_youtube", note: "Opens, asks update, closes. After update: blocked" }
+        ],
+        notWorking: [
+          { method: "chrome_intents", note: "All intent:// URLs blocked" },
+          { method: "secret_codes", note: "*#0808#, *#0*#, *#9900# - no trigger" },
+          { method: "samfw_mtp_adb", note: "MTP→ADB exploit not compatible" },
+          { method: "usb_driver_switch", note: "COM14 - no compatible ADB drivers" },
+          { method: "developer_options_toggle", note: "7x build number tap doesn't enable" }
+        ],
+        interestingBehavior: [
+          { finding: "IntentResolver crashes on some share requests" },
+          { finding: "Could be exploitable for navigation" }
+        ],
+        testDate: "2026-01-12"
+      }
+      // Add more devices as testing continues
+    };
+
+    // Current device (for future auto-detection)
+    const currentDevice = "SM-S721B";
+
     function showTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));

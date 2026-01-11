@@ -4,15 +4,29 @@ A mobile-friendly web toolkit for Android intent URL research and testing. Desig
 
 ## Live Demo
 
-Access the toolkit: **[Your GitHub Pages URL]**
+Access the toolkit: **[https://danz17.github.io/intent-toolkit/](https://danz17.github.io/intent-toolkit/)**
 
 ## Features
 
+- **Google Assistant Commands** - Voice commands that work during FRP lock!
 - **Intent URL Generator** - Launch Android apps via Chrome intent:// URLs
 - **QR Code Generator** - Create scannable QR codes for intent URLs
 - **Samsung Secret Codes** - Collection of diagnostic dialer codes
+- **Device-Specific Visibility** - Greyed out items that don't work on tested devices
 - **Mobile-First Design** - Optimized for use directly on target devices
 - **One-Tap Actions** - Fixed bottom bar for quick access
+- **Research Data** - Built-in device compatibility tracking
+
+## Breakthrough: Google Assistant
+
+On some devices (tested: SM-S721B), Chrome intent:// URLs are blocked during FRP, but **Google Assistant voice commands work!**
+
+### Working Commands (SM-S721B)
+- "Open Display Settings"
+- "Open Accessibility"
+- "Open Sound Settings"
+- "Open Notifications"
+- "Open Device Info"
 
 ## Supported Intents
 
@@ -22,6 +36,12 @@ Access the toolkit: **[Your GitHub Pages URL]**
 | Samsung Apps | Galaxy Store, Samsung Members, SmartThings |
 | Settings Activities | Developer Options, WiFi, Security, Accessibility |
 | Dialer Codes | *#0808# (USB), *#0*# (Diagnostics), *#9900# (SysDump) |
+
+## Device Compatibility
+
+| Device | Model | Chrome Intents | Secret Codes | Assistant |
+|--------|-------|----------------|--------------|-----------|
+| Galaxy S24 FE | SM-S721B | Blocked | No trigger | Works |
 
 ## Intent URL Format
 
