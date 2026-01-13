@@ -4,73 +4,107 @@
 
 ```
 FRP-Research/
-├── index.html          # Main toolkit (SERVED via GitHub Pages)
-├── README.md           # Documentation
-├── CLAUDE.md           # This file - project rules
-├── .gitignore          # Excludes research/
-└── research/           # LOCAL ONLY - The "cookbook"
-    ├── digest/         # Temp: downloaded source repos (delete after processing)
-    ├── intent-database.json  # Source data for embedding
-    ├── logo_source.png       # Favicon source
-    └── research.md           # Notes and findings
+├── index.html              # PRODUCTION - Curated intents (GitHub Pages)
+├── rules.md                # PROJECT RULES - Data flow & curation criteria
+├── CLAUDE.md               # This file - agent instructions
+├── README.md               # Documentation
+├── .gitignore              # Excludes research/
+└── research/               # LOCAL ONLY - Complete research database
+    ├── approaches.md       # Bypass methods table (step-by-step + KPIs)
+    ├── intents-master.md   # ALL intents ever found (81+ entries)
+    ├── journal.md          # Session notes & findings
+    ├── samsung-intents.md  # Samsung-specific research
+    └── digest/             # Temp: downloaded source repos
 ```
 
-## Development Rules
+## Data Architecture
 
-### Git Strategy
-- `research/` folder is FULLY IGNORED in git
-- Only root-level files are tracked and deployed
-- GitHub Pages serves from root: https://danz17.github.io/intent-toolkit/
+```
+Research Sources → research/*.md (RAW) → index.html (CURATED)
+```
 
-### Research Folder Workflow
-1. **Download** sources to `research/digest/`
-2. **Process** and extract data to `research/intent-database.json`
-3. **Embed** processed data into `index.html`
-4. **Delete** digest files after processing (they're temporary)
-5. **Commit** only root files to git
+| Location | Contains | Deployed? |
+|----------|----------|-----------|
+| `research/intents-master.md` | ALL intents (complete) | NO |
+| `research/approaches.md` | ALL methods (with results) | NO |
+| `index.html` | Curated intents only | YES |
 
-### Database Updates
-- Intent data is embedded directly in `index.html` for offline use
-- Source JSON in `research/` is for development/reference only
-- When adding new intents: update both source JSON and embedded JS
+**See `rules.md` for full data flow and curation criteria.**
 
-### Mobile-First Design
-- All UI must work on FRP-locked devices (limited interaction)
-- Large touch targets (min 44px)
-- Fast loading, minimal dependencies
-- Session-persistent state (not saved between page loads)
+## Research Tables
 
-### Click Tracking Behavior
-1. Click intent → Grey out, mark as "last tried"
-2. Click another → Previous moves to end of category, gets fully greyed
-3. Reset button → Clears all tried state, restores order
+### 1. `research/approaches.md`
+Table of bypass methods with:
+- Step-by-step instructions
+- KPI per step (✅/❌/❓)
+- Working devices (model, OS)
+- NOT working devices (model, OS)
+
+### 2. `research/intents-master.md`
+Complete intent database with:
+- 81+ intents across all manufacturers
+- Category, label, URL, purpose
+- Source file reference
+- Device compatibility tracking
+
+## Digest Workflow
+
+When new research arrives (e.g., from web search or agents):
+
+1. **Save** raw findings to `research/*.md` (temp file)
+2. **Extract** intents → add to `intents-master.md`
+3. **Extract** approaches → add to `approaches.md`
+4. **Delete** the source file after digesting
+5. **Note** in `journal.md` what was digested
+
+## Git Strategy
+
+- `research/` folder is **GITIGNORED**
+- Only root files tracked: `index.html`, `rules.md`, `CLAUDE.md`, `README.md`
+- GitHub Pages: https://danz17.github.io/intent-toolkit/
+
+## Production Curation
+
+`index.html` contains ONLY:
+- Confirmed working intents
+- High-value theoretical intents (security, lock, account)
+- Samsung-specific (target device)
+- NOT confirmed broken on Android 14+
 
 ## Testing
 
-### Local Testing
+### Local
 ```bash
 cd C:\Users\Kratos\Desktop\FRP-Research
 python -m http.server 8000
 # Open http://localhost:8000/
 ```
 
-### Device Testing
-1. Get device to Chrome browser (via keyboard settings or Assistant)
+### Device
+1. Get to Chrome (keyboard settings or Assistant)
 2. Navigate to toolkit URL
-3. Switch to Database tab
-4. Tap category to expand
-5. Tap intents to test
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `index.html` | Complete toolkit - HTML, CSS, JS all-in-one |
-| `research/intent-database.json` | Source database (120+ intents) |
-| `research/digest/` | Downloaded repos for processing |
+3. Test intents from categories
 
 ## Device Under Test
-- **Model:** SM-S721B (Galaxy S24 FE)
-- **Android:** 14
-- **FRP Status:** TRIGGERED
-- **Findings:** Chrome intent:// URLs blocked, Google Assistant voice commands WORK
+
+| Property | Value |
+|----------|-------|
+| Model | SM-S721B (Galaxy S24 FE) |
+| Android | 14 |
+| One UI | 6.0+ |
+| FRP Status | TRIGGERED |
+| Chrome intents | BLOCKED |
+| Voice commands | WORKING |
+| Auto Blocker | Blocks dial codes |
+
+## Key Findings (S24 FE)
+
+| What | Status |
+|------|--------|
+| `intent://` URLs in Chrome | ❌ Blocked |
+| `*#0*#` test mode | ❌ Auto Blocker |
+| `*#0808#` USB settings | ❌ Auto Blocker |
+| Google Assistant | ✅ Works |
+| "Open Settings" voice | ❓ Untested |
+| Keyboard gear icon | ❓ Untested |
+| Connection Settings | ❓ Exploring |

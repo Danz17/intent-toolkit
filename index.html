@@ -559,14 +559,22 @@
     // EMBEDDED DATABASE
     // ============================================
     const categories = {
+      frp_critical: { icon: "🎯", label: "FRP Critical", priority: "critical" },
+      installer: { icon: "📥", label: "Package Installer", priority: "critical" },
       voice_commands: { icon: "🗣️", label: "Voice Commands", priority: "critical" },
       secret_codes: { icon: "🔢", label: "Secret Codes", priority: "critical" },
       security: { icon: "🔒", label: "Lock & Security", priority: "critical" },
+      knox: { icon: "🛡️", label: "Knox Security", priority: "critical" },
       third_party: { icon: "📦", label: "3rd Party Tools", priority: "critical" },
       general: { icon: "⚙️", label: "General Android", priority: "high" },
       settings: { icon: "🛠️", label: "Device Settings", priority: "high" },
-      samsung: { icon: "📱", label: "Samsung", priority: "high" },
+      advanced: { icon: "🔧", label: "Advanced Actions", priority: "high" },
+      samsung: { icon: "📱", label: "Samsung Apps", priority: "high" },
+      samsung_system: { icon: "⚡", label: "Samsung System", priority: "high" },
+      accessibility: { icon: "♿", label: "Accessibility", priority: "high" },
+      network: { icon: "📡", label: "Network", priority: "medium" },
       google: { icon: "🔵", label: "Google Apps", priority: "medium" },
+      bixby: { icon: "🤖", label: "Bixby & AI", priority: "medium" },
       xiaomi: { icon: "📱", label: "Xiaomi", priority: "medium" },
       oneplus: { icon: "📱", label: "OnePlus", priority: "medium" },
       oppo: { icon: "📱", label: "OPPO", priority: "medium" },
@@ -684,7 +692,112 @@
       { id: "google_008", category: "google", label: "Google Photos", intentUrl: "intent://com.google.android.apps.photos/#Intent;scheme=android-app;end", purpose: "Photo management" },
       { id: "google_009", category: "google", label: "Play Services", intentUrl: "intent://com.google.android.gms/#Intent;scheme=android-app;end", purpose: "Google services framework" },
       { id: "google_010", category: "google", label: "Files by Google", intentUrl: "intent://com.google.android.apps.nbu.files/#Intent;scheme=android-app;end", purpose: "File manager" },
-      { id: "google_011", category: "google", label: "Google Lens", intentUrl: "intent://com.google.ar.lens/#Intent;scheme=android-app;end", purpose: "Visual search - QR scanning" }
+      { id: "google_011", category: "google", label: "Google Lens", intentUrl: "intent://com.google.ar.lens/#Intent;scheme=android-app;end", purpose: "Visual search - QR scanning" },
+
+      // ============================================
+      // NEW INTENTS FROM SAMSUNG S24 FE RESEARCH
+      // ============================================
+
+      // FRP-Critical (Setup/Account)
+      { id: "frp_001", category: "frp_critical", label: "Android Setup Wizard", intentUrl: "intent://com.google.android.setupwizard/#Intent;scheme=android-app;end", purpose: "Main FRP wizard - CRITICAL" },
+      { id: "frp_002", category: "frp_critical", label: "Setup Wizard Legal", intentUrl: "intent://com.android.setupwizard.legal/#Intent;scheme=android-app;end", purpose: "Setup legal screens" },
+      { id: "frp_003", category: "frp_critical", label: "Google Partner Setup", intentUrl: "intent://com.google.android.partnersetup/#Intent;scheme=android-app;end", purpose: "OEM partner setup" },
+      { id: "frp_004", category: "frp_critical", label: "Google One Time Init", intentUrl: "intent://com.google.android.onetimeinitializer/#Intent;scheme=android-app;end", purpose: "First-time init" },
+      { id: "frp_005", category: "frp_critical", label: "Galaxy Service Setup", intentUrl: "intent://com.samsung.android.galaxyservicesetup/#Intent;scheme=android-app;end", purpose: "Samsung setup service" },
+      { id: "frp_006", category: "frp_critical", label: "Credential Manager", intentUrl: "intent://com.android.credentialmanager/#Intent;scheme=android-app;end", purpose: "Account credential storage" },
+      { id: "frp_007", category: "frp_critical", label: "ConfigAPK", intentUrl: "intent://com.android.configapk/#Intent;scheme=android-app;end", purpose: "System config" },
+      { id: "frp_008", category: "frp_critical", label: "Add Account Action", intentUrl: "intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end", purpose: "Add Account flow" },
+      { id: "frp_009", category: "frp_critical", label: "Sync Settings", intentUrl: "intent://#Intent;action=android.settings.SYNC_SETTINGS;end", purpose: "Account sync settings" },
+
+      // Package Installer (CRITICAL for unknown sources)
+      { id: "installer_001", category: "installer", label: "Package Installer", intentUrl: "intent://com.android.packageinstaller/#Intent;scheme=android-app;end", purpose: "INSTALL UNKNOWN APPS - CRITICAL" },
+      { id: "installer_002", category: "installer", label: "Unknown App Sources", intentUrl: "intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;end", purpose: "Enable unknown sources" },
+      { id: "installer_003", category: "installer", label: "Install Package Action", intentUrl: "intent://#Intent;action=android.intent.action.INSTALL_PACKAGE;end", purpose: "Install APK action" },
+      { id: "installer_004", category: "installer", label: "Package Verifier", intentUrl: "intent://com.android.packageinstaller.PackageInstallerActivity/#Intent;end", purpose: "Installer activity" },
+      { id: "installer_005", category: "installer", label: "APK via File", intentUrl: "intent://com.android.packageinstaller/#Intent;action=android.intent.action.VIEW;type=application/vnd.android.package-archive;end", purpose: "Open APK file" },
+
+      // Knox & Samsung Security
+      { id: "knox_001", category: "knox", label: "Knox Matrix", intentUrl: "intent://com.samsung.android.knox.kpm/#Intent;scheme=android-app;end", purpose: "Knox security core" },
+      { id: "knox_002", category: "knox", label: "Knox Analytics", intentUrl: "intent://com.samsung.android.knox.analytics/#Intent;scheme=android-app;end", purpose: "Knox telemetry" },
+      { id: "knox_003", category: "knox", label: "KLMS Agent", intentUrl: "intent://com.samsung.klmsagent/#Intent;scheme=android-app;end", purpose: "Knox license" },
+      { id: "knox_004", category: "knox", label: "KPECore", intentUrl: "intent://com.samsung.android.kpecore/#Intent;scheme=android-app;end", purpose: "Knox policy engine" },
+      { id: "knox_005", category: "knox", label: "Auto Blocker", intentUrl: "intent://com.samsung.android.autoblocker/#Intent;scheme=android-app;end", purpose: "Auto Blocker (blocks dial codes)" },
+      { id: "knox_006", category: "knox", label: "Separated Apps", intentUrl: "intent://com.samsung.android.separatedapps/#Intent;scheme=android-app;end", purpose: "Work profile" },
+
+      // Samsung System (from screenshots)
+      { id: "samsung_sys_001", category: "samsung_system", label: "Settings Helper", intentUrl: "intent://com.samsung.android.app.settingshelper/#Intent;scheme=android-app;end", purpose: "Settings helper service" },
+      { id: "samsung_sys_002", category: "samsung_system", label: "Samsung Keyboard", intentUrl: "intent://com.samsung.android.honeyboard/#Intent;scheme=android-app;end", purpose: "Keyboard (gear icon exploit!)" },
+      { id: "samsung_sys_003", category: "samsung_system", label: "Quick Share", intentUrl: "intent://com.samsung.android.quickshare/#Intent;scheme=android-app;end", purpose: "Quick Share" },
+      { id: "samsung_sys_004", category: "samsung_system", label: "Smart Switch Agent", intentUrl: "intent://com.sec.android.easyMover.Agent/#Intent;scheme=android-app;end", purpose: "Transfer agent" },
+      { id: "samsung_sys_005", category: "samsung_system", label: "Device Services", intentUrl: "intent://com.samsung.android.deviceservices/#Intent;scheme=android-app;end", purpose: "Device services" },
+      { id: "samsung_sys_006", category: "samsung_system", label: "MTP Application", intentUrl: "intent://com.samsung.android.mtpapplication/#Intent;scheme=android-app;end", purpose: "USB MTP mode" },
+      { id: "samsung_sys_007", category: "samsung_system", label: "MTP Host", intentUrl: "intent://com.samsung.android.mtphost/#Intent;scheme=android-app;end", purpose: "MTP host service" },
+      { id: "samsung_sys_008", category: "samsung_system", label: "System UI", intentUrl: "intent://com.android.systemui/#Intent;scheme=android-app;end", purpose: "System UI" },
+      { id: "samsung_sys_009", category: "samsung_system", label: "System Tracing", intentUrl: "intent://com.android.traceur/#Intent;scheme=android-app;end", purpose: "System trace" },
+      { id: "samsung_sys_010", category: "samsung_system", label: "Storage Manager", intentUrl: "intent://com.android.storagemanager/#Intent;scheme=android-app;end", purpose: "Storage management" },
+      { id: "samsung_sys_011", category: "samsung_system", label: "Download Manager", intentUrl: "intent://com.android.providers.downloads/#Intent;scheme=android-app;end", purpose: "Downloads core" },
+      { id: "samsung_sys_012", category: "samsung_system", label: "Downloads UI", intentUrl: "intent://com.android.providers.downloads.ui/#Intent;scheme=android-app;end", purpose: "Downloads app" },
+      { id: "samsung_sys_013", category: "samsung_system", label: "HTML Viewer", intentUrl: "intent://com.android.htmlviewer/#Intent;scheme=android-app;end", purpose: "Web content viewer" },
+      { id: "samsung_sys_014", category: "samsung_system", label: "Intent Resolver", intentUrl: "intent://com.android.intentresolver/#Intent;scheme=android-app;end", purpose: "Intent handler" },
+
+      // Accessibility & Voice (Bypass Vectors)
+      { id: "access_001", category: "accessibility", label: "TalkBack", intentUrl: "intent://com.google.android.marvin.talkback/#Intent;scheme=android-app;end", purpose: "Screen reader - bypass vector" },
+      { id: "access_002", category: "accessibility", label: "Voice Access", intentUrl: "intent://com.google.android.apps.accessibility.voiceaccess/#Intent;scheme=android-app;end", purpose: "Voice control" },
+      { id: "access_003", category: "accessibility", label: "Live Transcribe", intentUrl: "intent://com.google.android.apps.accessibility.maui/#Intent;scheme=android-app;end", purpose: "Live transcribe" },
+      { id: "access_004", category: "accessibility", label: "Magnifier", intentUrl: "intent://com.samsung.android.app.magnifier/#Intent;scheme=android-app;end", purpose: "Screen magnifier" },
+      { id: "access_005", category: "accessibility", label: "One Handed Mode", intentUrl: "intent://com.samsung.android.onehandmode/#Intent;scheme=android-app;end", purpose: "One hand mode" },
+
+      // Network & Connectivity
+      { id: "network_001", category: "network", label: "WiFi Settings", intentUrl: "intent://#Intent;action=android.settings.WIFI_SETTINGS;end", purpose: "WiFi menu" },
+      { id: "network_002", category: "network", label: "Bluetooth Settings", intentUrl: "intent://#Intent;action=android.settings.BLUETOOTH_SETTINGS;end", purpose: "Bluetooth menu" },
+      { id: "network_003", category: "network", label: "WiFi Calling", intentUrl: "intent://com.samsung.android.wificallingmanager/#Intent;scheme=android-app;end", purpose: "WiFi calling" },
+      { id: "network_004", category: "network", label: "Network Unlock", intentUrl: "intent://com.samsung.android.networkunlock/#Intent;scheme=android-app;end", purpose: "Carrier unlock" },
+      { id: "network_005", category: "network", label: "VPN Dialogs", intentUrl: "intent://com.android.vpndialogs/#Intent;scheme=android-app;end", purpose: "VPN UI" },
+      { id: "network_006", category: "network", label: "eSIM Client", intentUrl: "intent://com.samsung.android.esim/#Intent;scheme=android-app;end", purpose: "eSIM management" },
+      { id: "network_007", category: "network", label: "Nearby Scanning", intentUrl: "intent://com.samsung.android.nearbydevicescanning/#Intent;scheme=android-app;end", purpose: "Nearby devices" },
+      { id: "network_008", category: "network", label: "Airplane Mode", intentUrl: "intent://#Intent;action=android.settings.AIRPLANE_MODE_SETTINGS;end", purpose: "Airplane mode" },
+
+      // Additional Samsung Apps
+      { id: "samsung_extra_001", category: "samsung", label: "Samsung DeX", intentUrl: "intent://com.samsung.android.dexhome/#Intent;scheme=android-app;end", purpose: "DeX mode" },
+      { id: "samsung_extra_002", category: "samsung", label: "DeX System UI", intentUrl: "intent://com.samsung.desktopsystemui/#Intent;scheme=android-app;end", purpose: "DeX UI" },
+      { id: "samsung_extra_003", category: "samsung", label: "Link to Windows", intentUrl: "intent://com.samsung.android.ltw/#Intent;scheme=android-app;end", purpose: "PC link" },
+      { id: "samsung_extra_004", category: "samsung", label: "Multi Control", intentUrl: "intent://com.samsung.android.multicontrol/#Intent;scheme=android-app;end", purpose: "Multi device control" },
+      { id: "samsung_extra_005", category: "samsung", label: "Smart View", intentUrl: "intent://com.samsung.android.smartview/#Intent;scheme=android-app;end", purpose: "Screen cast" },
+      { id: "samsung_extra_006", category: "samsung", label: "SmartThings", intentUrl: "intent://com.samsung.android.smartthingsframework/#Intent;scheme=android-app;end", purpose: "IoT framework" },
+      { id: "samsung_extra_007", category: "samsung", label: "Photo Editor", intentUrl: "intent://com.samsung.android.photoeditor/#Intent;scheme=android-app;end", purpose: "Photo edit" },
+      { id: "samsung_extra_008", category: "samsung", label: "Video Player", intentUrl: "intent://com.samsung.android.video/#Intent;scheme=android-app;end", purpose: "Video player" },
+
+      // Bixby & AI
+      { id: "bixby_001", category: "bixby", label: "Bixby Vision Framework", intentUrl: "intent://com.samsung.android.bixbyvision.framework/#Intent;scheme=android-app;end", purpose: "Vision framework" },
+      { id: "bixby_002", category: "bixby", label: "AI Core", intentUrl: "intent://com.samsung.android.aicore/#Intent;scheme=android-app;end", purpose: "AI engine" },
+      { id: "bixby_003", category: "bixby", label: "AI Wallpaper", intentUrl: "intent://com.samsung.android.aiwallpaper/#Intent;scheme=android-app;end", purpose: "AI wallpaper" },
+      { id: "bixby_004", category: "bixby", label: "Intelligence Voice", intentUrl: "intent://com.samsung.android.svoice/#Intent;scheme=android-app;end", purpose: "Voice service" },
+
+      // Advanced Actions (Settings Intents)
+      { id: "advanced_001", category: "advanced", label: "All Apps List", intentUrl: "intent://#Intent;action=android.settings.MANAGE_ALL_APPLICATIONS_SETTINGS;end", purpose: "All apps list" },
+      { id: "advanced_002", category: "advanced", label: "Play Services Info", intentUrl: "intent://#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:com.google.android.gms;end", purpose: "GMS app info" },
+      { id: "advanced_003", category: "advanced", label: "Battery Saver", intentUrl: "intent://#Intent;action=android.settings.BATTERY_SAVER_SETTINGS;end", purpose: "Battery saver" },
+      { id: "advanced_004", category: "advanced", label: "Date & Time", intentUrl: "intent://#Intent;action=android.settings.DATE_SETTINGS;end", purpose: "Date/time settings" },
+      { id: "advanced_005", category: "advanced", label: "Developer Options", intentUrl: "intent://#Intent;action=android.settings.APPLICATION_DEVELOPMENT_SETTINGS;end", purpose: "Dev options - CRITICAL" },
+      { id: "advanced_006", category: "advanced", label: "Display Settings", intentUrl: "intent://#Intent;action=android.settings.DISPLAY_SETTINGS;end", purpose: "Display menu" },
+      { id: "advanced_007", category: "advanced", label: "Input Method", intentUrl: "intent://#Intent;action=android.settings.INPUT_METHOD_SETTINGS;end", purpose: "Keyboard settings" },
+      { id: "advanced_008", category: "advanced", label: "Manage Overlay", intentUrl: "intent://#Intent;action=android.settings.MANAGE_OVERLAY_PERMISSION;end", purpose: "Overlay permission" },
+      { id: "advanced_009", category: "advanced", label: "NFC Settings", intentUrl: "intent://#Intent;action=android.settings.NFC_SETTINGS;end", purpose: "NFC menu" },
+      { id: "advanced_010", category: "advanced", label: "Notification Access", intentUrl: "intent://#Intent;action=android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;end", purpose: "Notification access" },
+      { id: "advanced_011", category: "advanced", label: "Write Settings", intentUrl: "intent://#Intent;action=android.settings.action.MANAGE_WRITE_SETTINGS;end", purpose: "Write settings perm" },
+      { id: "advanced_012", category: "advanced", label: "Cast Settings", intentUrl: "intent://#Intent;action=android.settings.CAST_SETTINGS;end", purpose: "Screen cast" },
+      { id: "advanced_013", category: "advanced", label: "Internal Storage", intentUrl: "intent://#Intent;action=android.settings.INTERNAL_STORAGE_SETTINGS;end", purpose: "Storage details" },
+      { id: "advanced_014", category: "advanced", label: "Memory Card", intentUrl: "intent://#Intent;action=android.settings.MEMORY_CARD_SETTINGS;end", purpose: "SD card settings" },
+      { id: "advanced_015", category: "advanced", label: "Privacy Settings", intentUrl: "intent://#Intent;action=android.settings.PRIVACY_SETTINGS;end", purpose: "Privacy menu" },
+      { id: "advanced_016", category: "advanced", label: "Usage Access", intentUrl: "intent://#Intent;action=android.settings.USAGE_ACCESS_SETTINGS;end", purpose: "Usage access" },
+      { id: "advanced_017", category: "advanced", label: "Permission Controller", intentUrl: "intent://com.android.permissioncontroller/#Intent;scheme=android-app;end", purpose: "Permission manager" },
+
+      // Google Services (from screenshots)
+      { id: "google_new_001", category: "google", label: "Services Framework", intentUrl: "intent://com.google.android.gsf/#Intent;scheme=android-app;end", purpose: "Account framework" },
+      { id: "google_new_002", category: "google", label: "Device Health", intentUrl: "intent://com.google.android.apps.healthservices/#Intent;scheme=android-app;end", purpose: "Health services" },
+      { id: "google_new_003", category: "google", label: "WiFi Provisioner", intentUrl: "intent://com.google.android.apps.gcs/#Intent;scheme=android-app;end", purpose: "WiFi setup" },
+      { id: "google_new_004", category: "google", label: "Speech Services", intentUrl: "intent://com.google.android.tts/#Intent;scheme=android-app;end", purpose: "Text to speech" },
+      { id: "google_new_005", category: "google", label: "Google Meet", intentUrl: "intent://com.google.android.apps.meetings/#Intent;scheme=android-app;end", purpose: "Video calls" }
     ];
 
     // ============================================
