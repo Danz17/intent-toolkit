@@ -587,7 +587,9 @@
       htc: { icon: "📱", label: "HTC", priority: "low" },
       nokia: { icon: "📱", label: "Nokia", priority: "low" },
       asus: { icon: "📱", label: "Asus", priority: "low" },
-      infinix: { icon: "📱", label: "Infinix", priority: "low" }
+      infinix: { icon: "📱", label: "Infinix", priority: "low" },
+      github_frp: { icon: "🔬", label: "GitHub Research", priority: "critical" },
+      external_tools: { icon: "🌐", label: "External Tools", priority: "critical" }
     };
 
     // Voice Commands (merged from Assistant tab)
@@ -797,7 +799,33 @@
       { id: "google_new_002", category: "google", label: "Device Health", intentUrl: "intent://com.google.android.apps.healthservices/#Intent;scheme=android-app;end", purpose: "Health services" },
       { id: "google_new_003", category: "google", label: "WiFi Provisioner", intentUrl: "intent://com.google.android.apps.gcs/#Intent;scheme=android-app;end", purpose: "WiFi setup" },
       { id: "google_new_004", category: "google", label: "Speech Services", intentUrl: "intent://com.google.android.tts/#Intent;scheme=android-app;end", purpose: "Text to speech" },
-      { id: "google_new_005", category: "google", label: "Google Meet", intentUrl: "intent://com.google.android.apps.meetings/#Intent;scheme=android-app;end", purpose: "Video calls" }
+      { id: "google_new_005", category: "google", label: "Google Meet", intentUrl: "intent://com.google.android.apps.meetings/#Intent;scheme=android-app;end", purpose: "Video calls" },
+
+      // ============================================
+      // GITHUB RESEARCH - FRP INTENTS (2025-01-14)
+      // ============================================
+      { id: "github_001", category: "github_frp", label: "GSF Login Activity", intentUrl: "intent://#Intent;component=com.google.android.gsf.login/.LoginActivity;end", purpose: "Direct GSF login - CRITICAL" },
+      { id: "github_002", category: "github_frp", label: "GSF Login (Package)", intentUrl: "intent://com.google.android.gsf.login/#Intent;scheme=android-app;end", purpose: "GSF login package" },
+      { id: "github_003", category: "github_frp", label: "Add Account Settings", intentUrl: "intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end", purpose: "Add Google account directly" },
+      { id: "github_004", category: "github_frp", label: "Sync Settings", intentUrl: "intent://#Intent;action=android.settings.SYNC_SETTINGS;end", purpose: "Account sync menu" },
+      { id: "github_005", category: "github_frp", label: "Account Settings", intentUrl: "intent://#Intent;action=android.settings.ACCOUNT_SETTINGS;end", purpose: "Account management" },
+      { id: "github_006", category: "github_frp", label: "Settings Direct", intentUrl: "intent://#Intent;component=com.android.settings/.Settings;end", purpose: "Direct settings component" },
+      { id: "github_007", category: "github_frp", label: "Locale Settings", intentUrl: "intent://#Intent;action=android.settings.LOCALE_SETTINGS;end", purpose: "Language settings" },
+      { id: "github_008", category: "github_frp", label: "Sound Settings", intentUrl: "intent://#Intent;action=android.settings.SOUND_SETTINGS;end", purpose: "Sound menu" },
+      { id: "github_009", category: "github_frp", label: "User Setup Complete", intentUrl: "intent://#Intent;data=content://settings/secure/user_setup_complete;end", purpose: "Setup flag URI (ADB)" },
+      { id: "github_010", category: "github_frp", label: "Install Non-Market", intentUrl: "intent://#Intent;data=content://settings/secure/install_non_market_apps;end", purpose: "Unknown sources flag" },
+
+      // ============================================
+      // EXTERNAL TOOLS - WebADB & Resources
+      // ============================================
+      { id: "ext_001", category: "external_tools", label: "WebADB Demo (ya-webadb)", intentUrl: "https://app.nicemoe.cc/", purpose: "Browser ADB shell - requires USB debug" },
+      { id: "ext_002", category: "external_tools", label: "Browserlify (WebUSB)", intentUrl: "https://browserlify.com/", purpose: "WebUSB + scrcpy in browser" },
+      { id: "ext_003", category: "external_tools", label: "APK Hosting (nr1.nu)", intentUrl: "https://android.nr1.nu/", purpose: "FRP bypass APK downloads" },
+      { id: "ext_004", category: "external_tools", label: "SamMobile Firmware", intentUrl: "https://sammobile.com/firmwares/", purpose: "Stock Samsung ROMs" },
+      { id: "ext_005", category: "external_tools", label: "GitHub: ya-webadb", intentUrl: "https://github.com/yume-chan/ya-webadb", purpose: "WebADB library (2850 stars)" },
+      { id: "ext_006", category: "external_tools", label: "GitHub: FRP Bypass A12", intentUrl: "https://github.com/spacecase123/Android_12_FRPBypass", purpose: "TalkBack+Bixby method" },
+      { id: "ext_007", category: "external_tools", label: "GitHub: ADB FRP Bypass", intentUrl: "https://github.com/unreliablecode/Bypass-FRP-Dengan-ADB", purpose: "ADB command reference" },
+      { id: "ext_008", category: "external_tools", label: "Chrome Extension: Phone on Web", intentUrl: "https://chrome.google.com/webstore/detail/phone-on-web-browserlifyc/gaibhhiogjpncmcehohlmcikfgbcacbl", purpose: "WebADB Chrome extension" }
     ];
 
     // ============================================
