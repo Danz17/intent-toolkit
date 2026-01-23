@@ -538,6 +538,36 @@
     .bar-controls.hidden { display: none; }
     .hidden { display: none; }
 
+    /* ========== DEVICE SELECTOR ========== */
+    .device-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .device-btn {
+      padding: 8px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .device-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .device-btn:hover { background: var(--bg-hover); }
+
     /* ========== WEBSERIAL STYLES ========== */
     .ws-header {
       display: flex;
@@ -640,6 +670,17 @@
     </div>
   </header>
 
+  <!-- DEVICE SELECTOR -->
+  <div class="device-selector">
+    <button class="device-btn active" data-brand="all" onclick="filterByBrand('all')">📱 All Devices</button>
+    <button class="device-btn" data-brand="samsung" onclick="filterByBrand('samsung')">🔵 Samsung</button>
+    <button class="device-btn" data-brand="oppo" onclick="filterByBrand('oppo')">🔴 Oppo/Realme</button>
+    <button class="device-btn" data-brand="oneplus" onclick="filterByBrand('oneplus')">⚡ OnePlus</button>
+    <button class="device-btn" data-brand="xiaomi" onclick="filterByBrand('xiaomi')">🟠 Xiaomi</button>
+    <button class="device-btn" data-brand="huawei" onclick="filterByBrand('huawei')">🌐 Huawei</button>
+    <button class="device-btn" data-brand="vivo" onclick="filterByBrand('vivo')">🟣 Vivo</button>
+  </div>
+
   <!-- MAIN CONTENT -->
   <main class="main-content">
 
@@ -647,10 +688,10 @@
     <div id="view-home" class="view active">
       <div class="hero">
         <h1>🔓 FRP Unlock Toolkit</h1>
-        <p>Comprehensive bypass guide for Samsung Android devices</p>
+        <p>Multi-device bypass guide for Android FRP locks</p>
         <div class="hero-device">
-          Target: <span>Samsung Galaxy S24 FE (SM-S721B)</span><br>
-          <small style="color:var(--text-dim)">Android 14 • One UI 6.0</small>
+          Supported: <span>Samsung • Oppo • OnePlus • Xiaomi • Huawei • Vivo</span><br>
+          <small style="color:var(--text-dim)">Android 12-14 • Multiple Brands</small>
         </div>
       </div>
 
@@ -956,6 +997,62 @@
         </div>
         <div class="cat-body" id="intents-general"></div>
       </div>
+
+      <!-- ========== BRAND-SPECIFIC INTENTS ========== -->
+      <div class="category-section" data-brand="oppo">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔴</span>
+            Oppo / Realme (ColorOS)
+            <span class="cat-count">7</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-oppo"></div>
+      </div>
+
+      <div class="category-section" data-brand="oneplus">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">⚡</span>
+            OnePlus (OxygenOS)
+            <span class="cat-count">5</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-oneplus"></div>
+      </div>
+
+      <div class="category-section" data-brand="xiaomi">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🟠</span>
+            Xiaomi / Redmi (MIUI/HyperOS)
+            <span class="cat-count">9</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-xiaomi"></div>
+      </div>
+
+      <div class="category-section" data-brand="huawei">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🌐</span>
+            Huawei (EMUI/HarmonyOS)
+            <span class="cat-count">5</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-huawei"></div>
+      </div>
+
+      <div class="category-section" data-brand="vivo">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🟣</span>
+            Vivo (FuntouchOS)
+            <span class="cat-count">4</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-vivo"></div>
+      </div>
     </div>
 
     <!-- ========== METHODS VIEW ========== -->
@@ -1008,6 +1105,51 @@
           </span>
         </div>
         <div class="cat-body" id="methods-exp"></div>
+      </div>
+
+      <!-- ========== BRAND-SPECIFIC METHODS ========== -->
+      <div class="category-section" data-brand="oppo">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔴</span>
+            Oppo / Realme Methods
+            <span class="cat-count">2</span>
+          </span>
+        </div>
+        <div class="cat-body" id="methods-oppo"></div>
+      </div>
+
+      <div class="category-section" data-brand="xiaomi">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🟠</span>
+            Xiaomi / Redmi Methods
+            <span class="cat-count">2</span>
+          </span>
+        </div>
+        <div class="cat-body" id="methods-xiaomi"></div>
+      </div>
+
+      <div class="category-section" data-brand="huawei">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🌐</span>
+            Huawei Methods
+            <span class="cat-count">2</span>
+          </span>
+        </div>
+        <div class="cat-body" id="methods-huawei"></div>
+      </div>
+
+      <div class="category-section" data-brand="universal">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🌍</span>
+            Universal Methods
+            <span class="cat-count">3</span>
+          </span>
+        </div>
+        <div class="cat-body" id="methods-universal"></div>
       </div>
     </div>
 
@@ -1163,6 +1305,51 @@
           </span>
         </div>
         <div class="cat-body" id="codes-info"></div>
+      </div>
+
+      <!-- ========== BRAND-SPECIFIC DIAL CODES ========== -->
+      <div class="category-section" data-brand="oppo">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔴</span>
+            Oppo / Realme Codes
+            <span class="cat-count">4</span>
+          </span>
+        </div>
+        <div class="cat-body" id="codes-oppo"></div>
+      </div>
+
+      <div class="category-section" data-brand="oneplus">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">⚡</span>
+            OnePlus Codes
+            <span class="cat-count">3</span>
+          </span>
+        </div>
+        <div class="cat-body" id="codes-oneplus"></div>
+      </div>
+
+      <div class="category-section" data-brand="xiaomi">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🟠</span>
+            Xiaomi / Redmi Codes
+            <span class="cat-count">4</span>
+          </span>
+        </div>
+        <div class="cat-body" id="codes-xiaomi"></div>
+      </div>
+
+      <div class="category-section" data-brand="huawei">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🌐</span>
+            Huawei Codes
+            <span class="cat-count">3</span>
+          </span>
+        </div>
+        <div class="cat-body" id="codes-huawei"></div>
       </div>
     </div>
 
@@ -1414,6 +1601,56 @@
       { label: "Calculator (AOSP)", url: "intent://com.android.calculator2/#Intent;scheme=android-app;end", purpose: "Basic calculator" }
     ];
 
+    // OPPO / COLOROS
+    const intentsOppo = [
+      { label: "Oppo Store", url: "intent://com.oppo.market/.MainActivity/#Intent;scheme=android-app;end", purpose: "Oppo app store" },
+      { label: "ColorOS Settings", url: "intent://com.coloros.settings/.MainActivity/#Intent;scheme=android-app;end", purpose: "ColorOS settings" },
+      { label: "Oppo File Manager", url: "intent://com.coloros.filesmanager/.FileListActivity/#Intent;scheme=android-app;end", purpose: "File manager" },
+      { label: "Oppo Theme Store", url: "intent://com.oppo.theme/.ThemeStoreActivity/#Intent;scheme=android-app;end", purpose: "Themes" },
+      { label: "Oppo Cloud", url: "intent://com.heytap.cloud/.activity.MainActivity/#Intent;scheme=android-app;end", purpose: "Oppo cloud backup" },
+      { label: "Clone Phone", url: "intent://com.coloros.clonetransfer/.ui.transfer.TransferActivity/#Intent;scheme=android-app;end", purpose: "Data transfer (FRP escape)" },
+      { label: "Oppo Security", url: "intent://com.coloros.security/.activity.SecurityMainActivity/#Intent;scheme=android-app;end", purpose: "Security center" }
+    ];
+
+    // ONEPLUS / OXYGENOS
+    const intentsOneplus = [
+      { label: "OnePlus Switch", url: "intent://com.oneplus.clonetransfer/.ui.transfer.TransferActivity/#Intent;scheme=android-app;end", purpose: "Data transfer" },
+      { label: "OnePlus Store", url: "intent://com.oneplus.market/.MainActivity/#Intent;scheme=android-app;end", purpose: "OnePlus app store" },
+      { label: "OnePlus Files", url: "intent://com.oneplus.filemanager/.FileListActivity/#Intent;scheme=android-app;end", purpose: "File manager" },
+      { label: "OxygenOS Settings", url: "intent://com.oneplus.settings/.SettingsMainActivity/#Intent;scheme=android-app;end", purpose: "OxygenOS settings" },
+      { label: "OnePlus Community", url: "intent://com.oneplus.forum/.community.CommunityActivity/#Intent;scheme=android-app;end", purpose: "Community forums" }
+    ];
+
+    // XIAOMI / MIUI / HYPEROS
+    const intentsXiaomi = [
+      { label: "Mi Store", url: "intent://com.xiaomi.shop/.plugin.ui.MainHostActivity/#Intent;scheme=android-app;end", purpose: "Xiaomi store" },
+      { label: "Mi Files", url: "intent://com.android.fileexplorer/.FileExplorerTabActivity/#Intent;scheme=android-app;end", purpose: "File manager" },
+      { label: "Mi Cloud", url: "intent://com.xiaomi.mi.cloud/.cloud.HomeActivity/#Intent;scheme=android-app;end", purpose: "Mi cloud backup" },
+      { label: "Mi Share", url: "intent://com.xiaomi.midrop/.Activity.MainActivity/#Intent;scheme=android-app;end", purpose: "File transfer" },
+      { label: "Mi Remote", url: "intent://com.duokan.phone.remotecontroller/.MiRemoteActivity/#Intent;scheme=android-app;end", purpose: "IR remote" },
+      { label: "Security App", url: "intent://com.miui.securitycenter/.MainActivity/#Intent;scheme=android-app;end", purpose: "Security & cleaner" },
+      { label: "MIUI Settings", url: "intent://com.android.settings/.MiuiSettings/#Intent;scheme=android-app;end", purpose: "MIUI settings" },
+      { label: "Second Space", url: "intent://com.miui/.secondspace.SecondSpaceSettingsActivity/#Intent;scheme=android-app;end", purpose: "Dual workspace" },
+      { label: "Quick Apps", url: "intent://com.miui.hybrid/.HybridLauncherActivity/#Intent;scheme=android-app;end", purpose: "Quick apps (lite)" }
+    ];
+
+    // HUAWEI / EMUI
+    const intentsHuawei = [
+      { label: "AppGallery", url: "intent://com.huawei.appmarket/.module.main.MainActivity/#Intent;scheme=android-app;end", purpose: "Huawei app store" },
+      { label: "Huawei Cloud", url: "intent://com.huawei.cloud/.ui.main.MainActivity/#Intent;scheme=android-app;end", purpose: "Cloud backup" },
+      { label: "Phone Clone", url: "intent://com.huawei.kiddytalk/.ui.MainActivity/#Intent;scheme=android-app;end", purpose: "Data transfer (FRP escape)" },
+      { label: "File Manager", url: "intent://com.huawei.hidisk/.FileExplorerActivity/#Intent;scheme=android-app;end", purpose: "File manager" },
+      { label: "Health App", url: "intent://com.huawei.health/.MainActivity/#Intent;scheme=android-app;end", purpose: "Health & fitness" }
+    ];
+
+    // VIVO / FUNTUCHOS
+    const intentsVivo = [
+      { label: "V-AppStore", url: "intent://com.bbk.appstore/.ui.tab.MainTabActivity/#Intent;scheme=android-app;end", purpose: "Vivo app store" },
+      { label: "Vivo Cloud", url: "intent://com.vivo.cloud/.ui.MainActivity/#Intent;scheme=android-app;end", purpose: "Vivo cloud" },
+      { label: "Vivo Browser", url: "intent://com.vivo.browser/.MainActivity/#Intent;scheme=android-app;end", purpose: "Vivo browser" },
+      { label: "EasyShare", url: "intent://com.vivo.transfer/.ui.MainActivity/#Intent;scheme=android-app;end", purpose: "File transfer" }
+    ];
+
     // BYPASS METHODS
     const methodsCritical = [
       {
@@ -1651,6 +1888,111 @@ Result: System UID, ADB enabled with auto-confirm`,
       }
     ];
 
+    // BRAND-SPECIFIC METHODS
+    const methodsOppo = [
+      {
+        title: "Oppo Clone Phone Method",
+        status: "works",
+        device: "Oppo/Realme Android 12-13",
+        steps: `1. Get to "Verify Account" screen
+2. Look for "Clone Phone" or data transfer option
+3. Select "From old phone"
+4. Choose any transfer method (Bluetooth/QR)
+5. During setup, access file picker or browser
+6. Navigate to Settings or install APK`,
+        notes: "Works on ColorOS 12-13. Patched on newer ColorOS 14+."
+      },
+      {
+        title: "Oppo Engineer Mode → ADB",
+        status: "testing",
+        device: "Oppo Reno, Realme",
+        steps: `1. Dial *#899# to open Engineer Mode
+2. Navigate to "Debugging" or "USB" section
+3. Enable "USB Debugging" option if available
+4. Connect to PC and run ADB commands`,
+        notes: "Requires dial code access. Some models block this."
+      }
+    ];
+
+    const methodsXiaomi = [
+      {
+        title: "Xiaomi Mi Share Method",
+        status: "works",
+        device: "Xiaomi/Redmi Android 12-13",
+        steps: `1. On FRP lock screen, look for Mi Share option
+2. Enable Mi Share from another device
+3. Send APK or file to Xiaomi device
+4. File picker may allow installation
+5. Use Mi Files to navigate to Settings`,
+        notes: "Works on MIUI 14. HyperOS may have patched this."
+      },
+      {
+        title: "Xiaomi CIT Test Mode",
+        status: "testing",
+        device: "Xiaomi/Redmi All",
+        steps: `1. Dial *#*#6484#*#* (CIT Test)
+2. Navigate through test options
+3. Look for "USB Config" or "ADB" options
+4. Enable debugging from test menu`,
+        notes: "CIT menu varies by model. Some have ADB toggle."
+      }
+    ];
+
+    const methodsHuawei = [
+      {
+        title: "Huawei Phone Clone Method",
+        status: "works",
+        device: "Huawei Android 10-12",
+        steps: `1. Select "Phone Clone" on setup screen
+2. Choose "From old phone"
+3. Use any transfer method available
+4. During transfer, access browser or file manager
+5. Navigate to Settings or install bypass APK`,
+        notes: "Works because Phone Clone has elevated permissions. Patched on HarmonyOS 3+."
+      },
+      {
+        title: "Huawei Project Menu",
+        status: "testing",
+        device: "Huawei EMUI 12+",
+        steps: `1. Dial *#*#2846579#*#* (Project Menu)
+2. Go to "USB Settings" or "Background Setting"
+3. Enable "USB Debugging" or "HDC"`
+      }
+    ];
+
+    const methodsUniversal = [
+      {
+        title: "Google Assistant Voice",
+        status: "works",
+        device: "All Android 12-14",
+        steps: `1. Long press power button or say "Hey Google"
+2. Say "Open Settings" or "Open Chrome"
+3. Google Assistant opens the app
+4. Navigate to account settings or install APK`,
+        notes: "Most universal method. Works on all brands with Google Assistant."
+      },
+      {
+        title: "Google Go App Share",
+        status: "works",
+        device: "Motorola, TCL, Samsung",
+        steps: `1. Trigger any share action (from text, link, file)
+2. Look for "Google Go" icon in share options
+3. Tap "Use without Google account"
+4. Access unrestricted app features`,
+        notes: "Works when Play Store is blocked. Tested on multiple brands."
+      },
+      {
+        title: "YouTube Legal Link Method",
+        status: "partial",
+        device: "All Android 12+",
+        steps: `1. Open YouTube (pre-installed on all devices)
+2. Go to Settings → Legal → Privacy
+3. Tap any link to open browser
+4. Browser may allow account access`,
+        notes: "Patched on many A13+ devices but workarounds exist."
+      }
+    ];
+
     // DIAL CODES
     const dialCodesCritical = [
       { code: "*#9090#", name: "Service Mode", status: "works", desc: "USB/UART MUX toggle - BYPASSES AUTO BLOCKER!" },
@@ -1684,6 +2026,36 @@ Result: System UID, ADB enabled with auto-confirm`,
       { code: "*#0228#", name: "Battery", status: "untested", desc: "Battery status" },
       { code: "*#12580*369#", name: "All Info", status: "untested", desc: "SW/HW info" },
       { code: "*#*#4636#*#*", name: "Testing", status: "untested", desc: "Android testing menu" }
+    ];
+
+    // OPPO / REALME DIAL CODES
+    const dialCodesOppo = [
+      { code: "*#899#", name: "Engineer Mode", status: "untested", desc: "Oppo/Realme engineering menu" },
+      { code: "*#800#", name: "Factory Mode", status: "untested", desc: "Oppo factory test mode" },
+      { code: "*#68#", name: "LCD Test", status: "untested", desc: "Display test mode" },
+      { code: "*#6776#", name: "Software Info", status: "untested", desc: "Oppo software version info" }
+    ];
+
+    // ONEPLUS DIAL CODES
+    const dialCodesOneplus = [
+      { code: "*#808#", name: "ELT Mode", status: "untested", desc: "OnePlus engineering mode" },
+      { code: "*#*#4636#*#*", name: "Testing Menu", status: "untested", desc: "Android testing menu" },
+      { code: "*#*#7780#*#*", name: "Factory Reset", status: "untested", desc: "Factory reset warning" }
+    ];
+
+    // XIAOMI / MIUI DIAL CODES
+    const dialCodesXiaomi = [
+      { code: "*#*#6484#*#*", name: "CIT Test", status: "untested", desc: "Xiaomi hardware test (QC test)" },
+      { code: "*#*#717717#*#*", name: "Service Menu", status: "untested", desc: "Xiaomi service menu" },
+      { code: "*#*#4636#*#*", name: "Testing", status: "untested", desc: "MIUI testing menu" },
+      { code: "*#*#232337#*#*", name: "Diagnostics", status: "untested", desc: "Xiaomi device diagnostics" }
+    ];
+
+    // HUAWEI / EMUI DIAL CODES
+    const dialCodesHuawei = [
+      { code: "*#*#2846579#*#*", name: "Project Menu", status: "untested", desc: "Huawei engineering menu" },
+      { code: "*#*#3646633#*#*", name: "Engineer Mode", status: "untested", desc: "MTK engineer mode" },
+      { code: "*#*#1478963#*#*", name: "Test Mode", status: "untested", desc: "Huawei test mode" }
     ];
 
     // ============================================
@@ -1741,15 +2113,34 @@ Result: System UID, ADB enabled with auto-confirm`,
       renderIntents(document.getElementById('intents-network'), intentsNetwork);
       renderIntents(document.getElementById('intents-general'), intentsGeneral);
 
+      // Brand-specific intents
+      renderIntents(document.getElementById('intents-oppo'), intentsOppo);
+      renderIntents(document.getElementById('intents-oneplus'), intentsOneplus);
+      renderIntents(document.getElementById('intents-xiaomi'), intentsXiaomi);
+      renderIntents(document.getElementById('intents-huawei'), intentsHuawei);
+      renderIntents(document.getElementById('intents-vivo'), intentsVivo);
+
       renderApproaches(document.getElementById('methods-critical'), methodsCritical);
       renderApproaches(document.getElementById('methods-adb'), methodsADB);
       renderApproaches(document.getElementById('methods-interface'), methodsInterface);
       renderApproaches(document.getElementById('methods-browser'), methodsBrowser);
       renderApproaches(document.getElementById('methods-exp'), methodsExp);
 
+      // Brand-specific methods
+      renderApproaches(document.getElementById('methods-oppo'), methodsOppo);
+      renderApproaches(document.getElementById('methods-xiaomi'), methodsXiaomi);
+      renderApproaches(document.getElementById('methods-huawei'), methodsHuawei);
+      renderApproaches(document.getElementById('methods-universal'), methodsUniversal);
+
       renderCodes(document.getElementById('codes-critical'), dialCodesCritical);
       renderCodes(document.getElementById('codes-diag'), dialCodesDiag);
       renderCodes(document.getElementById('codes-info'), dialCodesInfo);
+
+      // Brand-specific dial codes
+      renderCodes(document.getElementById('codes-oppo'), dialCodesOppo);
+      renderCodes(document.getElementById('codes-oneplus'), dialCodesOneplus);
+      renderCodes(document.getElementById('codes-xiaomi'), dialCodesXiaomi);
+      renderCodes(document.getElementById('codes-huawei'), dialCodesHuawei);
     });
 
     // ============================================
@@ -1817,6 +2208,38 @@ Result: System UID, ADB enabled with auto-confirm`,
       document.querySelectorAll('.intent-card, .approach-card, .dial-code, .ext-link').forEach(card => {
         const text = card.textContent.toLowerCase();
         card.style.display = text.includes(search) ? '' : 'none';
+      });
+    }
+
+    // ============================================
+    // DEVICE FILTER
+    // ============================================
+    let selectedBrand = 'all';
+
+    function filterByBrand(brand) {
+      selectedBrand = brand;
+
+      // Update button states
+      document.querySelectorAll('.device-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.brand === brand);
+      });
+
+      // Filter category sections by brand
+      document.querySelectorAll('.category-section').forEach(section => {
+        const sectionBrand = section.dataset.brand;
+        if (!sectionBrand) return; // Skip sections without brand attribute (universal)
+        const shouldShow = brand === 'all' || sectionBrand === brand || sectionBrand === 'universal';
+        section.style.display = shouldShow ? 'block' : 'none';
+      });
+
+      // Filter approach cards by device
+      document.querySelectorAll('.approach-card').forEach(card => {
+        const deviceBrand = card.dataset.device;
+        if (!deviceBrand) return; // Show cards without device attribute
+        const shouldShow = brand === 'all' ||
+                          deviceBrand.toLowerCase().includes('universal') ||
+                          deviceBrand.toLowerCase().includes(brand);
+        card.style.display = shouldShow ? 'block' : 'none';
       });
     }
 
