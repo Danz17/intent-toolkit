@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="Comprehensive FRP bypass toolkit - Intents, methods, ADB commands, and dial codes for Samsung Android devices">
+  <title>FRP Unlock Toolkit | Comprehensive Samsung Bypass Guide</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-header: #0d0d14;
+      --accent: #00d4ff;
+      --accent-dim: #0088aa;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --text: #e8e8e8;
+      --text-dim: #888;
+      --border: #1a1a25;
+      --header-h: 56px;
+      --footer-h: 90px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ========== TOP HEADER ========== */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .logo-text {
+      font-size: 1rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tabs {
+      display: flex;
+      gap: 6px;
+    }
+    .header-tab {
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-tab:active { transform: scale(0.95); }
+    .header-tab.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main-content {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      bottom: var(--footer-h);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      text-align: center;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #1a1a28 0%, #0d0d14 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 1.5rem;
+      background: linear-gradient(90deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .hero-device {
+      background: var(--bg-card);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: inline-block;
+    }
+    .hero-device span {
+      color: var(--warning);
+      font-weight: 600;
+    }
+
+    /* ========== QUICK ACCESS CARDS ========== */
+    .quick-access {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .quick-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-card:active { transform: scale(0.98); }
+    .quick-card .icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .quick-card .label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+    .quick-card .count { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
+    .quick-card.critical { border-color: var(--danger); }
+    .quick-card.critical .icon { color: var(--danger); }
+
+    /* ========== CATEGORY SECTIONS ========== */
+    .category-section {
+      margin-bottom: 12px;
+    }
+    .cat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, var(--bg-card) 0%, #1a1a28 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .cat-header:active { transform: scale(0.98); }
+    .cat-header.open { border-radius: 12px 12px 0 0; border-bottom: none; }
+    .cat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .cat-icon { font-size: 1.1rem; }
+    .cat-count {
+      background: var(--accent);
+      color: #000;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .cat-body {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 8px;
+    }
+    .category-section.open .cat-body { display: block; }
+
+    .cat-header[data-priority="critical"] { border-left: 4px solid var(--danger); }
+    .cat-header[data-priority="high"] { border-left: 4px solid var(--warning); }
+
+    /* ========== INTENT CARDS ========== */
+    .intent-card {
+      display: block;
+      background: linear-gradient(135deg, #16161f 0%, #1a1a26 100%);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .intent-card:last-child { margin-bottom: 0; }
+    .intent-card:active { transform: scale(0.98); opacity: 0.8; }
+    .intent-label {
+      font-weight: 600;
+      color: var(--warning);
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    .intent-purpose {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+
+    /* ========== APPROACH CARDS ========== */
+    .approach-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    .approach-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .approach-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex: 1;
+    }
+    .approach-status {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .approach-status.works { background: var(--success); color: #000; }
+    .approach-status.testing { background: var(--warning); color: #000; }
+    .approach-status.blocked { background: var(--danger); color: #fff; }
+    .approach-steps {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .approach-steps ol {
+      margin-left: 16px;
+      margin-top: 6px;
+    }
+
+    /* ========== ADB COMMANDS ========== */
+    .cmd-block {
+      background: #0d0d14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .cmd-title {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .cmd-code {
+      background: #000;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.7rem;
+      color: #22c55e;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-bottom: 8px;
+    }
+    .cmd-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    .cmd-copy {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    /* ========== BOTTOM BAR ========== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .bar-controls {
+      background: var(--bg-header);
+      border-top: 1px solid var(--border);
+      padding: 10px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .cat-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      flex: 1;
+      padding: 2px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-pills::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cat-pill:active { transform: scale(0.95); }
+    .cat-pill.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    .search-box {
+      width: 90px;
+      padding: 8px 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.75rem;
+    }
+    .search-box:focus { outline: none; border-color: var(--accent); width: 120px; }
+
+    /* ========== ATTRIBUTION ========== */
+    .attribution {
+      background: var(--bg-dark);
+      padding: 6px 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    /* ========== MODAL ========== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-title {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .modal-close {
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* ========== BADGES ========== */
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .badge-critical { background: var(--danger); color: #fff; }
+    .badge-high { background: var(--warning); color: #000; }
+    .badge-medium { background: var(--accent); color: #000; }
+
+    /* ========== TIP BOX ========== */
+    .tip-box {
+      background: linear-gradient(135deg, #1a1a28 0%, #12121a 100%);
+      border: 1px solid var(--warning);
+      border-left: 3px solid var(--warning);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .tip-box .tip-title {
+      color: var(--warning);
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+    }
+    .tip-box .tip-text {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ========== EXTERNAL LINKS ========== */
+    .ext-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .ext-link:active { transform: scale(0.98); }
+    .ext-link .link-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .ext-link .link-url {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+    .ext-link .link-arrow {
+      color: var(--accent);
+    }
+
+    /* ========== STATUS BAR ========== */
+    .status-bar {
+      display: flex;
+      justify-content: space-around;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .status-item {
+      text-align: center;
+    }
+    .status-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .status-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    /* ========== DIAL CODE DISPLAY ========== */
+    .dial-code {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+    .dial-code .code {
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      color: var(--warning);
+      font-weight: 600;
+    }
+    .dial-code .status {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .dial-code .status.works { background: var(--success); color: #000; }
+    .dial-code .status.blocked { background: var(--danger); color: #fff; }
+    .dial-code .status.untested { background: var(--bg-dark); color: var(--text-dim); }
+
+    /* ========== HIDE ========== */
+    .bar-controls.hidden { display: none; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="logo">
+      <div class="logo-icon">🔓</div>
+      <span class="logo-text">FRP Unlock</span>
+    </div>
+    <div class="header-tabs">
+      <button class="header-tab active" id="tab-home" onclick="switchView('home')">Home</button>
+      <button class="header-tab" id="tab-intents" onclick="switchView('intents')">Intents</button>
+      <button class="header-tab" id="tab-methods" onclick="switchView('methods')">Methods</button>
+      <button class="header-tab" id="tab-adb" onclick="switchView('adb')">ADB</button>
+      <button class="header-tab" id="tab-codes" onclick="switchView('codes')">Codes</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ========== HOME VIEW ========== -->
+    <div id="view-home" class="view active">
+      <div class="hero">
+        <h1>🔓 FRP Unlock Toolkit</h1>
+        <p>Comprehensive bypass guide for Samsung Android devices</p>
+        <div class="hero-device">
+          Target: <span>Samsung Galaxy S24 FE (SM-S721B)</span><br>
+          <small style="color:var(--text-dim)">Android 14 • One UI 6.0</small>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-item">
+          <div class="status-value" id="stat-intents">190+</div>
+          <div class="status-label">Intents</div>
+        </div>
+        <div class="status-item">
+          <div class="status-value" id="stat-methods">30</div>
+          <div class="status-label">Methods</div>
+        </div>
+        <div class="status-item">
+          <div class="status-value" id="stat-codes">17</div>
+          <div class="status-label">Dial Codes</div>
+        </div>
+        <div class="status-item">
+          <div class="status-value" id="stat-adb">40+</div>
+          <div class="status-label">ADB Cmds</div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">🔥 CRITICAL FINDING</div>
+        <div class="tip-text">
+          <strong>*#9090# Service Mode</strong> works on S24 FE! Bypasses Auto Blocker and provides USB/UART switch for AT commands.
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">⚠️ WHAT'S BLOCKED on S24 FE</div>
+        <div class="tip-text">
+          • Chrome intent:// URLs - BLOCKED<br>
+          • *#0*# Test Mode - Auto Blocker<br>
+          • *#0808# USB Settings - Auto Blocker<br>
+          • TalkBack exploits - Patched in A14
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">✅ WHAT WORKS on S24 FE</div>
+        <div class="tip-text">
+          • Google Assistant voice commands<br>
+          • *#9090# Service Mode<br>
+          • AT commands via COM12 (after *#9090#)<br>
+          • Chrome browser (app-level only)
+        </div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🚀</span>
+            Quick Access
+          </span>
+        </div>
+        <div class="cat-body">
+          <div class="quick-access">
+            <div class="quick-card critical" onclick="switchView('methods'); setTimeout(()=>filterMethods('critical'), 100)">
+              <div class="icon">🎯</div>
+              <div class="label">Critical Methods</div>
+              <div class="count">5 approaches</div>
+            </div>
+            <div class="quick-card" onclick="switchView('codes')">
+              <div class="icon">🔢</div>
+              <div class="label">Dial Codes</div>
+              <div class="count">17 codes</div>
+            </div>
+            <div class="quick-card" onclick="switchView('adb')">
+              <div class="icon">💻</div>
+              <div class="label">ADB Commands</div>
+              <div class="count">40+ commands</div>
+            </div>
+            <div class="quick-card" onclick="switchView('intents'); setTimeout(()=>filterByCategory('frp_critical'), 100)">
+              <div class="icon">🎯</div>
+              <div class="label">FRP Intents</div>
+              <div class="count">9 intents</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Intents -->
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">⚡</span>
+            Quick Launch Intents
+          </span>
+        </div>
+        <div class="cat-body">
+          <a href="intent://com.android.settings/#Intent;scheme=android-app;end" class="intent-card">
+            <div class="intent-label">Settings App</div>
+            <div class="intent-purpose">Main Android Settings</div>
+          </a>
+          <a href="intent://com.android.packageinstaller/#Intent;scheme=android-app;end" class="intent-card">
+            <div class="intent-label">Package Installer <span class="badge badge-critical">CRITICAL</span></div>
+            <div class="intent-purpose">Install unknown APKs</div>
+          </a>
+          <a href="intent://com.google.android.gsf.login/#Intent;scheme=android-app;end" class="intent-card">
+            <div class="intent-label">GSF Login <span class="badge badge-critical">CRITICAL</span></div>
+            <div class="intent-purpose">Google account manager</div>
+          </a>
+          <a href="intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end" class="intent-card">
+            <div class="intent-label">Add Account <span class="badge badge-critical">CRITICAL</span></div>
+            <div class="intent-purpose">Add Google account flow</div>
+          </a>
+          <a href="intent://com.samsung.android.honeyboard/#Intent;scheme=android-app;end" class="intent-card">
+            <div class="intent-label">Samsung Keyboard <span class="badge badge-high">GEAR</span></div>
+            <div class="intent-purpose">Keyboard settings (gear icon!)</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- External Tools -->
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🌐</span>
+            External Tools
+          </span>
+        </div>
+        <div class="cat-body">
+          <a href="https://app.nicemoe.cc/" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">WebADB Demo (ya-webadb)</div>
+              <div class="link-url">Browser ADB shell - requires USB debug</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://browserlify.com/" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">Browserlify</div>
+              <div class="link-url">WebUSB + scrcpy in browser</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://github.com/yume-chan/ya-webadb" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">ya-webadb GitHub</div>
+              <div class="link-url">WebADB library (2,850 stars)</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://sammobile.com/firmwares/" target="_blank" class="ext-link">
+            <div>
+              <div class="link-title">SamMobile Firmware</div>
+              <div class="link-url">Stock Samsung ROMs</div>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== INTENTS VIEW ========== -->
+    <div id="view-intents" class="view">
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🎯</span>
+            FRP Critical Intents
+            <span class="cat-count">9</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-frp"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">📥</span>
+            Package Installer
+            <span class="cat-count">5</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-installer"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔒</span>
+            Security & Lock
+            <span class="cat-count">10</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-security"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">📱</span>
+            Samsung Apps
+            <span class="cat-count">15</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-samsung"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">⚡</span>
+            Samsung System
+            <span class="cat-count">14</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-samsung-sys"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🛡️</span>
+            Knox Security
+            <span class="cat-count">6</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-knox"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">♿</span>
+            Accessibility
+            <span class="cat-count">5</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-access"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔧</span>
+            Advanced Actions
+            <span class="cat-count">17</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-advanced"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔵</span>
+            Google Apps
+            <span class="cat-count">11</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-google"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">📡</span>
+            Network
+            <span class="cat-count">8</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-network"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">⚙️</span>
+            General Android
+            <span class="cat-count">9</span>
+          </span>
+        </div>
+        <div class="cat-body" id="intents-general"></div>
+      </div>
+    </div>
+
+    <!-- ========== METHODS VIEW ========== -->
+    <div id="view-methods" class="view">
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔥</span>
+            Critical Methods (Working)
+          </span>
+        </div>
+        <div class="cat-body" id="methods-critical"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="high" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔧</span>
+            ADB-Based Methods
+          </span>
+        </div>
+        <div class="cat-body" id="methods-adb"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">📱</span>
+            Interface Exploits
+          </span>
+        </div>
+        <div class="cat-body" id="methods-interface"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🌐</span>
+            Browser-Based
+          </span>
+        </div>
+        <div class="cat-body" id="methods-browser"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔬</span>
+            Experimental / Theory
+          </span>
+        </div>
+        <div class="cat-body" id="methods-exp"></div>
+      </div>
+    </div>
+
+    <!-- ========== ADB VIEW ========== -->
+    <div id="view-adb" class="view">
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔑</span>
+            Key FRP Commands
+          </span>
+        </div>
+        <div class="cat-body">
+          <div class="cmd-block">
+            <div class="cmd-title">🔑 THE FRP BYPASS COMMAND</div>
+            <div class="cmd-code" id="cmd-frp">adb shell content insert --uri content://settings/secure --bind name:s:user_setup_complete --bind value:s:1</div>
+            <div class="cmd-desc">Marks device setup as complete - bypasses FRP verification</div>
+            <button class="cmd-copy" onclick="copyCmd('cmd-frp')">Copy</button>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-title">🗑️ Remove GSF (Removes FRP Lock)</div>
+            <div class="cmd-code" id="cmd-gsf">adb shell pm uninstall -k --user 0 com.google.android.gsf</div>
+            <div class="cmd-desc">Uninstalls Google Services Framework - removes FRP entirely</div>
+            <button class="cmd-copy" onclick="copyCmd('cmd-gsf')">Copy</button>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-title">🔓 Disable Lock Screen</div>
+            <div class="cmd-code" id="cmd-lock">adb shell cmd lock_settings set-disabled true</div>
+            <div class="cmd-desc">Disables all lock screen security</div>
+            <button class="cmd-copy" onclick="copyCmd('cmd-lock')">Copy</button>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-title">📂 Expand Notifications</div>
+            <div class="cmd-code" id="cmd-notify">adb shell cmd statusbar expand-notifications</div>
+            <div class="cmd-desc">Opens notification panel - bypass touch lock</div>
+            <button class="cmd-copy" onclick="copyCmd('cmd-notify')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">⚙️</span>
+            Settings Commands
+          </span>
+        </div>
+        <div class="cat-body">
+          <div class="cmd-block">
+            <div class="cmd-title">Open Main Settings</div>
+            <div class="cmd-code">adb shell am start -a android.settings.SETTINGS</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Open Security Settings</div>
+            <div class="cmd-code">adb shell am start -a android.settings.SECURITY_SETTINGS</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Open Developer Options</div>
+            <div class="cmd-code">adb shell am start -a android.settings.APPLICATION_DEVELOPMENT_SETTINGS</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Open Accounts (Add Google)</div>
+            <div class="cmd-code">adb shell am start -a android.settings.ADD_ACCOUNT_SETTINGS</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Enable Unknown Sources</div>
+            <div class="cmd-code">adb shell content insert --uri content://settings/secure --bind name:s:install_non_market_apps --bind value:s:1</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">📦</span>
+            Package Commands
+          </span>
+        </div>
+        <div class="cat-body">
+          <div class="cmd-block">
+            <div class="cmd-title">List All Packages</div>
+            <div class="cmd-code">adb shell cmd package list packages</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">List Samsung Packages</div>
+            <div class="cmd-code">adb shell cmd package list packages | grep samsung</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Uninstall Package (User 0)</div>
+            <div class="cmd-code">adb shell pm uninstall -k --user 0 [package_name]</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Clear App Data</div>
+            <div class="cmd-code">adb shell pm clear [package_name]</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+          <div class="cmd-block">
+            <div class="cmd-title">Force Stop App</div>
+            <div class="cmd-code">adb shell am force-stop [package_name]</div>
+            <button class="cmd-copy" onclick="copyCmd(this.previousElementSibling.textContent)">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== DIAL CODES VIEW ========== -->
+    <div id="view-codes" class="view">
+      <div class="tip-box">
+        <div class="tip-title">🔥 *#9090# - The Magic Code</div>
+        <div class="tip-text">
+          <strong>*#9090#</strong> bypasses Samsung Auto Blocker on S24 FE!<br>
+          Provides USB/UART switch for diagnostic access.<br>
+          <small>Tested: ✅ Working on SM-S721B (Android 14)</small>
+        </div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" data-priority="critical" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔥</span>
+            Critical Codes
+          </span>
+        </div>
+        <div class="cat-body" id="codes-critical"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">🔧</span>
+            Diagnostic Codes
+          </span>
+        </div>
+        <div class="cat-body" id="codes-diag"></div>
+      </div>
+
+      <div class="category-section">
+        <div class="cat-header" onclick="toggleCategory(this.parentElement)">
+          <span class="cat-title">
+            <span class="cat-icon">ℹ️</span>
+            Information Codes
+          </span>
+        </div>
+        <div class="cat-body" id="codes-info"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM BAR -->
+  <footer class="bottom-bar">
+    <div class="bar-controls" id="bar-controls">
+      <div class="cat-pills" id="cat-pills">
+        <button class="cat-pill active" onclick="showAll()">All</button>
+      </div>
+      <input type="text" class="search-box" id="search-box" placeholder="Search..." oninput="filterAll()">
+    </div>
+    <div class="attribution">
+      <span>Sources: </span>
+      <a href="https://github.com/akadriu98" target="_blank" style="color:var(--accent);">akadriu98</a>
+      <span> • </span>
+      <a href="https://github.com/NDXCode" target="_blank" style="color:var(--accent);">NDXCode</a>
+      <span> • </span>
+      <a href="https://github.com/yume-chan" target="_blank" style="color:var(--accent);">ya-webadb</a>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <div class="modal-title" id="modal-title">Title</div>
+      <div id="modal-body"></div>
+      <button class="modal-close" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // DATABASES
+    // ============================================
+
+    // FRP CRITICAL INTENTS
+    const intentsFRP = [
+      { label: "Android Setup Wizard", url: "intent://com.google.android.setupwizard/#Intent;scheme=android-app;end", purpose: "Main FRP wizard - CRITICAL" },
+      { label: "Setup Wizard Legal", url: "intent://com.android.setupwizard.legal/#Intent;scheme=android-app;end", purpose: "Setup legal screens" },
+      { label: "Google Partner Setup", url: "intent://com.google.android.partnersetup/#Intent;scheme=android-app;end", purpose: "OEM partner setup" },
+      { label: "Credential Manager", url: "intent://com.android.credentialmanager/#Intent;scheme=android-app;end", purpose: "Account credential storage" },
+      { label: "ConfigAPK", url: "intent://com.android.configapk/#Intent;scheme=android-app;end", purpose: "System config" },
+      { label: "Add Account Action", url: "intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end", purpose: "Add Account flow" },
+      { label: "Sync Settings", url: "intent://#Intent;action=android.settings.SYNC_SETTINGS;end", purpose: "Account sync" },
+      { label: "GSF Login", url: "intent://#Intent;component=com.google.android.gsf.login/.LoginActivity;end", purpose: "Direct GSF login" },
+      { label: "GSF Login (Package)", url: "intent://com.google.android.gsf.login/#Intent;scheme=android-app;end", purpose: "GSF login package" }
+    ];
+
+    // INSTALLER INTENTS
+    const intentsInstaller = [
+      { label: "Package Installer", url: "intent://com.android.packageinstaller/#Intent;scheme=android-app;end", purpose: "INSTALL UNKNOWN APPS - CRITICAL" },
+      { label: "Unknown App Sources", url: "intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;end", purpose: "Enable unknown sources" },
+      { label: "Install Package Action", url: "intent://#Intent;action=android.intent.action.INSTALL_PACKAGE;end", purpose: "Install APK action" },
+      { label: "Package Verifier", url: "intent://com.android.packageinstaller.PackageInstallerActivity/#Intent;end", purpose: "Installer activity" },
+      { label: "APK via File", url: "intent://com.android.packageinstaller/#Intent;action=android.intent.action.VIEW;type=application/vnd.android.package-archive;end", purpose: "Open APK file" }
+    ];
+
+    // SECURITY INTENTS
+    const intentsSecurity = [
+      { label: "Security Settings", url: "intent://#Intent;action=android.settings.SECURITY_SETTINGS;package=com.android.settings;end", purpose: "Security settings main" },
+      { label: "Set New PIN/Password", url: "intent://#Intent;action=android.app.action.SET_NEW_PASSWORD;package=com.android.settings;end", purpose: "Password creation - critical" },
+      { label: "Change Lock Type", url: "intent://#Intent;action=android.app.action.CHOOSE_LOCK;package=com.android.settings;end", purpose: "Lock type selection" },
+      { label: "Fingerprint Setup", url: "intent://#Intent;action=android.settings.FINGERPRINT_ENROLL;package=com.android.settings;end", purpose: "Fingerprint enrollment" },
+      { label: "Device Admin Apps", url: "intent://#Intent;action=android.settings.DEVICE_ADMIN_SETTINGS;package=com.android.settings;end", purpose: "Device administrator list" },
+      { label: "Smart Lock", url: "intent://#Intent;scheme=promote_smartlock_scheme;package=com.google.android.gms;end", purpose: "Google Smart Lock" },
+      { label: "Privacy Settings", url: "intent://#Intent;action=android.settings.PRIVACY_SETTINGS;end", purpose: "Privacy configuration" },
+      { label: "Location Settings", url: "intent://#Intent;action=android.settings.LOCATION_SOURCE_SETTINGS;end", purpose: "GPS and location" },
+      { label: "Accessibility Settings", url: "intent://#Intent;action=android.settings.ACCESSIBILITY_SETTINGS;end", purpose: "Accessibility options" },
+      { label: "Credential Storage", url: "intent://#Intent;action=android.settings.CREDENTIAL_STORAGE_SETTINGS;end", purpose: "Credential management" }
+    ];
+
+    // SAMSUNG INTENTS
+    const intentsSamsung = [
+      { label: "Samsung Dialer", url: "intent://com.samsung.android.dialer/#Intent;scheme=android-app;end", purpose: "Samsung phone app" },
+      { label: "MyFiles", url: "intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end", purpose: "Samsung file manager" },
+      { label: "Galaxy Store", url: "intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end", purpose: "Samsung app store" },
+      { label: "One UI Launcher", url: "intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end", purpose: "Samsung home launcher" },
+      { label: "Hidden Menu", url: "intent://com.sec.android.hiddenmenu/#Intent;scheme=android-app;end", purpose: "Samsung hidden diagnostic" },
+      { label: "Samsung Pass", url: "intent://com.samsung.android.samsungpass/#Intent;scheme=android-app;end", purpose: "Password manager" },
+      { label: "Smart Switch", url: "intent://com.sec.android.easyMover/#Intent;scheme=android-app;end", purpose: "Data transfer" },
+      { label: "Knox Secure Folder", url: "intent://com.samsung.knox.securefolder/#Intent;scheme=android-app;end", purpose: "Knox Secure Folder" },
+      { label: "Device Care", url: "intent://com.samsung.android.lool/#Intent;scheme=android-app;end", purpose: "Device maintenance" },
+      { label: "Samsung Browser", url: "intent://com.sec.android.app.sbrowser/#Intent;scheme=android-app;end", purpose: "Samsung browser" },
+      { label: "Samsung Camera", url: "intent://com.sec.android.app.camera/#Intent;scheme=android-app;end", purpose: "Samsung camera" },
+      { label: "Samsung DeX", url: "intent://com.samsung.android.dexhome/#Intent;scheme=android-app;end", purpose: "DeX mode" },
+      { label: "Link to Windows", url: "intent://com.samsung.android.ltw/#Intent;scheme=android-app;end", purpose: "PC link" },
+      { label: "Smart View", url: "intent://com.samsung.android.smartview/#Intent;scheme=android-app;end", purpose: "Screen cast" },
+      { label: "SmartThings", url: "intent://com.samsung.android.smartthingsframework/#Intent;scheme=android-app;end", purpose: "IoT framework" }
+    ];
+
+    // SAMSUNG SYSTEM
+    const intentsSamsungSys = [
+      { label: "Settings Helper", url: "intent://com.samsung.android.app.settingshelper/#Intent;scheme=android-app;end", purpose: "Settings helper" },
+      { label: "Samsung Keyboard", url: "intent://com.samsung.android.honeyboard/#Intent;scheme=android-app;end", purpose: "Keyboard (gear icon!)" },
+      { label: "Quick Share", url: "intent://com.samsung.android.quickshare/#Intent;scheme=android-app;end", purpose: "Quick Share" },
+      { label: "Smart Switch Agent", url: "intent://com.sec.android.easyMover.Agent/#Intent;scheme=android-app;end", purpose: "Transfer agent" },
+      { label: "MTP Application", url: "intent://com.samsung.android.mtpapplication/#Intent;scheme=android-app;end", purpose: "USB MTP mode" },
+      { label: "MTP Host", url: "intent://com.samsung.android.mtphost/#Intent;scheme=android-app;end", purpose: "MTP host service" },
+      { label: "Storage Manager", url: "intent://com.android.storagemanager/#Intent;scheme=android-app;end", purpose: "Storage management" },
+      { label: "Downloads UI", url: "intent://com.android.providers.downloads.ui/#Intent;scheme=android-app;end", purpose: "Downloads app" },
+      { label: "HTML Viewer", url: "intent://com.android.htmlviewer/#Intent;scheme=android-app;end", purpose: "Web viewer" },
+      { label: "System UI", url: "intent://com.android.systemui/#Intent;scheme=android-app;end", purpose: "System UI" },
+      { label: "WiFi Calling", url: "intent://com.samsung.android.wificallingmanager/#Intent;scheme=android-app;end", purpose: "WiFi calling" },
+      { label: "Network Unlock", url: "intent://com.samsung.android.networkunlock/#Intent;scheme=android-app;end", purpose: "Carrier unlock" },
+      { label: "eSIM Client", url: "intent://com.samsung.android.esim/#Intent;scheme=android-app;end", purpose: "eSIM management" },
+      { label: "Auto Blocker", url: "intent://com.samsung.android.autoblocker/#Intent;scheme=android-app;end", purpose: "Auto Blocker settings" }
+    ];
+
+    // KNOX
+    const intentsKnox = [
+      { label: "Knox Matrix", url: "intent://com.samsung.android.knox.kpm/#Intent;scheme=android-app;end", purpose: "Knox security core" },
+      { label: "Knox Analytics", url: "intent://com.samsung.android.knox.analytics/#Intent;scheme=android-app;end", purpose: "Knox telemetry" },
+      { label: "KLMS Agent", url: "intent://com.samsung.klmsagent/#Intent;scheme=android-app;end", purpose: "Knox license" },
+      { label: "KPECore", url: "intent://com.samsung.android.kpecore/#Intent;scheme=android-app;end", purpose: "Knox policy engine" },
+      { label: "Separated Apps", url: "intent://com.samsung.android.separatedapps/#Intent;scheme=android-app;end", purpose: "Work profile" },
+      { label: "Knox Enrollment", url: "intent://com.sec.enterprise.knox.cloudmdm.smdms/#Intent;scheme=android-app;end", purpose: "Knox MDM" }
+    ];
+
+    // ACCESSIBILITY
+    const intentsAccess = [
+      { label: "TalkBack", url: "intent://com.google.android.marvin.talkback/#Intent;scheme=android-app;end", purpose: "Screen reader - bypass vector" },
+      { label: "Voice Access", url: "intent://com.google.android.apps.accessibility.voiceaccess/#Intent;scheme=android-app;end", purpose: "Voice control" },
+      { label: "Live Transcribe", url: "intent://com.google.android.apps.accessibility.maui/#Intent;scheme=android-app;end", purpose: "Live transcribe" },
+      { label: "Magnifier", url: "intent://com.samsung.android.app.magnifier/#Intent;scheme=android-app;end", purpose: "Screen magnifier" },
+      { label: "One Handed Mode", url: "intent://com.samsung.android.onehandmode/#Intent;scheme=android-app;end", purpose: "One hand mode" }
+    ];
+
+    // ADVANCED
+    const intentsAdvanced = [
+      { label: "All Apps List", url: "intent://#Intent;action=android.settings.MANAGE_ALL_APPLICATIONS_SETTINGS;end", purpose: "All apps list" },
+      { label: "Play Services Info", url: "intent://#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:com.google.android.gms;end", purpose: "GMS app info" },
+      { label: "Battery Saver", url: "intent://#Intent;action=android.settings.BATTERY_SAVER_SETTINGS;end", purpose: "Battery saver" },
+      { label: "Developer Options", url: "intent://#Intent;action=android.settings.APPLICATION_DEVELOPMENT_SETTINGS;end", purpose: "Dev options - CRITICAL" },
+      { label: "Display Settings", url: "intent://#Intent;action=android.settings.DISPLAY_SETTINGS;end", purpose: "Display menu" },
+      { label: "Manage Overlay", url: "intent://#Intent;action=android.settings.MANAGE_OVERLAY_PERMISSION;end", purpose: "Overlay permission" },
+      { label: "Notification Access", url: "intent://#Intent;action=android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;end", purpose: "Notification access" },
+      { label: "Write Settings", url: "intent://#Intent;action=android.settings.action.MANAGE_WRITE_SETTINGS;end", purpose: "Write settings perm" },
+      { label: "Cast Settings", url: "intent://#Intent;action=android.settings.CAST_SETTINGS;end", purpose: "Screen cast" },
+      { label: "Internal Storage", url: "intent://#Intent;action=android.settings.INTERNAL_STORAGE_SETTINGS;end", purpose: "Storage details" },
+      { label: "Privacy Settings", url: "intent://#Intent;action=android.settings.PRIVACY_SETTINGS;end", purpose: "Privacy menu" },
+      { label: "Usage Access", url: "intent://#Intent;action=android.settings.USAGE_ACCESS_SETTINGS;end", purpose: "Usage access" },
+      { label: "Permission Controller", url: "intent://com.android.permissioncontroller/#Intent;scheme=android-app;end", purpose: "Permission manager" },
+      { label: "Locale Settings", url: "intent://#Intent;action=android.settings.LOCALE_SETTINGS;end", purpose: "Language settings" },
+      { label: "Sound Settings", url: "intent://#Intent;action=android.settings.SOUND_SETTINGS;end", purpose: "Sound menu" },
+      { label: "WiFi Settings", url: "intent://#Intent;action=android.settings.WIFI_SETTINGS;end", purpose: "WiFi menu" },
+      { label: "Bluetooth Settings", url: "intent://#Intent;action=android.settings.BLUETOOTH_SETTINGS;end", purpose: "Bluetooth menu" }
+    ];
+
+    // GOOGLE
+    const intentsGoogle = [
+      { label: "Google Assistant", url: "intent://com.google.android.apps.googleassistant/#Intent;scheme=android-app;end", purpose: "Voice assistant" },
+      { label: "Play Store", url: "intent://com.android.vending/#Intent;scheme=android-app;end", purpose: "App store" },
+      { label: "YouTube", url: "intent://com.google.android.youtube/#Intent;scheme=android-app;end", purpose: "Video streaming" },
+      { label: "Gmail", url: "intent://com.google.android.gm/#Intent;scheme=android-app;end", purpose: "Email client" },
+      { label: "Google Maps", url: "intent://com.google.android.apps.maps/#Intent;scheme=android-app;end", purpose: "Navigation" },
+      { label: "Chrome", url: "intent://com.android.chrome/#Intent;scheme=android-app;end", purpose: "Web browser" },
+      { label: "Google Drive", url: "intent://com.google.android.apps.docs/#Intent;scheme=android-app;end", purpose: "Cloud storage" },
+      { label: "Google Photos", url: "intent://com.google.android.apps.photos/#Intent;scheme=android-app;end", purpose: "Photo management" },
+      { label: "Play Services", url: "intent://com.google.android.gms/#Intent;scheme=android-app;end", purpose: "Google services framework" },
+      { label: "Files by Google", url: "intent://com.google.android.apps.nbu.files/#Intent;scheme=android-app;end", purpose: "File manager" },
+      { label: "Google Lens", url: "intent://com.google.ar.lens/#Intent;scheme=android-app;end", purpose: "Visual search - QR scanning" }
+    ];
+
+    // NETWORK
+    const intentsNetwork = [
+      { label: "WiFi Settings", url: "intent://#Intent;action=android.settings.WIFI_SETTINGS;end", purpose: "WiFi configuration" },
+      { label: "Bluetooth Settings", url: "intent://#Intent;action=android.settings.BLUETOOTH_SETTINGS;end", purpose: "Bluetooth pairing" },
+      { label: "WiFi Calling", url: "intent://com.samsung.android.wificallingmanager/#Intent;scheme=android-app;end", purpose: "WiFi calling" },
+      { label: "Network Unlock", url: "intent://com.samsung.android.networkunlock/#Intent;scheme=android-app;end", purpose: "Carrier unlock" },
+      { label: "VPN Dialogs", url: "intent://com.android.vpndialogs/#Intent;scheme=android-app;end", purpose: "VPN UI" },
+      { label: "eSIM Client", url: "intent://com.samsung.android.esim/#Intent;scheme=android-app;end", purpose: "eSIM management" },
+      { label: "Nearby Scanning", url: "intent://com.samsung.android.nearbydevicescanning/#Intent;scheme=android-app;end", purpose: "Nearby devices" },
+      { label: "Airplane Mode", url: "intent://#Intent;action=android.settings.AIRPLANE_MODE_SETTINGS;end", purpose: "Airplane mode" }
+    ];
+
+    // GENERAL
+    const intentsGeneral = [
+      { label: "Open Settings App", url: "intent://com.android.settings/#Intent;scheme=android-app;end", purpose: "Main settings launcher" },
+      { label: "Open Settings (Action)", url: "intent:#Intent;action=android.settings.SETTINGS;end", purpose: "Settings via action" },
+      { label: "USB Settings", url: "intent://com.android.settings.UsbSettingsActivity/#Intent;scheme=android-app;end", purpose: "USB - potential ADB" },
+      { label: "ADB Settings", url: "intent://com.android.settings.AdbSettingsActivity/#Intent;scheme=android-app;end", purpose: "ADB debugging" },
+      { label: "Dial Pad", url: "tel:123456789", purpose: "Open phone dialer" },
+      { label: "Open Contacts", url: "intent://com.android.contacts/#Intent;scheme=android-app;end", purpose: "Contacts app" },
+      { label: "Launch Camera", url: "intent://android.media.action.IMAGE_CAPTURE#Intent;scheme=android-app;end", purpose: "Open camera" },
+      { label: "Calendar", url: "intent://com.samsung.android.calendar/#Intent;scheme=android-app;end", purpose: "Samsung Calendar" },
+      { label: "Calculator (AOSP)", url: "intent://com.android.calculator2/#Intent;scheme=android-app;end", purpose: "Basic calculator" }
+    ];
+
+    // BYPASS METHODS
+    const methodsCritical = [
+      {
+        title: "*#9090# USB/UART Switch",
+        status: "works",
+        device: "SM-S721B (A14)",
+        steps: `1. Emergency Call → Dial *#9090#
+2. Service Mode menu opens
+3. Navigate to USB/UART Switch
+4. Toggle to USB Modem mode
+5. PC detects COM port (CDC ACM)
+6. Send AT: AT+SWATD=1
+7. USB debugging popup → Approve`
+      },
+      {
+        title: "Modem AT Command Exploit",
+        status: "testing",
+        device: "Samsung A15/16",
+        steps: `1. Dial *#0*# for test mode
+2. Find Samsung Modem port
+3. Send AT commands via serial
+4. AT+SWATD=1 triggers USB debug
+5. User approves USB debugging
+6. ADB: user_setup_complete=1`
+      },
+      {
+        title: "TalkBack + Bixby + Alliance Shield",
+        status: "works",
+        device: "Samsung A12",
+        steps: `1. Vol Up+Power → Draw R→Up
+2. Say "Google Assistant" → Bixby
+3. Say "Open Chrome" → android.nr1.nu
+4. Install Alliance Shield X
+5. Service Mode → MTP+ADB
+6. ADB: user_setup_complete=1`
+      },
+      {
+        title: "ADB Setup Complete (Direct)",
+        status: "works",
+        device: "Universal (if ADB)",
+        steps: `1. Enable USB debugging (any method)
+2. Connect to PC via USB
+3. adb shell content insert user_setup_complete=1
+4. Optionally: pm uninstall gsf
+5. am start settings`
+      },
+      {
+        title: "Force Stop Play Services",
+        status: "works",
+        device: "Various (A10-A13)",
+        steps: `1. Access Settings → Apps
+2. Show system apps
+3. Android Setup → Force Stop
+4. Google Play Services → Force Stop
+5. FRP verification dead!`
+      }
+    ];
+
+    const methodsADB = [
+      {
+        title: "StatusBar Expand Trick",
+        status: "works",
+        device: "Universal (if ADB)",
+        steps: `1. Get ADB access (any method)
+2. adb shell cmd statusbar expand-notifications
+3. Notification panel opens
+4. Access Settings via toggles
+5. Remove account`
+      },
+      {
+        title: "WebADB Browser Method",
+        status: "works",
+        device: "Chrome browsers",
+        steps: `1. Enable USB debugging (any method)
+2. Chrome → app.nicemoe.cc
+3. Click Connect → Select device
+4. Approve USB debugging
+5. Run FRP commands`
+      },
+      {
+        title: "Heimdall Custom ROM Flash",
+        status: "works",
+        device: "Samsung S8",
+        steps: `1. Boot Download mode (Vol Dn+Power)
+2. Use Heimdall flash debug ROM
+3. cmd statusbar expand-notifications
+4. Access Settings
+5. Flash back stock ROM`
+      }
+    ];
+
+    const methodsInterface = [
+      {
+        title: "Keyboard Gear Method",
+        status: "blocked",
+        device: "SM-S721B (A14)",
+        steps: `1. Tap email/password field
+2. Look for ⚙ gear icon on keyboard
+3. Tap gear → Language & Input
+4. Navigate to Settings`
+      },
+      {
+        title: "*#0808# ADB Enable",
+        status: "blocked",
+        device: "Samsung A14+",
+        steps: `1. Emergency Call → *#0808#
+2. Select DM + ACM + ADB
+3. Tap Reboot
+4. Connect USB → ADB available`
+      },
+      {
+        title: "*#0*# Test Mode",
+        status: "blocked",
+        device: "SM-S721B (A14)",
+        steps: `1. Emergency Call → *#0*#
+2. Test menu opens
+3. Enable MTP+ADB
+4. Connect to PC`
+      },
+      {
+        title: "Google Go Share",
+        status: "works",
+        device: "Moto G, TCL",
+        steps: `1. Find share popup
+2. "Google Go" → Use without account
+3. Mic icon → "Open Settings"
+4. Disable Play Services`
+      },
+      {
+        title: "Battery Drain Trick",
+        status: "works",
+        device: "TCL, Moto",
+        steps: `1. Wrong email for 1-2 minutes
+2. Battery → Usage Details
+3. Google Play Services visible
+4. Tap → Force stop!`
+      }
+    ];
+
+    const methodsBrowser = [
+      {
+        title: "YouTube → Chrome Escape",
+        status: "blocked",
+        device: "A13+",
+        steps: `1. YouTube Terms link
+2. YouTube logo → App opens
+3. Settings → About → Privacy
+4. Chrome opens`
+      },
+      {
+        title: "Calendar Event URL",
+        status: "blocked",
+        device: "A13+",
+        steps: `1. Open Calendar app
+2. Create new event
+3. Add URL in location
+4. Tap URL → Browser`
+      },
+      {
+        title: "Chrome Google Login",
+        status: "partial",
+        device: "SM-S721B",
+        steps: `1. Access Chrome during FRP
+2. Login to myaccount.google.com
+3. Sign out device remotely
+4. ❌ FRP persists`
+      },
+      {
+        title: "Captive Portal Injection",
+        status: "theory",
+        device: "Any",
+        steps: `1. Setup Mikrotik captive portal
+2. Add intent:// URLs
+3. Connect FRP device
+4. Intent fires`
+      }
+    ];
+
+    const methodsExp = [
+      {
+        title: "Find My Samsung Unlock",
+        status: "untested",
+        device: "Samsung",
+        steps: `1. findmymobile.samsung.com
+2. Login with Samsung account
+3. Select device
+4. Click "Unlock"
+5. Wait for command`
+      },
+      {
+        title: "Smart Switch Transfer",
+        status: "untested",
+        device: "Samsung",
+        steps: `1. Open Smart Switch
+2. Select "Receive data"
+3. Connect donor Samsung
+4. Transfer includes account?`
+      },
+      {
+        title: "Bluetooth File Transfer",
+        status: "untested",
+        device: "Any",
+        steps: `1. Enable Bluetooth
+2. Pair with another device
+3. Send file TO FRP device
+4. File picker escape?`
+      },
+      {
+        title: "WiFi QR Share",
+        status: "untested",
+        device: "Samsung",
+        steps: `1. WiFi settings
+2. Tap network → Share
+3. Share menu escape?`
+      }
+    ];
+
+    // DIAL CODES
+    const dialCodesCritical = [
+      { code: "*#9090#", name: "Service Mode", status: "works", desc: "USB/UART MUX toggle - BYPASSES AUTO BLOCKER!" },
+      { code: "*#0808#", name: "USB Settings", status: "blocked", desc: "MTP/ADB/PTP/DM modes - Auto Blocker" },
+      { code: "*#0*#", name: "HW Test Mode", status: "blocked", desc: "Hardware diagnostics - Auto Blocker" },
+      { code: "*#7284#", name: "USB I2C", status: "untested", desc: "USB mode control" }
+    ];
+
+    const dialCodesDiag = [
+      { code: "*#9900#", name: "SysDump", status: "untested", desc: "System dump mode" },
+      { code: "*#746#", name: "Debug Dump", status: "untested", desc: "Debug dump menu" },
+      { code: "*#66336#", name: "CP Debug", status: "untested", desc: "Modem debug level" },
+      { code: "*#1111#", name: "Service Mode 1", status: "untested", desc: "Network/Modem info" },
+      { code: "*#2222#", name: "Service Mode 2", status: "untested", desc: "Network/Modem info" },
+      { code: "*#0011#", name: "Service Mode 3", status: "untested", desc: "Network status" },
+      { code: "*#872564#", name: "USB Logging", status: "untested", desc: "USB debug logs" },
+      { code: "*#2263#", name: "RF Band", status: "untested", desc: "Network band selection" }
+    ];
+
+    const dialCodesInfo = [
+      { code: "*#06#", name: "IMEI", status: "works", desc: "Display IMEI/SN" },
+      { code: "*#1234#", name: "Firmware", status: "untested", desc: "AP/CP/CSC versions" },
+      { code: "*#0228#", name: "Battery", status: "untested", desc: "Battery status" },
+      { code: "*#12580*369#", name: "All Info", status: "untested", desc: "SW/HW info" },
+      { code: "*#*#4636#*#*", name: "Testing", status: "untested", desc: "Android testing menu" }
+    ];
+
+    // ============================================
+    // RENDER FUNCTIONS
+    // ============================================
+
+    function renderIntents(container, data) {
+      container.innerHTML = data.map(item => `
+        <a href="${item.url}" class="intent-card" onclick="showIntentModal('${item.url}', '${item.label.replace(/'/g, "\\'")}')">
+          <div class="intent-label">${item.label}</div>
+          <div class="intent-purpose">${item.purpose}</div>
+        </a>
+      `).join('');
+    }
+
+    function renderApproaches(container, data) {
+      container.innerHTML = data.map(m => `
+        <div class="approach-card">
+          <div class="approach-header">
+            <div class="approach-title">${m.title}</div>
+            <div class="approach-status ${m.status === 'works' ? 'works' : m.status === 'testing' ? 'testing' : 'blocked'}">
+              ${m.status.toUpperCase()}
+            </div>
+          </div>
+          <div class="approach-steps"><ol style="margin:0;padding-left:16px">${m.steps.split('\n').map(s => `<li>${s}</li>`).join('')}</ol></div>
+          ${m.device ? `<div style="font-size:0.7rem;color:var(--text-dim);margin-top:8px;">Device: ${m.device}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderCodes(container, data) {
+      container.innerHTML = data.map(c => `
+        <div class="dial-code">
+          <div>
+            <div class="code">${c.code}</div>
+            <div style="font-size:0.75rem;color:var(--text);margin-top:2px;">${c.name}</div>
+          </div>
+          <div class="status ${c.status}">${c.status.toUpperCase()}</div>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px;margin-left:8px;">${c.desc}</div>
+      `).join('');
+    }
+
+    // Render all on load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderIntents(document.getElementById('intents-frp'), intentsFRP);
+      renderIntents(document.getElementById('intents-installer'), intentsInstaller);
+      renderIntents(document.getElementById('intents-security'), intentsSecurity);
+      renderIntents(document.getElementById('intents-samsung'), intentsSamsung);
+      renderIntents(document.getElementById('intents-samsung-sys'), intentsSamsungSys);
+      renderIntents(document.getElementById('intents-knox'), intentsKnox);
+      renderIntents(document.getElementById('intents-access'), intentsAccess);
+      renderIntents(document.getElementById('intents-advanced'), intentsAdvanced);
+      renderIntents(document.getElementById('intents-google'), intentsGoogle);
+      renderIntents(document.getElementById('intents-network'), intentsNetwork);
+      renderIntents(document.getElementById('intents-general'), intentsGeneral);
+
+      renderApproaches(document.getElementById('methods-critical'), methodsCritical);
+      renderApproaches(document.getElementById('methods-adb'), methodsADB);
+      renderApproaches(document.getElementById('methods-interface'), methodsInterface);
+      renderApproaches(document.getElementById('methods-browser'), methodsBrowser);
+      renderApproaches(document.getElementById('methods-exp'), methodsExp);
+
+      renderCodes(document.getElementById('codes-critical'), dialCodesCritical);
+      renderCodes(document.getElementById('codes-diag'), dialCodesDiag);
+      renderCodes(document.getElementById('codes-info'), dialCodesInfo);
+    });
+
+    // ============================================
+    // VIEW SWITCHING
+    // ============================================
+    function switchView(view) {
+      currentView = view;
+      document.querySelectorAll('.header-tab').forEach(t => {
+        t.classList.remove('active');
+      });
+      document.getElementById('tab-' + view)?.classList.add('active');
+
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const viewEl = document.getElementById('view-' + view);
+      if (viewEl) viewEl.classList.add('active');
+
+      const controls = document.getElementById('bar-controls');
+      if (controls) {
+        controls.classList.toggle('hidden', view === 'home' || view === 'codes');
+      }
+
+      document.querySelector('.main-content').scrollTop = 0;
+    }
+    let currentView = 'home';
+
+    // ============================================
+    // UTILITIES
+    // ============================================
+    function toggleCategory(section) {
+      section.classList.toggle('open');
+    }
+
+    function showAll() {
+      document.querySelectorAll('.category-section').forEach(s => s.style.display = 'block');
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function copyCmd(text) {
+      navigator.clipboard.writeText(text);
+      event.target.textContent = 'Copied!';
+      setTimeout(() => event.target.textContent = 'Copy', 1500);
+    }
+
+    function showIntentModal(url, label) {
+      document.getElementById('modal-title').textContent = label;
+      document.getElementById('modal-body').innerHTML = `
+        <div class="cmd-code" style="word-break:break-all;font-size:0.7rem;">${url}</div>
+        <p style="font-size:0.8rem;color:var(--text-dim);margin-top:12px;">
+          Tap to open this intent on your device.
+        </p>
+      `;
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal(e) {
+      if (!e || e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
+        document.getElementById('modal').classList.remove('active');
+      }
+    }
+
+    function filterAll() {
+      const search = document.getElementById('search-box').value.toLowerCase();
+      // Filter visible elements
+      document.querySelectorAll('.intent-card, .approach-card, .dial-code, .ext-link').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(search) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

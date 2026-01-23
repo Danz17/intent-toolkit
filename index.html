@@ -459,6 +459,7 @@
     <div class="header-tabs">
       <button class="header-tab" id="tab-intent" onclick="switchView('intent')">Intent</button>
       <button class="header-tab" id="tab-qr" onclick="switchView('qr')">QR</button>
+      <button class="header-tab" id="tab-webadb" onclick="switchView('webadb')">WebADB</button>
     </div>
   </header>
 
@@ -475,6 +476,58 @@
     <div id="view-qr" class="view">
       <div id="qr-categories">
         <div class="loading">Loading QR codes...</div>
+      </div>
+    </div>
+
+    <!-- WebADB View -->
+    <div id="view-webadb" class="view">
+      <div class="admin-section">
+        <h3 class="admin-title">🔌 WebADB Tool</h3>
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 3rem; margin-bottom: 16px;">🚧</div>
+          <div style="color: var(--warning); font-size: 1.1rem; margin-bottom: 8px;">Under Development</div>
+          <div style="color: var(--text-dim); font-size: 0.85rem;">Custom WebADB implementation coming after research backtest</div>
+        </div>
+      </div>
+
+      <div class="admin-section">
+        <h3 class="admin-title">📋 Planned Features</h3>
+        <div class="admin-stat">
+          <span>USB Device Detection</span>
+          <span class="admin-stat-value">🔲</span>
+        </div>
+        <div class="admin-stat">
+          <span>AT Command Sender</span>
+          <span class="admin-stat-value">🔲</span>
+        </div>
+        <div class="admin-stat">
+          <span>USB Config Switcher</span>
+          <span class="admin-stat-value">🔲</span>
+        </div>
+        <div class="admin-stat">
+          <span>FRP Bypass Commands</span>
+          <span class="admin-stat-value">🔲</span>
+        </div>
+        <div class="admin-stat">
+          <span>Serial Monitor</span>
+          <span class="admin-stat-value">🔲</span>
+        </div>
+      </div>
+
+      <div class="admin-section">
+        <h3 class="admin-title">🔗 External Tools (Research)</h3>
+        <div class="admin-stat">
+          <span>WebADB Demo</span>
+          <a href="https://app.nicemoe.cc/" target="_blank" class="btn-reset" style="background: var(--accent); color: #000; text-decoration: none;">Open</a>
+        </div>
+        <div class="admin-stat">
+          <span>Browserlify</span>
+          <a href="https://browserlify.com/" target="_blank" class="btn-reset" style="background: var(--accent); color: #000; text-decoration: none;">Open</a>
+        </div>
+        <div class="admin-stat">
+          <span>ya-webadb GitHub</span>
+          <a href="https://github.com/yume-chan/ya-webadb" target="_blank" class="btn-reset" style="background: var(--bg-card); color: var(--text); text-decoration: none;">View</a>
+        </div>
       </div>
     </div>
 
@@ -620,7 +673,12 @@
       { id: "code_009", category: "secret_codes", label: "*#1234# - Firmware", intentUrl: "tel:*#1234#", purpose: "AP/CP/CSC versions" },
       { id: "code_010", category: "secret_codes", label: "*#12580*369# - All Info", intentUrl: "tel:*#12580*369#", purpose: "Complete SW/HW info" },
       { id: "code_011", category: "secret_codes", label: "*#2263# - RF Band", intentUrl: "tel:*#2263#", purpose: "Network band selection" },
-      { id: "code_012", category: "secret_codes", label: "*#*#4636#*#* - Testing", intentUrl: "tel:*#*#4636#*#*", purpose: "Android testing menu" }
+      { id: "code_012", category: "secret_codes", label: "*#*#4636#*#* - Testing", intentUrl: "tel:*#*#4636#*#*", purpose: "Android testing menu" },
+      { id: "code_013", category: "secret_codes", label: "*#9090# - Service Mode 🔥", intentUrl: "tel:*#9090#", purpose: "WORKS ON S24 FE! USB/UART Switch + Modem settings" },
+      { id: "code_014", category: "secret_codes", label: "*#1111# - Service Mode 1", intentUrl: "tel:*#1111#", purpose: "Network/Modem info" },
+      { id: "code_015", category: "secret_codes", label: "*#2222# - Service Mode 2", intentUrl: "tel:*#2222#", purpose: "Network/Modem info" },
+      { id: "code_016", category: "secret_codes", label: "*#66336# - CP Debug", intentUrl: "tel:*#66336#", purpose: "Modem debug level settings" },
+      { id: "code_017", category: "secret_codes", label: "*#872564# - USB Logging", intentUrl: "tel:*#872564#", purpose: "USB debug logs control" }
     ];
 
     // Main intent database (embedded from research/intent-database.json)
@@ -854,24 +912,18 @@
     function switchView(view) {
       currentView = view;
 
-      // Update tabs
-      document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
-      if (view === 'intent') {
-        document.getElementById('tab-qr').classList.add('active');
-        document.getElementById('tab-intent').classList.add('hidden');
-        document.getElementById('tab-qr').classList.remove('hidden');
-      } else if (view === 'qr') {
-        document.getElementById('tab-intent').classList.add('active');
-        document.getElementById('tab-qr').classList.add('hidden');
-        document.getElementById('tab-intent').classList.remove('hidden');
-      }
+      // Update tabs - show all tabs, highlight current
+      document.querySelectorAll('.header-tab').forEach(t => {
+        t.classList.remove('active', 'hidden');
+      });
+      document.getElementById('tab-' + view).classList.add('active');
 
       // Update views
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById('view-' + view).classList.add('active');
 
-      // Show/hide controls bar (hide for admin)
-      document.getElementById('bar-controls').classList.toggle('hidden', view === 'admin');
+      // Show/hide controls bar (hide for admin and webadb)
+      document.getElementById('bar-controls').classList.toggle('hidden', view === 'admin' || view === 'webadb');
     }
 
     // ============================================
