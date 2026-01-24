@@ -3,6 +3,11 @@ research/
 tools/
 notes/
 
+# Claude Code / MCP
+.claude/
+.spec-workflow/
+tmpclaude-*/
+
 # System files
 .DS_Store
 Thumbs.db
